@@ -21,10 +21,10 @@ const BlogCard: React.FC<BlogCardProps> = ({ title, excerpt, image, slug, date }
                     </Link>
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-300 mb-4">{date}</p>
-                <p className="text-text-light dark:text-text.dark mb-4">{excerpt}</p>
+                <p className="text-primary dark:text-text.dark mb-4">{excerpt}</p>
                 <Link href={`/blog/${slug}`}>
                     <button className="text-primary dark:text-secondary hover:underline">
-                        Read More
+                        আরো পড়ুন
                     </button>
                 </Link>
             </div>

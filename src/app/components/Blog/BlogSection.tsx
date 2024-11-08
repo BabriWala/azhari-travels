@@ -4,24 +4,23 @@ import BlogCard from "./BlogCard";
 
 const blogPosts = [
     {
-        title: "Understanding Next.js and Tailwind CSS",
-        excerpt: "Learn how to build modern websites with Next.js and Tailwind CSS.",
-        image: "/images/blog1.jpg",
-        slug: "nextjs-tailwind-css",
-        date: "October 12, 2024",
+        title: "মিশর ভিসা নিতে প্রতাড়িত হবেন না যেভাবে",
+        excerpt: "মিশর ভিসা নিতে আমরা অনেক সময়ই নানা ধরণের সমস্যাই পড়ে থাকি যার দরুণ মাঝে মধ্যেই আমরা প্রতড়িত হয়।",
+        image: "/gallery/Gallery-05.jpg",
+        slug: "মিশর-ভিসা-নিতে-প্রতাড়িত-হবেন-না-যেভাবে",
+        date: "১০ নভেম্বর ২০২৪ ইং",
     },
-    // Add more blog posts as needed
 ];
 
 const BlogSection: React.FC = () => {
     return (
-        <section className="bg-background-light dark:bg-background.dark py-16">
+        <section className="bg-background-light dark:bg-background.dark py-20">
             <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-8">
-                    Our Blog
+                <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">
+                    আমাদের ব্লগ সমূহ
                 </h2>
-                <p className="text-text-light dark:text-text.dark mb-12 max-w-xl mx-auto">
-                    Discover the latest articles on web development, design, and more.
+                <p className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">
+                    ব্লগ বা আর্টিকেল গুলো পড়ে যাবতীয় ইনফরমেশন নিন
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {blogPosts.map((post, index) => (

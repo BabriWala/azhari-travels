@@ -4,30 +4,30 @@ import PackageCard from "./PackageCard";
 
 const packageOptions = [
     {
-        title: "Basic",
-        price: "$19/mo",
-        features: ["Feature 1", "Feature 2", "Feature 3"],
+        title: "স্টুডেন্ট",
+        price: "১ লক্ষ ৫০ হাজার",
+        features: ["ভিসা", "টিকেট", "ভর্তি", "বাসা",],
     },
     {
-        title: "Standard",
-        price: "$49/mo",
-        features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4"],
+        title: "ওমরাহ এবং মিশর ভ্রমণ",
+        price: "২ লক্ষ ২৫ হাজার",
+        features: ["মিশর ভিসা", "ওমরাহ ভিসা", "টুর স্পট", "মক্কা", "মদিনা"],
         isPopular: true,
     },
     {
-        title: "Premium",
-        price: "$99/mo",
-        features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5"],
+        title: "ভিসা প্রসেসিং",
+        price: "১ লক্ষ টাকা",
+        features: ["ভিসা"],
     },
 ];
 
 const Packages: React.FC = () => {
     return (
-        <section className="bg-background-light dark:bg-background.dark py-16">
+        <section className="bg-background-lightOdd dark:bg-background.dark py-20">
             <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-8">Our Packages</h2>
-                <p className="text-text-light dark:text-text.dark mb-12 max-w-xl mx-auto">
-                    Choose the best plan that suits your needs.
+                <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">আমাদের প্যাকেজসমূহ</h2>
+                <p className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">
+                    আপনার পছন্দ অনুযায়ী প্যাকেজ নির্বাচন করুন
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {packageOptions.map((pkg, index) => (

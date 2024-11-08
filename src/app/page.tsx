@@ -8,6 +8,7 @@ import Hero from "./components/Hero/Hero";
 import HowWeWork from "./components/HowWeWork/HowWeWork";
 import Packages from "./components/Package/Packages";
 import OurTeam from "./components/Team/OurTeam";
+import TipsSection from "./components/TipsSection/TipsSection";
 import TravelingStatistics from "./components/TravelingStatistics/TravelingStatistics";
 
 export default function Home() {
@@ -28,8 +29,9 @@ export default function Home() {
       <ContactUs></ContactUs>
       <Gallery></Gallery>
       <OurTeam></OurTeam>
-      {/* <Packages></Packages> */}
-      {/* <BlogSection></BlogSection> */}
+      <Packages></Packages>
+      <BlogSection></BlogSection>
+      <TipsSection></TipsSection>
     </>
   );
 }
