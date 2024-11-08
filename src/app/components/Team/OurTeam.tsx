@@ -4,28 +4,38 @@ import TeamMemberCard from "./TeamMemberCard";
 
 const teamMembers = [
     {
-        name: "Alice Johnson",
-        position: "CEO & Founder",
-        bio: "Alice has over 20 years of experience in tech leadership.",
-        imageUrl: "/images/alice.jpg",
+        name: "রুম্মান হামযাহ",
+        position: "প্রতিষ্ঠাতা",
+        imageUrl: "/team/Team-01.jpg",
+        mobileNumber: "+8801877995354",
+        whatsappNumber: "+8801877995354",
+        socialMedia: {
+            facebook: "https://facebook.com/iamhamzahkhan",
+            messenger: "https://m.me/iamhamzahkhan",
+        },
     },
     {
-        name: "Bob Smith",
-        position: "CTO",
-        bio: "Bob specializes in building scalable solutions.",
-        imageUrl: "/images/bob.jpg",
+        name: "বাবরি ওয়ালা",
+        position: "সফটওয়ার ইঞ্জিয়ার",
+        imageUrl: "/team/Team-02.jpg",
+        mobileNumber: "+8801580580982",
+        whatsappNumber: "+8801580580982",
+        socialMedia: {
+            facebook: "https://facebook.com/babriwala.hazishaheb",
+            linkedin: "https://linkedin.com/in/hanzala2022",
+            messenger: "https://m.me/babriwala.hazishaheb",
+        },
     },
     {
-        name: "Cathy Brown",
-        position: "Head of Design",
-        bio: "Cathy creates beautiful, user-friendly designs.",
-        imageUrl: "/images/cathy.jpg",
-    },
-    {
-        name: "David Wilson",
-        position: "Lead Developer",
-        bio: "David is a full-stack expert with a passion for coding.",
-        imageUrl: "/images/david.jpg",
+        name: "মুঈনুল ইসলাম",
+        position: "কোষাধক্ষ্য",
+        imageUrl: "/team/Team-03.jpg",
+        mobileNumber: "+8801719169191",
+        whatsappNumber: "+8801719169191",
+        socialMedia: {
+            facebook: "https://www.facebook.com/md.mainulislam.585",
+            messenger: "https://m.me/md.mainulislam.585",
+        },
     },
 ];
 
@@ -33,13 +43,13 @@ const OurTeam: React.FC = () => {
     return (
         <section className="bg-background-light dark:bg-background.dark py-16">
             <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-8">
-                    Meet Our Team
+                <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">
+                    আমাদের টিম
                 </h2>
-                <p className="text-text-light dark:text-text.dark mb-12 max-w-xl mx-auto">
-                    Our team is dedicated to making the world a better place through innovative solutions.
+                <p className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">
+                    আপনাদের আরামদায়ক ভ্রমণের জন্য আমরা আছি পাশে
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {teamMembers.map((member, index) => (
                         <TeamMemberCard key={index} {...member} />
                     ))}

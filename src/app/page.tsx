@@ -23,11 +23,11 @@ export default function Home() {
       <AboutUs></AboutUs>
       <HappyClients></HappyClients>
       <TravelingStatistics></TravelingStatistics>
-      {/* <HowWeWork></HowWeWork> */}
-      {/* <FAQ></FAQ> */}
-      {/* <ContactUs></ContactUs> */}
-      {/* <Gallery></Gallery> */}
-      {/* <OurTeam></OurTeam> */}
+      <HowWeWork></HowWeWork>
+      <FAQ></FAQ>
+      <ContactUs></ContactUs>
+      <Gallery></Gallery>
+      <OurTeam></OurTeam>
       {/* <Packages></Packages> */}
       {/* <BlogSection></BlogSection> */}
     </>

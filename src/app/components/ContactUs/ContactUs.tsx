@@ -37,13 +37,13 @@ const ContactUs: React.FC = () => {
     return (
         <section className="py-12 bg-background-light dark:bg-background.dark">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-center text-text-light dark:text-text.dark mb-8">
-                    Contact Us
+                <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                    যোগাযোগ
                 </h2>
                 {submitted ? (
                     <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                        <strong className="font-bold">Thank you!</strong>
-                        <span className="block sm:inline"> Your message has been sent.</span>
+                        <strong className="font-bold">ধন্যবাদ!</strong>
+                        <span className="block sm:inline"> আপনার ম্যাসেজটি পাঠানো হয়েছে</span>
                     </div>
                 ) : (
                     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
@@ -54,8 +54,8 @@ const ContactUs: React.FC = () => {
                             </div>
                         )}
                         <div className="mb-4">
-                            <label className="block text-text-light dark:text-text.dark mb-2" htmlFor="name">
-                                Name
+                            <label className="block text-primary dark:text-text.dark mb-2" htmlFor="name">
+                                নাম
                             </label>
                             <input
                                 type="text"
@@ -63,14 +63,14 @@ const ContactUs: React.FC = () => {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-text-light dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
-                                placeholder="Your Name"
+                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                placeholder="আপনার নাম"
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-text-light dark:text-text.dark mb-2" htmlFor="email">
-                                Email
+                            <label className="block text-primary dark:text-text.dark mb-2" htmlFor="email">
+                                ইমেইল
                             </label>
                             <input
                                 type="email"
@@ -78,31 +78,31 @@ const ContactUs: React.FC = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-text-light dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
-                                placeholder="Your Email"
+                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                placeholder="আপনার ইমেইলটি লিখুন"
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-text-light dark:text-text.dark mb-2" htmlFor="message">
-                                Message
+                            <label className="block text-primary dark:text-text.dark mb-2" htmlFor="message">
+                                বার্তা
                             </label>
                             <textarea
                                 id="message"
                                 name="message"
                                 value={formData.message}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-text-light dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
                                 rows={4}
-                                placeholder="Your Message"
+                                placeholder="আপনার বার্তাটি লিখুন............"
                                 required
                             ></textarea>
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-primary.DEFAULT hover:bg-primary-light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            className="w-full bg-primary.DEFAULT bg-primary-light hover:bg-primary-light text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         >
-                            Send Message
+                            ম্যাসেজ পাঠান
                         </button>
                     </form>
                 )}
