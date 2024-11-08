@@ -28,7 +28,7 @@ const teamMembers = [
     },
     {
         name: "মুঈনুল ইসলাম",
-        position: "কোষাধক্ষ্য",
+        position: "কোষাধ্যক্ষ",
         imageUrl: "/team/Team-03.jpg",
         mobileNumber: "+8801719169191",
         whatsappNumber: "+8801719169191",

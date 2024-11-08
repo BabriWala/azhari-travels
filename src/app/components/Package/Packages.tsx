@@ -5,7 +5,7 @@ import PackageCard from "./PackageCard";
 const packageOptions = [
     {
         title: "স্টুডেন্ট",
-        price: "১ লক্ষ ৫০ হাজার",
+        price: "১ লক্ষ ২০ হাজার",
         features: ["ভিসা", "টিকেট", "ভর্তি", "বাসা",],
     },
     {
@@ -15,8 +15,8 @@ const packageOptions = [
         isPopular: true,
     },
     {
-        title: "ভিসা প্রসেসিং",
-        price: "১ লক্ষ টাকা",
+        title: "ওমরাহ",
+        price: "১ লক্ষ ৩০ হাজার টাকা",
         features: ["ভিসা"],
     },
 ];

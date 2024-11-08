@@ -28,7 +28,7 @@ const Hero: React.FC<HeroProps> = ({
             <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 lg:px-8 text-white dark:text-text-dark max-w-3xl">
                 <h1 className="text-4xl md:text-5xl font-extrabold mb-4">{title}</h1>
                 <p className="text-lg md:text-xl mb-6">{description}</p>
-                <Link href={buttonLink}>
+                <Link href={buttonLink} target="_blank">
                     <button className="bg-primary hover:bg-primary-light hover:text-primary text-2xl text-white font-semibold py-2 px-4 rounded transition duration-300 flex gap-2 items-center">
                         <Icon icon="icon-park-outline:send"></Icon>  {buttonText}
                     </button>

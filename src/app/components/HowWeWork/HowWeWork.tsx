@@ -14,7 +14,7 @@ const steps: Step[] = [
     {
         title: "চুক্তিপত্র",
         description:
-            "আমাদের সাথে চুক্তিপত্রে আবদ্ধ হতে হবে।",
+            "আমাদের সাথে চুক্তিপত্রে আবদ্ধ হতে হবে",
         icon: "hugeicons:agreement-01",
     },
     {
@@ -30,9 +30,21 @@ const steps: Step[] = [
         icon: "mingcute:ticket-fill",
     },
     {
+        title: "ওকে টু বোর্ড",
+        description:
+            "ওকে টু বোর্ড সংগ্রহ করুন",
+        icon: "mingcute:ticket-fill",
+    },
+    {
         title: "ভ্রমণ",
         description:
             "আপনার ভ্রমণ শুরু",
+        icon: "ri:plane-line",
+    },
+    {
+        title: "রিসিভ",
+        description:
+            "এয়ারপোর্ট রিসিভ",
         icon: "ri:plane-line",
     },
 ];

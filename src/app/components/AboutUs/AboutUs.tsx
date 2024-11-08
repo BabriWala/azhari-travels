@@ -5,12 +5,12 @@ import React from "react";
 
 const AboutUs: React.FC = () => {
     return (
-        <section className="py-12 bg-background-lightOdd dark:bg-background.dark">
+        <section className="py-20 bg-background-lightOdd dark:bg-background.dark">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row items-center gap-5 md:gap-0 justify-between">
                     <div className="md:w-2/6 mt-6 md:mt-0">
                         <img
-                            src="https://images.pexels.com/photos/20682503/pexels-photo-20682503/free-photo-of-exterior-of-the-al-azhar-mosque-in-cairo.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" // Replace with a valid Pexels image link
+                            src="/about/About.jpg" // Replace with a valid Pexels image link
                             alt="Travel Experience"
                             className=" h-96 object-cover rounded-lg shadow-lg"
                         />

@@ -25,11 +25,6 @@ const statistics: Statistic[] = [
         value: 4,
         description: "ওমরাহ যাওয়া-আসা",
     },
-    {
-        title: "ওয়ার্কিং",
-        value: 6,
-        description: "শ্রীলংকা চাকুরির যাওয়া আসা",
-    },
 ];
 
 const TravelingStatistics: React.FC = () => {
@@ -39,7 +34,7 @@ const TravelingStatistics: React.FC = () => {
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     পরিসংখ্যান
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {statistics.map((stat, index) => (
                         <div
                             key={index}
