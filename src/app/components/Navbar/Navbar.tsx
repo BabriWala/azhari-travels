@@ -35,7 +35,8 @@ const Navbar: React.FC = () => {
     return (
         <nav className="fixed top-0 left-0 w-full bg-background-light dark:bg-background-dark shadow-md z-50 transition-all">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-                <Link href="/">
+                <Link href="/" className='flex items-center gap-2'>
+                    <img src='/Logo.png' className="w-8 h-8" />
                     <span className="text-2xl font-bold text-primary dark:text-primary-dark">আজহারী ট্রাভেলস</span>
                 </Link>
                 <div className="hidden md:flex items-center space-x-6">
