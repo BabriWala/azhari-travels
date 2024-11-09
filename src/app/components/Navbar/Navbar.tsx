@@ -18,7 +18,8 @@ const NAV_LINKS: NavLink[] = [
     { name: 'আপনার জিজ্ঞাসা!', href: '/frequently-asked-questions' },
     { name: 'অভিব্যক্তি', href: '/happy-clients' },
     { name: 'আমরা কিভাবে কাজ করি', href: '/tours' },
-    { name: 'নিয়ম কানুন', href: '/contact' },
+    { name: 'নিয়ম কানুন', href: '/terms-and-conditions' },
+    { name: 'রিফান্ড', href: '/refund-policy' },
     { name: 'যোগাযোগ', href: '/contact' },
 ];
 

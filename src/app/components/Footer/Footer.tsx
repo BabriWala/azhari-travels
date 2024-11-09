@@ -48,10 +48,10 @@ const Footer: React.FC = () => {
                             <Link href="/services" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
                                 অভিব্যক্তি
                             </Link>
-                            <Link href="/contact" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/how-we-work" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
                                 আমরা কিভাবে কাজ করি
                             </Link>
-                            <Link href="/privacy-policy" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/terms-and-conditions" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
                                 নিয়ম কানুন
                             </Link>
                         </div>
