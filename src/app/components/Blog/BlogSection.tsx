@@ -4,11 +4,13 @@ import BlogCard from "./BlogCard";
 
 const blogPosts = [
     {
-        title: "মিশর ভিসা নিতে প্রতাড়িত হবেন না যেভাবে",
-        excerpt: "মিশর ভিসা নিতে আমরা অনেক সময়ই নানা ধরণের সমস্যাই পড়ে থাকি যার দরুণ মাঝে মধ্যেই আমরা প্রতড়িত হয়।",
-        image: "/gallery/Gallery-05.jpg",
-        slug: "মিশর-ভিসা-নিতে-প্রতাড়িত-হবেন-না-যেভাবে",
-        date: "১০ নভেম্বর ২০২৪ ইং",
+        slug: "Al-Azhar-Introduction",
+    },
+    {
+        slug: "Al-Azhar-Syllabus",
+    },
+    {
+        slug: "Introduction-To-Egypt",
     },
 ];
 
