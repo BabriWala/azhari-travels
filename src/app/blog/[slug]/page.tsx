@@ -149,7 +149,7 @@ export default async function BlogPost({
     }
     return (
         <div className="bg-gradient-secondary">
-            <div className="container mx-auto py-[64px]">
+            <div className="container mx-auto py-[64px] lg:px-8">
                 {blog.fullContent}
             </div>
         </div>
