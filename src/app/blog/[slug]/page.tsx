@@ -148,8 +148,10 @@ export default async function BlogPost({
         return <p>Blog post not found</p>; // Handle 404 or missing content here
     }
     return (
-        <div className="container mx-auto my-[64px]">
-            {blog.fullContent}
+        <div className="bg-gradient-third">
+            <div className="container mx-auto my-[64px]">
+                {blog.fullContent}
+            </div>
         </div>
     );
 };

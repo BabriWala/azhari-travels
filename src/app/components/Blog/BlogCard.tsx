@@ -11,7 +11,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug }) => {
     const blogs = [
         {
             slug: "Al-Azhar-Introduction",
-            content: <div>
+            content: <div className="bg-gradient-third">
                 <img className="w-full h-80 object-cover" src="/blog/Blog_01.jpg" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary dark:text-secondary mb-2">
@@ -31,7 +31,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug }) => {
         },
         {
             slug: "Al-Azhar-Syllabus",
-            content: <div>
+            content: <div className="bg-gradient-third">
                 <img className="w-full h-80 object-cover" src="/blog/Blog_02.jpg" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary dark:text-secondary mb-2">
@@ -51,7 +51,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug }) => {
         },
         {
             slug: "Introduction-To-Egypt",
-            content: <div>
+            content: <div className="bg-gradient-third">
                 <img className="w-full h-80 object-cover" src="/blog/Blog_03.jpg" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary dark:text-secondary mb-2">
