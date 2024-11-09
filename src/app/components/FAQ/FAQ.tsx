@@ -28,7 +28,7 @@ const faqData: FAQItem[] = [
     {
         question: "মাসিক কত টাকা থাকা খাওয়ার জন্য খরচ হবে ?",
         answer:
-            "সর্ব নিন্ম  ৭- ৮ হাজার টাকা লেগে যায়.. তবে  খরচ টা যে যেমন করে তার ঠিক তেমন খরচ হয়ে থাকে",
+            "সর্ব নিন্ম  ৭- ১০ হাজার টাকা লেগে যায়.. তবে  খরচ টা যে যেমন করে তার ঠিক তেমন খরচ হয়ে থাকে",
     },
     {
         question: "মিশরে ভর্তি এবং বাসা ভাড়া কারা করে দিবে ?",
@@ -176,7 +176,7 @@ const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
                 {
                     !type && <Link className="inline-block w-full text-center mt-8" href={'/frequently-asked-questions'}>
                         <button className="mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
-                            আরো দেখুন
+                           আল আযহার সম্পর্কে আরো জানুন
                         </button>
                     </Link>
                 }

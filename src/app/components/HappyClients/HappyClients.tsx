@@ -90,7 +90,7 @@ interface HappyClientsProps {
     type: string;
 }
 const HappyClients: React.FC<HappyClientsProps> = ({ type = "" }) => {
-    const renderedTestimonials = type ? testimonials : testimonials.slice(0, 5)
+    const renderedTestimonials = type ? testimonials : testimonials.slice(0, 3)
     return (
         <section className={type ? "py-32 md:py-40 bg-gradient-secondary dark:bg-background.dark" : "py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark"}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -124,7 +124,7 @@ const HappyClients: React.FC<HappyClientsProps> = ({ type = "" }) => {
             {
                 !type && <Link className="inline-block w-full text-center mt-8" href={'/happy-clients'}>
                     <button className="md:mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
-                        আরো দেখুন
+                        আরো অভিব্যক্তি দেখুন
                     </button>
                 </Link>
             }

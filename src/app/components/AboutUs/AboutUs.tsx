@@ -20,14 +20,21 @@ const AboutUs: React.FC = () => {
                             আমাদের সম্পর্কে
                         </h2>
                         <p className="text-lg text-justify md:text-start text-primary dark:text-text.dark mb-4">
-                            আযহারী ট্রাভেলস এন্ড ট্যুরস একটি সরকার অনুমোদিত প্রতিষ্ঠান। যা ২০২৪ সালে প্রতিষ্ঠিত হয়েছে। আযহারী ট্রাভেলস সম্মানের সহিত এখন পর্যন্ত অসংখ্য ছাত্রদের স্বপ্ন পূরণ করেছে স্বল্প খরচে।
+                            আজহারী ট্রাভেলস এন্ড ট্যুরস একটি সরকার অনুমোদিত প্রতিষ্ঠান। যা ২০২৪ সালে প্রতিষ্ঠিত হয়েছে। আজহারী ট্রাভেলস সম্মানের সহিত এখন পর্যন্ত অসংখ্য ছাত্রদের স্বপ্ন পূরণ করেছে স্বল্প খরচে।
                         </p>
                         <p className="text-lg text-justify md:text-start text-primary dark:text-text.dark mb-4">
-                            আযহারী ট্রাভেলস এন্ড ট্যুরস এর মাধ্যমে যেসকল ছাত্র আল আযহার বিশ্ববিদ্যালয় পড়াশোনা করতে গিয়েছেন তাদের সসম্মানে ভর্তিসহ থাকার ব্যবস্থা করে দিয়ে আসছে। যাতে ছাত্ররা সেখানে খুব সহজেই খাপ খাওয়াতে পারে।
+                            আজহারী ট্রাভেলস এন্ড ট্যুরস এর মাধ্যমে যেসকল ছাত্র আল আযহার বিশ্ববিদ্যালয় পড়াশোনা করতে গিয়েছেন তাদের সসম্মানে ভর্তিসহ থাকার ব্যবস্থা করে দিয়ে আসছে। যাতে ছাত্ররা সেখানে খুব সহজেই খাপ খাওয়াতে পারে।
                         </p>
-                        <p className="text-lg text-justify md:text-start text-primary dark:text-text.dark font-bold">
-                            সকল ছাত্রদের একটিই ভরসা আযহারী ট্রাভেলস এন্ড ট্যুরস
+                        <p className="text-lg text-justify md:text-start text-primary dark:text-text.dark font-bold mb-2">
+                            সকল ছাত্রদের একটিই বিশ্বস্ত প্রতিষ্ঠান আজহারী ট্রাভেলস এন্ড ট্যুরস
                         </p>
+                        <p className="text-lg text-justify md:text-start text-primary dark:text-text.dark">
+                            <span>ট্রেড লাইসেন্স:</span> <span>TRAD/DNCC/017918/2024</span>
+                        </p>
+                        <p className="text-lg text-justify md:text-start text-primary dark:text-text.dark">
+                            <span>টিন:</span> <span>361380371820</span>
+                        </p>
+
                     </div>
 
                 </div>

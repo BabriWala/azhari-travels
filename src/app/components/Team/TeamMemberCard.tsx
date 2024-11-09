@@ -1,6 +1,7 @@
 // src/components/TeamMemberCard.tsx
 import React from "react";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 interface TeamMemberProps {
     name: string;
@@ -32,42 +33,42 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({ name, position, bio, imageU
             {bio && <p className="mt-2 text-text-light dark:text-text.dark text-sm">{bio}</p>}
             <div className="flex justify-center mt-4 space-x-4">
                 {/* Mobile and WhatsApp Icons */}
-                <a href={`tel:${mobileNumber}`} target="_blank" rel="noopener noreferrer">
+                <Link href={`tel:${mobileNumber}`} target="_blank" rel="noopener noreferrer">
                     <Icon icon="mdi:phone" className="text-primary dark:text-secondary w-6 h-6" />
-                </a>
-                <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
+                </Link>
+                <Link href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
                     <Icon icon="mdi:whatsapp" className="text-primary dark:text-secondary w-6 h-6" />
-                </a>
+                </Link>
                 {/* Social Media Icons */}
                 {socialMedia?.twitter && (
-                    <a href={socialMedia.twitter} target="_blank" rel="noopener noreferrer">
+                    <Link href={socialMedia.twitter} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:twitter" className="text-primary dark:text-secondary w-6 h-6" />
-                    </a>
+                    </Link>
                 )}
                 {socialMedia?.linkedin && (
-                    <a href={socialMedia.linkedin} target="_blank" rel="noopener noreferrer">
+                    <Link href={socialMedia.linkedin} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:linkedin" className="text-primary dark:text-secondary w-6 h-6" />
-                    </a>
+                    </Link>
                 )}
                 {socialMedia?.instagram && (
-                    <a href={socialMedia.instagram} target="_blank" rel="noopener noreferrer">
+                    <Link href={socialMedia.instagram} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:instagram" className="text-primary dark:text-secondary w-6 h-6" />
-                    </a>
+                    </Link>
                 )}
                 {socialMedia?.facebook && (
-                    <a href={socialMedia.facebook} target="_blank" rel="noopener noreferrer">
+                    <Link href={socialMedia.facebook} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:facebook" className="text-primary dark:text-secondary w-6 h-6" />
-                    </a>
+                    </Link>
                 )}
                 {socialMedia?.github && (
-                    <a href={socialMedia.github} target="_blank" rel="noopener noreferrer">
+                    <Link href={socialMedia.github} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:github" className="text-primary dark:text-secondary w-6 h-6" />
-                    </a>
+                    </Link>
                 )}
                 {socialMedia?.messenger && (
-                    <a href={socialMedia.messenger} target="_blank" rel="noopener noreferrer">
+                    <Link href={socialMedia.messenger} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:facebook-messenger" className="text-primary dark:text-secondary w-6 h-6" />
-                    </a>
+                    </Link>
                 )}
             </div>
         </div>

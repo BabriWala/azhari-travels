@@ -16,9 +16,9 @@ const PackageCard: React.FC<PackageCardProps> = ({ title, price, features, isPop
                 {isPopular && <span className="bg-primary dark:bg-secondary text-white px-3 py-1 rounded-full text-xs absolute -top-4 left-4">Popular</span>}
                 <h3 className="text-xl font-semibold text-primary dark:text-secondary mb-2">{title}</h3>
                 <p className="text-4xl font-bold text-primary dark:text-secondary mb-4">{price}</p>
-                <ul className="grid grid-cols-2 gap-2 text-primary dark:text-text.dark">
+                <ul className="grid grid-cols-1 lg:grid-cols-2 gap-2 text-primary dark:text-text.dark">
                     {features.map((feature, index) => (
-                        <li key={index} className="flex items-center  space-x-2">
+                        <li key={index} className="flex items-start  space-x-2">
                             <Icon icon="eva:arrow-right-fill" />
                             <span>{feature}</span>
                         </li>
