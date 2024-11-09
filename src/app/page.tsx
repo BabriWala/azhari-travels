@@ -26,11 +26,11 @@ export default function Home() {
       <HowWeWork></HowWeWork>
       <TravelingStatistics></TravelingStatistics>
       <OurTeam></OurTeam>
-      <FAQ></FAQ>
-      <HappyClients></HappyClients>
+      <FAQ type=""></FAQ>
+      <HappyClients type=""></HappyClients>
 
 
-      
+
       {/* <ContactUs></ContactUs> */}
 
       <BlogSection></BlogSection>
