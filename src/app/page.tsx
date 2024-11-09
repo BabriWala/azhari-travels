@@ -22,16 +22,20 @@ export default function Home() {
         backgroundImage="https://images.pexels.com/photos/18991579/pexels-photo-18991579/free-photo-of-al-azhar-mosque-in-cairo.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" // Replace with your chosen Pexels image URL
       />
       <AboutUs></AboutUs>
-      <HappyClients></HappyClients>
-      <TravelingStatistics></TravelingStatistics>
-      <HowWeWork></HowWeWork>
-      <FAQ></FAQ>
-      {/* <ContactUs></ContactUs> */}
-      <Gallery></Gallery>
-      <OurTeam></OurTeam>
       <Packages></Packages>
+      <HowWeWork></HowWeWork>
+      <TravelingStatistics></TravelingStatistics>
+      <OurTeam></OurTeam>
+      <FAQ></FAQ>
+      <HappyClients></HappyClients>
+
+
+      
+      {/* <ContactUs></ContactUs> */}
+
       <BlogSection></BlogSection>
       <TipsSection></TipsSection>
+      <Gallery></Gallery>
     </>
   );
 }

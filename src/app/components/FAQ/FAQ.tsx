@@ -127,21 +127,25 @@ const faqData: FAQItem[] = [
     },
 ];
 
-const FAQ: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
+interface FAQProps {
+    type: string;
+}
 
+const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const renderedFAQ = type ? faqData : faqData.slice(0, 5)
     const toggleAnswer = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
     return (
-        <section className="py-20 bg-gradient-secondary dark:bg-background.dark">
+        <section className={type ? "py-32 md:py-40 bg-gradient-secondary dark:bg-background.dark" : "py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark"}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     আল আযহার সম্পর্কে সাধারন জিজ্ঞাসা
                 </h2>
                 <div className="space-y-4">
-                    {faqData.slice(0, 5).map((item, index) => (
+                    {renderedFAQ.map((item, index) => (
                         <div
                             key={index}
                             className="bg-gradient-third p-4 dark:bg-gray-800 rounded-lg shadow-md"
@@ -158,7 +162,7 @@ const FAQ: React.FC = () => {
                                 </span>
                             </button>
                             {openIndex === index && (
-                                <div className="py-4 border-t mt-2 bg-gradient-third rounded-md dark:border-gray-700">
+                                <div className="py-4 bg-gradient-third rounded-md dark:border-gray-700">
                                     <p className="text-primary dark:text-gray-300" dangerouslySetInnerHTML={{
                                         __html: item.answer
                                     }}>
@@ -168,11 +172,15 @@ const FAQ: React.FC = () => {
                         </div>
                     ))}
                 </div>
-                <Link className="inline-block w-full text-center mt-8" href={'/frequently-asked-questions'}>
 
-                    <button className="mt-6 px-6 py-2 rounded-lg hover:text-primary bg-primary hover:bg-gradient-primary text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
-                        আরো দেখুন
-                    </button></Link>
+                {
+                    !type && <Link className="inline-block w-full text-center mt-8" href={'/frequently-asked-questions'}>
+                        <button className="mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
+                            আরো দেখুন
+                        </button>
+                    </Link>
+                }
+
             </div>
         </section>
     );

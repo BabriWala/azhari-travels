@@ -21,7 +21,7 @@ interface TeamMemberProps {
 
 const TeamMemberCard: React.FC<TeamMemberProps> = ({ name, position, bio, imageUrl, mobileNumber, whatsappNumber, socialMedia }) => {
     return (
-        <div className="bg-gradient-third dark:bg-background.dark shadow-md rounded-lg p-10 text-center">
+        <div className="bg-gradient-third  dark:bg-background.dark shadow-md rounded-lg p-10 text-center">
             <img
                 src={imageUrl}
                 alt={`${name}'s photo`}

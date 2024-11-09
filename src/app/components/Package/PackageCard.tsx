@@ -25,7 +25,7 @@ const PackageCard: React.FC<PackageCardProps> = ({ title, price, features, isPop
                     ))}
                 </ul>
             </div>
-            <button className="mt-6 px-6 py-2 rounded-lg hover:text-primary bg-primary hover:bg-gradient-primary text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
+            <button className="mt-6 px-6 py-2 rounded-md hover:text-primary bg-primary hover:bg-gradient-third hover:font-bold border-primary border-2 text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
                 বিস্তারিত দেখুন
             </button>
         </div>

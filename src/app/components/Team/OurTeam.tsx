@@ -41,7 +41,7 @@ const teamMembers = [
 
 const OurTeam: React.FC = () => {
     return (
-        <section className="bg-gradient-secondary dark:bg-background.dark py-20">
+        <section className="bg-gradient-secondary dark:bg-background.dark py-10 md:py-20">
             <div className="container mx-auto px-4 text-center">
                 <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">
                     আমাদের টিম

@@ -86,15 +86,19 @@ const testimonials: ClientTestimonial[] = [
     },
 ];
 
-const HappyClients: React.FC = () => {
+interface HappyClientsProps {
+    type: string;
+}
+const HappyClients: React.FC<HappyClientsProps> = ({ type = "" }) => {
+    const renderedTestimonials = type ? testimonials : testimonials.slice(0, 5)
     return (
-        <section className="py-20 bg-gradient-secondary dark:bg-background.dark">
+        <section className={type ? "py-32 md:py-40 bg-gradient-secondary dark:bg-background.dark" : "py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark"}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     ছাত্রদের অভিব্যক্তি
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {testimonials.slice(0, 3).map((client: any, index: any) => (
+                    {renderedTestimonials.map((client: any, index: any) => (
                         <div
                             key={index}
                             className="bg-gradient-third dark:bg-gray-800 rounded-lg shadow-md p-10 mb-6 md:mb-0"
@@ -117,11 +121,14 @@ const HappyClients: React.FC = () => {
                     ))}
                 </div>
             </div>
-            <Link className="inline-block w-full text-center mt-8" href={'/testimonial'}>
-                <button className="mt-6 px-6 py-2 rounded-lg hover:text-primary bg-primary hover:bg-gradient-primary text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
-                    আরো দেখুন
-                </button>
-            </Link>
+            {
+                !type && <Link className="inline-block w-full text-center mt-8" href={'/happy-clients'}>
+                    <button className="md:mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
+                        আরো দেখুন
+                    </button>
+                </Link>
+            }
+
         </section>
     );
 };

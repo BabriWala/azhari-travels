@@ -57,7 +57,7 @@ const steps: Step[] = [
 
 const HowWeWork: React.FC = () => {
     return (
-        <section className="py-20 bg-gradient-secondary dark:bg-background.dark">
+        <section className="py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     আমরা যেভাবে কাজ করে থাকি
