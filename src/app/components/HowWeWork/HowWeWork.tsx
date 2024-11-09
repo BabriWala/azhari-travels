@@ -2,6 +2,7 @@
 "use client";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
+import Link from "next/link";
 import React from "react";
 
 interface Step {
@@ -80,6 +81,11 @@ const HowWeWork: React.FC = () => {
                         </div>
                     ))}
                 </div>
+                <Link className="inline-block w-full text-center mt-8" href={'/how-we-work'}>
+                    <button className="mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
+                        বিস্তারিত দেখুন
+                    </button>
+                </Link>
             </div>
         </section>
     );
