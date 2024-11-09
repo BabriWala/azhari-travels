@@ -12,24 +12,24 @@ interface Statistic {
 const statistics: Statistic[] = [
     {
         title: "আল আযহার বিশ্ববিদ্যালয়",
-        value: 25,
+        value: 17,
         description: "বিশ্ববিদ্যালয় এ ভর্তি",
     },
     {
-        title: "ভ্রমণ",
-        value: 5,
-        description: "মিশর ভ্রমণ",
+        title: "ওমরাহ + মিশর ভ্রমণ",
+        value: 6,
+        description: "ওমরাহ এবং মিশর ভ্রমণ",
     },
     {
-        title: "ওমরাহ",
-        value: 4,
-        description: "ওমরাহ যাওয়া-আসা",
+        title: "ভিসা প্রসেসিং চলমান",
+        value: 27,
+        description: "বর্তমান ভিসা প্রসেসিং চলমান",
     },
 ];
 
 const TravelingStatistics: React.FC = () => {
     return (
-        <section className="py-20 bg-background-lightOdd dark:bg-background.dark">
+        <section className="py-20 bg-gradient-secondary dark:bg-background.dark">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     পরিসংখ্যান
@@ -38,7 +38,7 @@ const TravelingStatistics: React.FC = () => {
                     {statistics.map((stat, index) => (
                         <div
                             key={index}
-                            className="bg-background-light dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center"
+                            className="bg-gradient-third dark:bg-gray-800 rounded-lg shadow-md p-10 flex flex-col items-center"
                         >
                             <h3 className="text-4xl font-bold text-primary.DEFAULT mb-2">
                                 {stat.value}+

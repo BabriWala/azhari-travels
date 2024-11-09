@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
                 <Icon icon="bxs:up-arrow"></Icon>
             </button>
 
-            <footer className="bg-background-light dark:bg-background.dark py-8">
+            <footer className="bg-gradient-primary dark:bg-background.dark py-20">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0">
                         {/* Brand and Description */}

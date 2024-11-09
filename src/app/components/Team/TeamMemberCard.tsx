@@ -21,11 +21,11 @@ interface TeamMemberProps {
 
 const TeamMemberCard: React.FC<TeamMemberProps> = ({ name, position, bio, imageUrl, mobileNumber, whatsappNumber, socialMedia }) => {
     return (
-        <div className="bg-white dark:bg-background.dark shadow-md rounded-lg p-6 text-center">
+        <div className="bg-gradient-third dark:bg-background.dark shadow-md rounded-lg p-10 text-center">
             <img
                 src={imageUrl}
                 alt={`${name}'s photo`}
-                className="w-full h-80 rounded-lg object-cover mx-auto mb-4" // Use rounded-lg for square images
+                className="w-52 h-52 rounded-full object-cover mx-auto mb-4" // Use rounded-lg for square images
             />
             <h3 className="text-lg font-semibold text-primary dark:text-secondary">{name}</h3>
             <p className="text-sm text-gray-600 dark:text-gray-300">{position}</p>

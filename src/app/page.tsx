@@ -26,7 +26,7 @@ export default function Home() {
       <TravelingStatistics></TravelingStatistics>
       <HowWeWork></HowWeWork>
       <FAQ></FAQ>
-      <ContactUs></ContactUs>
+      {/* <ContactUs></ContactUs> */}
       <Gallery></Gallery>
       <OurTeam></OurTeam>
       <Packages></Packages>

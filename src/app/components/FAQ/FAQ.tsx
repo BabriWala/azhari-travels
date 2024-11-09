@@ -135,7 +135,7 @@ const FAQ: React.FC = () => {
     };
 
     return (
-        <section className="py-12 bg-background-lightOdd dark:bg-background.dark">
+        <section className="py-20 bg-gradient-secondary dark:bg-background.dark">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     আল আযহার সম্পর্কে সাধারন জিজ্ঞাসা
@@ -144,7 +144,7 @@ const FAQ: React.FC = () => {
                     {faqData.slice(0, 5).map((item, index) => (
                         <div
                             key={index}
-                            className="bg-background-light p-4 dark:bg-gray-800 rounded-lg shadow-md"
+                            className="bg-gradient-third p-4 dark:bg-gray-800 rounded-lg shadow-md"
                         >
                             <button
                                 onClick={() => toggleAnswer(index)}
@@ -158,7 +158,7 @@ const FAQ: React.FC = () => {
                                 </span>
                             </button>
                             {openIndex === index && (
-                                <div className="p-4 border-t mt-2 bg-white rounded-md dark:border-gray-700">
+                                <div className="py-4 border-t mt-2 bg-gradient-third rounded-md dark:border-gray-700">
                                     <p className="text-primary dark:text-gray-300" dangerouslySetInnerHTML={{
                                         __html: item.answer
                                     }}>
@@ -168,7 +168,11 @@ const FAQ: React.FC = () => {
                         </div>
                     ))}
                 </div>
-                <Link className="inline-block w-full text-center mt-8" href={'/frequently-asked-questions'}><button className="font-bold  mx-auto bg-background-light p-2 px-6 rounded-lg">আরো দেখুন</button></Link>
+                <Link className="inline-block w-full text-center mt-8" href={'/frequently-asked-questions'}>
+
+                    <button className="mt-6 px-6 py-2 rounded-lg hover:text-primary bg-primary hover:bg-gradient-primary text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
+                        আরো দেখুন
+                    </button></Link>
             </div>
         </section>
     );

@@ -29,7 +29,7 @@ const Hero: React.FC<HeroProps> = ({
                 <h1 className="text-4xl md:text-5xl font-extrabold mb-4">{title}</h1>
                 <p className="text-lg md:text-xl mb-6">{description}</p>
                 <Link href={buttonLink} target="_blank">
-                    <button className="bg-primary hover:bg-primary-light hover:text-primary text-2xl text-white font-semibold py-2 px-4 rounded transition duration-300 flex gap-2 items-center">
+                    <button className="bg-primary hover:bg-gradient-primary hover:text-primary text-2xl text-white font-semibold py-2 px-4 rounded transition-all duration-300 flex gap-2 items-center">
                         <Icon icon="icon-park-outline:send"></Icon>  {buttonText}
                     </button>
                 </Link>

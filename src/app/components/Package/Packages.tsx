@@ -6,24 +6,24 @@ const packageOptions = [
     {
         title: "স্টুডেন্ট",
         price: "১ লক্ষ ২০ হাজার",
-        features: ["ভিসা", "টিকেট", "ভর্তি", "বাসা",],
+        features: ["ভিসা", "টিকেট", "অফার লেটার", "ভর্তি", "বাসা",],
     },
     {
         title: "ওমরাহ এবং মিশর ভ্রমণ",
         price: "২ লক্ষ ২৫ হাজার",
-        features: ["মিশর ভিসা", "ওমরাহ ভিসা", "টুর স্পট", "মক্কা", "মদিনা"],
+        features: ["মিশর ও ওমরাহ ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "টুরিস্ট স্পট", "মক্কা ও মদিনা যিয়ারাহ", "ট্রান্সপোর্ট", "খাবার", "হোটেল", "এন্ট্রি ফি",],
         isPopular: true,
     },
     {
         title: "ওমরাহ",
         price: "১ লক্ষ ৩০ হাজার টাকা",
-        features: ["ভিসা"],
+        features: ["ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "ট্রান্সপোর্ট", "মক্কা ও মদিনা যিয়ারহ", "খাবার", "হোটেল",],
     },
 ];
 
 const Packages: React.FC = () => {
     return (
-        <section className="bg-background-lightOdd dark:bg-background.dark py-20">
+        <section className="bg-gradient-secondary dark:bg-background.dark py-20">
             <div className="container mx-auto px-4 text-center">
                 <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">আমাদের প্যাকেজসমূহ</h2>
                 <p className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">

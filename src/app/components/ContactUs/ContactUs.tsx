@@ -35,7 +35,7 @@ const ContactUs: React.FC = () => {
     };
 
     return (
-        <section className="py-12 bg-background-light dark:bg-background.dark">
+        <section className="py-12 bg-gradient-primary dark:bg-background.dark">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     যোগাযোগ
@@ -63,7 +63,7 @@ const ContactUs: React.FC = () => {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-gradient-primary dark:bg-gray-700 focus:outline-none focus:shadow-outline"
                                 placeholder="আপনার নাম"
                                 required
                             />
@@ -78,7 +78,7 @@ const ContactUs: React.FC = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-gradient-primary dark:bg-gray-700 focus:outline-none focus:shadow-outline"
                                 placeholder="আপনার ইমেইলটি লিখুন"
                                 required
                             />
@@ -92,7 +92,7 @@ const ContactUs: React.FC = () => {
                                 name="message"
                                 value={formData.message}
                                 onChange={handleChange}
-                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-background-light dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-gradient-primary dark:bg-gray-700 focus:outline-none focus:shadow-outline"
                                 rows={4}
                                 placeholder="আপনার বার্তাটি লিখুন............"
                                 required

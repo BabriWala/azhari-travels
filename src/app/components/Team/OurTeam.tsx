@@ -4,7 +4,7 @@ import TeamMemberCard from "./TeamMemberCard";
 
 const teamMembers = [
     {
-        name: "রুম্মান হামযাহ",
+        name: "হাফেজ রুম্মান হামযাহ",
         position: "প্রতিষ্ঠাতা",
         imageUrl: "/team/Team-01.jpg",
         mobileNumber: "+8801877995354",
@@ -27,8 +27,8 @@ const teamMembers = [
         },
     },
     {
-        name: "মুঈনুল ইসলাম",
-        position: "কোষাধ্যক্ষ",
+        name: "হাফেজ মাওলানা মুঈনুল ইসলাম",
+        position: "কোষাধক্ষ্য",
         imageUrl: "/team/Team-03.jpg",
         mobileNumber: "+8801719169191",
         whatsappNumber: "+8801719169191",
@@ -41,7 +41,7 @@ const teamMembers = [
 
 const OurTeam: React.FC = () => {
     return (
-        <section className="bg-background-light dark:bg-background.dark py-16">
+        <section className="bg-gradient-secondary dark:bg-background.dark py-20">
             <div className="container mx-auto px-4 text-center">
                 <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">
                     আমাদের টিম

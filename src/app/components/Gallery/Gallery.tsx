@@ -14,45 +14,55 @@ interface GalleryItem {
 const galleryItems: GalleryItem[] = [
     {
         id: 1,
-        title: "Beautiful Landscape",
-        imageUrl: '/gallery/Gallery-01.jpg',
+        title: "মসজিদ উল হারাম",
+        imageUrl: '/gallery/Gallery_01.jpg',
     },
     {
         id: 2,
-        title: "City Lights",
-        imageUrl: '/gallery/Gallery-02.jpg',
+        title: "মহানবী স. এর জন্মস্থান",
+        imageUrl: '/gallery/Gallery_02.jpg',
     },
     {
         id: 3,
-        title: "Mountain Adventure",
-        imageUrl: '/gallery/Gallery-03.jpg',
+        title: "মসজিদে নববী",
+        imageUrl: '/gallery/Gallery_03.jpg',
     },
     {
         id: 4,
-        title: "Beach Sunset",
-        imageUrl: '/gallery/Gallery-04.jpg',
+        title: "পিরামিড",
+        imageUrl: '/gallery/Gallery_04.jpg',
     },
     {
         id: 5,
-        title: "Forest Path",
-        imageUrl: '/gallery/Gallery-05.jpg',
+        title: "আলেকজান্দ্রিয়া",
+        imageUrl: '/gallery/Gallery_05.jpg',
     },
     {
         id: 6,
-        title: "Desert Dunes",
-        imageUrl: '/gallery/Gallery-06.jpg',
+        title: "সাক্কারা",
+        imageUrl: '/gallery/Gallery_06.jpg',
+    },
+    {
+        id: 6,
+        title: "কায়রো শহর",
+        imageUrl: '/gallery/Gallery_07.jpg',
+    },
+    {
+        id: 6,
+        title: "সুলতান সালাহউদ্দিন আইয়ুবীর কেল্লা",
+        imageUrl: '/gallery/Gallery_08.jpg',
     },
 ];
 
 const Gallery: React.FC = () => {
     return (
-        <section className="py-12 bg-background-lightOdd dark:bg-background.dark">
+        <section className="py-12 bg-gradient-secondary dark:bg-background.dark">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     গ্যালারী
                 </h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                     {galleryItems.map((item) => (
                         <div key={item.id} className="relative group">
                             <img

@@ -32,6 +32,11 @@ const config: Config = {
           dark: "#162521", // Dark theme text color
         },
       },
+      backgroundImage: {
+        "gradient-primary": "linear-gradient(to right, #ffe259, #ffa751)",
+        "gradient-secondary": "linear-gradient(to right, #FFEFBA, #FFFFFF)",
+        "gradient-third": "linear-gradient(to right, #FFEFBA,#FFFFFF)",
+      },
     },
   },
   plugins: [],

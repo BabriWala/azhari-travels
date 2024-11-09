@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
     }, [pathname]);
 
     return (
-        <nav className="fixed top-0 left-0 w-full bg-background-light dark:bg-background-dark shadow-md z-50 transition-all">
+        <nav className="fixed top-0 left-0 w-full bg-gradient-primary dark:bg-background-dark shadow-md z-50 transition-all">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                 <Link href="/" className='flex items-center gap-2'>
                     <img src='/Logo.png' className="w-8 h-8" />
@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
                 </button>
             </div>
             {menuOpen && (
-                <div className="md:hidden bg-background-light dark:bg-background-dark">
+                <div className="md:hidden bg-gradient-primary dark:bg-background-dark">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         {NAV_LINKS.map((link) => (
                             <NavbarLink
