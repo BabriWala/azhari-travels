@@ -22,42 +22,42 @@ const Footer: React.FC = () => {
             {/* Go to Top Button on the Right */}
             <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="fixed bottom-8 right-4 z-50 bg-primary p-3 rounded-full border border-transparent hover:border-primary text-white hover:text-primary hover:bg-secondary transition-colors"
+                className="fixed bottom-8 right-4 z-50 bg-primary p-3 rounded-full border border-transparent hover:border-primary text-white hover:text-white hover:bg-secondary transition-colors"
             >
                 <Icon icon="bxs:up-arrow"></Icon>
             </button>
 
-            <footer className="bg-gradient-primary dark:bg-background.dark py-10 md:py-20">
+            <footer className="bg-primary dark:bg-background.dark py-10 md:py-20">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0">
                         {/* Brand and Description */}
                         <div className="text-center md:text-left">
-                            <h2 className="text-2xl font-bold text-primary dark:text-secondary">আযহারী ট্রাভেলস</h2>
-                            <p className="text-primary dark:text-text.dark mt-2 mb-2">
+                            <h2 className="text-2xl font-bold text-white dark:text-secondary">আযহারী ট্রাভেলস</h2>
+                            <p className="text-white dark:text-text.dark mt-2 mb-2">
                                 ছাত্রদের স্বপ্ন পূরনের মাধ্যম
                             </p>
-                            <p>মোবাইল: +8801877995354</p>
-                            <p>হোয়াটসঅ্যাপ: +8801877995354</p>
+                            <p className="text-white">মোবাইল: +8801877995354</p>
+                            <p className="text-white">হোয়াটসঅ্যাপ: +8801877995354</p>
                         </div>
 
                         {/* Navigation Links */}
                         <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2">
-                            <Link href="/about" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/about" className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors">
                                 হোম
                             </Link>
-                            <Link href="/frequently-asked-questions" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/frequently-asked-questions" className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors">
                                 আপনার জিজ্ঞাসা!
                             </Link>
-                            <Link href="/happy-clients" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/happy-clients" className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors">
                                 অভিব্যক্তি
                             </Link>
-                            <Link href="/how-we-work" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/how-we-work" className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors">
                                 আমরা কিভাবে কাজ করি
                             </Link>
-                            <Link href="/terms-and-conditions" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/terms-and-conditions" className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors">
                                 নিয়ম কানুন
                             </Link>
-                            <Link href="/refund-policy" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/refund-policy" className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors">
                                 রিফান্ড
                             </Link>
                         </div>
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
                                     href="https://facebook.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors"
+                                    className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors"
                                 >
                                     <Icon icon={"ic:twotone-facebook"} width="24" height="24" />
                                 </a>
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
                                     href="https://twitter.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors"
+                                    className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors"
                                 >
                                     <Icon icon={"formkit:twitter"} width="24" height="24" />
                                 </a>
@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
                                     href="https://instagram.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors"
+                                    className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors"
                                 >
                                     <Icon icon={"ant-design:instagram-filled"} width="24" height="24" />
                                 </a>
@@ -94,14 +94,14 @@ const Footer: React.FC = () => {
                                     href="https://linkedin.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors"
+                                    className="text-white dark:text-text.dark hover:text-white dark:hover:text-secondary transition-colors"
                                 >
                                     <Icon icon={"mage:linkedin"} width="24" height="24" />
                                 </a>
                             </div>
 
                             {/* Address and Contact Info */}
-                            <div className="text-primary dark:text-text.dark text-center md:text-right space-y-1">
+                            <div className="text-white dark:text-text.dark text-center md:text-right space-y-1">
                                 <p>বাস: ২/এ, রোড: ০৭, নবীনগর হাউজিং<br />  মোহাম্মদপুর, ঢাকা-১২০৭</p>
                             </div>
                         </div>
