@@ -171,6 +171,24 @@ const HowWeWork: React.FC = () => {
                             <div className="text-primary">{steps[5].description}</div>
                         </div>
                     </div>
+                    <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+
+                        <div className="flex items-center justify-center w-16 h-16 rounded-full borde  bg-primary group-[.is-active]:bg-emerald-500 text-primary group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/4 md:group-even:translate-x-1/4">
+                            <div className="w-16 h-16 bg-gradient-third dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md">
+                                <Icon
+                                    className="w-8 h-8 text-primary dark:text-text.dark"
+                                    icon={steps[6].icon}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] bg-gradient-third p-5 rounded-lg  shadow-lg">
+                            <div className="flex items-center justify-between space-x-2 mb-1">
+                                <div className="font-bold text-slate-900">{steps[6].title}</div>
+                            </div>
+                            <div className="text-primary">{steps[6].description}</div>
+                        </div>
+                    </div>
 
 
 
