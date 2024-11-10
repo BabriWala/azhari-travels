@@ -112,7 +112,7 @@ const Footer: React.FC = () => {
             </footer>
             {/* Footer Bottom Text */}
             <div className="text-center text-sm text-white bg-primary dark:text-text.dark py-5">
-                &copy; {new Date().getFullYear()} <Link href={"https://facebook.com/babriwala.hazishaheb"}><span className="font-bold underline cursor-pointer">বাবরি ওয়ালা</span></Link>. এই ওয়েবসাইটটির স্বত্ত্বাধিকার.
+                &copy; {new Date().getFullYear()} <Link href={"https://facebook.com/babriwala.hazishaheb"} target="_blank"><span className="font-bold underline cursor-pointer">বাবরি ওয়ালা</span></Link>. এই ওয়েবসাইটটির স্বত্ত্বাধিকার.
             </div>
         </>
     );
