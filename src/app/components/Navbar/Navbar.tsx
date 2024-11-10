@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
                 </button>
             </div>
             {menuOpen && (
-                <div className="md:hidden bg-gradient-primary dark:bg-background-dark">
+                <div className="md:hidden bg-gradient-third dark:bg-background-dark">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         {NAV_LINKS.map((link) => (
                             <NavbarLink
