@@ -16,7 +16,7 @@ const teamMembers = [
     },
     {
         name: "বাবরি ওয়ালা",
-        position: "সফটওয়ার ইঞ্জিয়ার",
+        position: "সফটওয়ার ইঞ্জিনিয়ার",
         imageUrl: "/team/Team-02.jpg",
         mobileNumber: "+8801580580982",
         whatsappNumber: "+8801580580982",

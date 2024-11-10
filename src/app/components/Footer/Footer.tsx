@@ -45,7 +45,10 @@ const Footer: React.FC = () => {
                             <Link href="/about" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
                                 হোম
                             </Link>
-                            <Link href="/services" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                            <Link href="/frequently-asked-questions" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                                আপনার জিজ্ঞাসা!
+                            </Link>
+                            <Link href="/happy-clients" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
                                 অভিব্যক্তি
                             </Link>
                             <Link href="/how-we-work" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
@@ -53,6 +56,9 @@ const Footer: React.FC = () => {
                             </Link>
                             <Link href="/terms-and-conditions" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
                                 নিয়ম কানুন
+                            </Link>
+                            <Link href="/refund-policy" className="text-primary dark:text-text.dark hover:text-primary dark:hover:text-secondary transition-colors">
+                                রিফান্ড
                             </Link>
                         </div>
 
@@ -106,7 +112,7 @@ const Footer: React.FC = () => {
             </footer>
             {/* Footer Bottom Text */}
             <div className="text-center text-sm text-white bg-primary dark:text-text.dark py-5">
-                &copy; {new Date().getFullYear()} <span className="font-bold">বাবরি ওয়ালা</span>. এই ওয়েবসাইটটির স্বত্ত্বাধিকার.
+                &copy; {new Date().getFullYear()} <Link href={"https://facebook.com/babriwala.hazishaheb"}><span className="font-bold underline cursor-pointer">বাবরি ওয়ালা</span></Link>. এই ওয়েবসাইটটির স্বত্ত্বাধিকার.
             </div>
         </>
     );

@@ -5,17 +5,20 @@ import PackageCard from "./PackageCard";
 const packageOptions = [
     {
         title: "স্টুডেন্ট",
+        slug: "student-package",
         price: "১ লক্ষ ২০ হাজার",
         features: ["ভিসা", "টিকেট", "অফার লেটার", "ভর্তি", "বাসা",],
     },
     {
         title: "ওমরাহ এবং মিশর ভ্রমণ",
+        slug: "umrah-and-egypt-package",
         price: "২ লক্ষ ২৫ হাজার",
         features: ["মিশর ও ওমরাহ ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "টুরিস্ট স্পট", "মক্কা ও মদিনা যিয়ারাহ", "ট্রান্সপোর্ট", "খাবার", "হোটেল", "এন্ট্রি ফি (মিশর)",],
         isPopular: true,
     },
     {
         title: "ওমরাহ",
+        slug: "umrah-package",
         price: "১ লক্ষ ৩০ হাজার টাকা",
         features: ["ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "ট্রান্সপোর্ট", "মক্কা ও মদিনা যিয়ারহ", "খাবার", "হোটেল",],
     },

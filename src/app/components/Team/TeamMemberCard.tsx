@@ -33,40 +33,40 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({ name, position, bio, imageU
             {bio && <p className="mt-2 text-text-light dark:text-text.dark text-sm">{bio}</p>}
             <div className="flex justify-center mt-4 space-x-4">
                 {/* Mobile and WhatsApp Icons */}
-                <Link href={`tel:${mobileNumber}`} target="_blank" rel="noopener noreferrer">
+                <Link className="cursor-pointer" href={`tel:${mobileNumber}`} target="_blank" rel="noopener noreferrer">
                     <Icon icon="mdi:phone" className="text-primary dark:text-secondary w-6 h-6" />
                 </Link>
-                <Link href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
+                <Link className="cursor-pointer" href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
                     <Icon icon="mdi:whatsapp" className="text-primary dark:text-secondary w-6 h-6" />
                 </Link>
                 {/* Social Media Icons */}
                 {socialMedia?.twitter && (
-                    <Link href={socialMedia.twitter} target="_blank" rel="noopener noreferrer">
+                    <Link className="cursor-pointer" href={socialMedia.twitter} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:twitter" className="text-primary dark:text-secondary w-6 h-6" />
                     </Link>
                 )}
                 {socialMedia?.linkedin && (
-                    <Link href={socialMedia.linkedin} target="_blank" rel="noopener noreferrer">
+                    <Link className="cursor-pointer" href={socialMedia.linkedin} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:linkedin" className="text-primary dark:text-secondary w-6 h-6" />
                     </Link>
                 )}
                 {socialMedia?.instagram && (
-                    <Link href={socialMedia.instagram} target="_blank" rel="noopener noreferrer">
+                    <Link className="cursor-pointer" href={socialMedia.instagram} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:instagram" className="text-primary dark:text-secondary w-6 h-6" />
                     </Link>
                 )}
                 {socialMedia?.facebook && (
-                    <Link href={socialMedia.facebook} target="_blank" rel="noopener noreferrer">
+                    <Link className="cursor-pointer" href={socialMedia.facebook} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:facebook" className="text-primary dark:text-secondary w-6 h-6" />
                     </Link>
                 )}
                 {socialMedia?.github && (
-                    <Link href={socialMedia.github} target="_blank" rel="noopener noreferrer">
+                    <Link className="cursor-pointer" href={socialMedia.github} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:github" className="text-primary dark:text-secondary w-6 h-6" />
                     </Link>
                 )}
                 {socialMedia?.messenger && (
-                    <Link href={socialMedia.messenger} target="_blank" rel="noopener noreferrer">
+                    <Link className="cursor-pointer" href={socialMedia.messenger} target="_blank" rel="noopener noreferrer">
                         <Icon icon="mdi:facebook-messenger" className="text-primary dark:text-secondary w-6 h-6" />
                     </Link>
                 )}

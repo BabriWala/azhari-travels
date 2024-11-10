@@ -20,7 +20,7 @@ const NAV_LINKS: NavLink[] = [
     { name: 'আমরা কিভাবে কাজ করি', href: '/how-we-work' },
     { name: 'নিয়ম কানুন', href: '/terms-and-conditions' },
     { name: 'রিফান্ড', href: '/refund-policy' },
-    { name: 'যোগাযোগ', href: '/contact' },
+    { name: 'যোগাযোগ', href: 'https://wa.me/+8801877995354' },
 ];
 
 const Navbar: React.FC = () => {
