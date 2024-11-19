@@ -56,7 +56,7 @@ export default async function PackageDetails({
                             <div className="w-8 h-8 border border-primary rounded-full flex items-center justify-center"><Icon className='w-5 h-5' icon={"material-symbols:house"}></Icon></div> <span> বাসা:</span>
                         </h3>
                         <p className="text-gray-600 dark:text-gray-300">
-                            গমনের পূর্বে ছাত্রদের জন্য মনোরম পরিবেশে বাসা নির্ধারণ করে রাখা হবে। বাসার এডভান্স, সামার চাঁদা এবং এক মাসের ভাড়া দেওয়া থাকবে।
+                            গমনের পূর্বে ছাত্রদের জন্য মনোরম পরিবেশে বাসা নির্ধারণ করে রাখা হবে। বাসার এডভান্স, সামানার চাঁদা এবং এক মাসের ভাড়া দেওয়া থাকবে।
                             গমনের পর প্রথম দুই দিন মেহমানদারির ব্যবস্থাও থাকবে।
                         </p>
                     </div>
@@ -67,7 +67,7 @@ export default async function PackageDetails({
                             <div className="w-8 h-8 border border-primary rounded-full flex items-center justify-center"><Icon className='w-5 h-5' icon={"ri:graduation-cap-fill"}></Icon></div> <span>ভর্তি:</span>
                         </h3>
                         <p className="text-gray-600 dark:text-gray-300">
-                            মিশরে পৌঁছানোর পরের দিন আব্বাসিয়্যাহ সীল, মেডিক্যাল পরীক্ষা এবং বাংলাদেশ দূতাবাস থেকে এম্বেসী লেটার গ্রহণের ব্যবস্থা করা হবে।
+                            মিশরে পৌঁছানোর পরের দিন আব্বাসিয়্যাহর সীল, মেডিক্যাল পরীক্ষা এবং বাংলাদেশ দূতাবাস থেকে এম্বেসী লেটার গ্রহণের ব্যবস্থা করা হবে।
                             সকল ফি এবং যাতায়াত আমাদের প্যাকেজের অন্তর্ভুক্ত।
                         </p>
                     </div>

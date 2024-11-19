@@ -12,7 +12,7 @@ interface Statistic {
 const statistics: Statistic[] = [
     {
         title: "আল আযহার বিশ্ববিদ্যালয়",
-        value: 17,
+        value: 22,
         description: "বিশ্ববিদ্যালয় এ ভর্তি",
     },
     {
