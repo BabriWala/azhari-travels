@@ -6,7 +6,8 @@ const packageOptions = [
     {
         title: "স্টুডেন্ট",
         slug: "student-package",
-        price: "১ লক্ষ ২০ হাজার",
+        // price: "১ লক্ষ ২০ হাজার",
+        price: "১ লক্ষ ১০ হাজার",
         features: ["ভিসা", "টিকেট", "অফার লেটার", "ভর্তি", "বাসা",],
     },
     {
