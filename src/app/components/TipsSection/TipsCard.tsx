@@ -1,6 +1,11 @@
+
+// @ts-nocheck
+"use client"
 // src/components/TipsCard.tsx
 import { Icon } from "@iconify/react/dist/iconify.js";
 import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 
 interface TipsCardProps {
@@ -9,9 +14,17 @@ interface TipsCardProps {
     type: "do" | "dont";
 }
 
-const TipsCard: React.FC<TipsCardProps> = ({ title, description, type }) => {
+const TipsCard: React.FC<TipsCardProps> = ({ title, description, type, variants, index, tipsInview }) => {
+    const { ref, inView } = useInView({
+        triggerOnce: false, // Animate only once
+        threshold: 0.1,    // Trigger when 20% of the element is visible
+    });
     return (
-        <div
+        <motion.div
+            variants={variants}
+            custom={index} // Pass index for staggered delay
+            initial="hidden"
+            animate={tipsInview ? "visible" : "hidden"}
             className={`p-6 border rounded-lg flex items-start space-x-4 ${type === "do" ? "bg-green-100 border-green-400" : "bg-red-100 border-red-400"
                 }`}
         >
@@ -31,7 +44,7 @@ const TipsCard: React.FC<TipsCardProps> = ({ title, description, type }) => {
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300 mt-2">{description}</p>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

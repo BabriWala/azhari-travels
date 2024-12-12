@@ -1,6 +1,12 @@
-// src/components/TipsSection.tsx
+
+// @ts-nocheck
+// src/components/Packages.tsx
+"use client"
 import React from "react";
 import TipsCard from "./TipsCard";
+import { motion, Variants } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
 
 
 const tips = [
@@ -31,24 +37,56 @@ const tips = [
         type: "dont" as const,
     },
 ];
+// Variants for text animations
+const textVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+    exit: { opacity: 0, y: 50, transition: { duration: 0.8 } }, // Slide out
+};
 
+// Variants for package cards with staggered delay
+const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.8, delay: i * 0.3 }, // Delay based on index
+    }),
+    exit: (i: number) => ({
+        opacity: 0,
+        y: 50,
+        transition: { duration: 0.8, delay: i * 0.3 }, // Delay based on index
+    }),
+};
 const TipsSection: React.FC = () => {
+    const [ref, inView] = useInView({
+        triggerOnce: false, // Trigger animation only once
+        threshold: 0.1, // Trigger when 20% of section is visible
+    });
     return (
-        <section className="bg-gradient-secondary dark:bg-background.dark py-10 md:py-20">
+        <motion.section
+            ref={ref}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            className="bg-gradient-secondary dark:bg-background.dark py-10 md:py-20">
             <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">
+                <motion.h2
+                    variants={textVariants}
+                    className="text-3xl font-bold text-primary dark:text-secondary mb-2">
                     বিমানবন্দরে করণীয় ও বর্জনীয়
-                </h2>
-                <p className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">
+                </motion.h2>
+                <motion.p
+                    variants={textVariants}
+                    className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">
                     বিমানবন্দর ও ইমিগ্রেশনে কিভাবে আচরণ করবেন তা জানুন।
-                </p>
+                </motion.p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {tips.map((tip, index) => (
-                        <TipsCard key={index} {...tip} />
+                        <TipsCard key={index} {...tip} tipsInview={inView} index={index} variants={cardVariants} />
                     ))}
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 };
 

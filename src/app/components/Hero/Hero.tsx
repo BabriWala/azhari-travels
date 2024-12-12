@@ -41,20 +41,20 @@ const Hero: React.FC<HeroProps> = ({
                     initial="hidden"
                     animate="visible"
                     variants={slideDownVariant}
-                    custom={0.2} // No delay for title
+                    custom={0} // No delay for title
                     className="text-4xl md:text-5xl font-extrabold mb-4">{title}</motion.h1>
                 <motion.p
                     initial="hidden"
                     animate="visible"
                     variants={slideDownVariant}
-                    custom={0.8} // 0.3s delay after the title
+                    custom={0.6} // 0.3s delay after the title
                     className="text-lg md:text-xl mb-6">{description}</motion.p>
                 <motion.div
                     initial="hidden"
                     animate="visible"
 
                     variants={slideDownVariant}
-                    custom={1.3} // 0.6s delay after the description
+                    custom={1} // 0.6s delay after the description
                     className="relative group">
 
                     <button className="bg-primary hover:bg-gradient-third hover:text-primary text-2xl text-white font-semibold py-2 px-4 rounded transition-all duration-300 flex gap-2 items-center">

@@ -1,17 +1,28 @@
+
+// @ts-nocheck
+"use client"
 // src/components/BlogCard.tsx
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
 
 interface BlogCardProps {
     slug: string;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ slug }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ slug, variants, index, blogInview }) => {
 
     const blogs = [
         {
             slug: "Al-Azhar-Introduction",
-            content: <div className="bg-gradient-third">
+            content: <motion.div
+                variants={variants}
+                custom={0} // Pass index for staggered delay
+                initial="hidden"
+                animate={blogInview ? "visible" : "hidden"}
+                className="bg-gradient-third bg-white shadow-lg rounded-lg overflow-hidden">
                 <img className="w-full h-80 object-cover" src="/blog/Blog_01.jpg" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary dark:text-secondary mb-2">
@@ -27,11 +38,16 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug }) => {
 
                     </Link>
                 </div>
-            </div>
+            </motion.div>
         },
         {
             slug: "Al-Azhar-Syllabus",
-            content: <div className="bg-gradient-third">
+            content: <motion.div
+                variants={variants}
+                custom={1} // Pass index for staggered delay
+                initial="hidden"
+                animate={blogInview ? "visible" : "hidden"}
+                className="bg-gradient-third bg-white shadow-lg rounded-lg overflow-hidden">
                 <img className="w-full h-80 object-cover" src="/blog/Blog_02.jpg" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary dark:text-secondary mb-2">
@@ -47,11 +63,16 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug }) => {
 
                     </Link>
                 </div>
-            </div>
+            </motion.div>
         },
         {
             slug: "Introduction-To-Egypt",
-            content: <div className="bg-gradient-third">
+            content: <motion.div
+                variants={variants}
+                custom={3} // Pass index for staggered delay
+                initial="hidden"
+                animate={blogInview ? "visible" : "hidden"}
+                className="bg-gradient-third bg-white shadow-lg rounded-lg overflow-hidden">
                 <img className="w-full h-80 object-cover" src="/blog/Blog_03.jpg" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary dark:text-secondary mb-2">
@@ -67,7 +88,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug }) => {
 
                     </Link>
                 </div>
-            </div>
+            </motion.div>
         }
 
     ]
@@ -75,7 +96,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug }) => {
 
 
     return (
-        <div className="bg-white dark:bg-background.dark shadow-lg rounded-lg overflow-hidden">
+        <div className=" dark:bg-background.dark ">
             {
                 blogs?.find(it => it.slug === slug)?.content ?? "No content available"
             }

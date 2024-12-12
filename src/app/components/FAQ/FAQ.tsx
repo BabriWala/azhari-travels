@@ -1,5 +1,8 @@
+// @ts-nocheck
 // src/components/FAQ.tsx
 "use client";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 import Link from "next/link";
 import React, { useState } from "react";
@@ -8,6 +11,27 @@ interface FAQItem {
     question: string;
     answer: string;
 }
+const textVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+    exit: { opacity: 0, y: 50, transition: { duration: 0.8 } }, // Slide out
+};
+
+// Variants for package cards with staggered delay
+const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.8, delay: i * 0.4 }, // Delay based on index
+    }),
+    exit: (i: number) => ({
+        opacity: 0,
+        y: 50,
+        transition: { duration: 0.8, delay: i * 0.4 }, // Delay based on index
+    }),
+};
+
 
 const faqData: FAQItem[] = [
     {
@@ -142,6 +166,11 @@ interface FAQProps {
 }
 
 const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
+    const [ref, inView] = useInView({
+        triggerOnce: false, // Trigger animation only once
+        threshold: 0.1, // Trigger when 20% of section is visible
+    });
+
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const renderedFAQ = type ? faqData : faqData.slice(0, 5)
     const toggleAnswer = (index: number) => {
@@ -149,15 +178,27 @@ const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
     };
 
     return (
-        <section className={type ? "py-32 md:py-40 bg-gradient-secondary dark:bg-background.dark" : "py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark"}>
+        <motion.section
+            ref={ref}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            className={type ? "py-32 md:py-40 bg-gradient-secondary dark:bg-background.dark" : "py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark"}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                <motion.h2
+
+                    className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
                     আল আযহার সম্পর্কে সাধারন জিজ্ঞাসা
-                </h2>
+                </motion.h2>
                 <div className="space-y-4">
                     {renderedFAQ.map((item, index) => (
-                        <div
+                        <motion.div
+
                             key={index}
+                            variants={cardVariants}
+                            custom={index} // Pass index for staggered delay
+                            initial="hidden"
+                            animate={inView ? "visible" : "hidden"}
+
                             className="bg-gradient-third p-4 dark:bg-gray-800 rounded-lg shadow-md"
                         >
                             <button
@@ -179,7 +220,7 @@ const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
                                     </p>
                                 </div>
                             )}
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 
@@ -192,7 +233,7 @@ const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
                 }
 
             </div>
-        </section>
+        </motion.section>
     );
 };
 

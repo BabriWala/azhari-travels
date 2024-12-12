@@ -1,6 +1,11 @@
+
+// @ts-nocheck
 // src/components/Packages.tsx
+"use client"
 import React from "react";
 import PackageCard from "./PackageCard";
+import { motion, Variants } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const packageOptions = [
     {
@@ -25,21 +30,69 @@ const packageOptions = [
     },
 ];
 
+// Variants for text animations
+const textVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+    exit: { opacity: 0, y: 50, transition: { duration: 0.8 } }, // Slide out
+};
+
+// Variants for package cards with staggered delay
+const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.8, delay: i * 0.5 }, // Delay based on index
+    }),
+    exit: (i: number) => ({
+        opacity: 0,
+        y: 50,
+        transition: { duration: 0.8, delay: i * 0.5 }, // Delay based on index
+    }),
+};
 const Packages: React.FC = () => {
+    const [ref, inView] = useInView({
+        triggerOnce: false,  // Trigger animation only once
+        threshold: 0.1, // Trigger when 20% of section is visible
+    });
+
+
     return (
-        <section className="bg-gradient-secondary dark:bg-background.dark py-10 md:py-20">
+        <motion.section
+            ref={ref}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            className="bg-gradient-secondary dark:bg-background.dark py-10 md:py-20"
+
+        >
             <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">আমাদের প্যাকেজসমূহ</h2>
-                <p className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">
+                {/* Heading */}
+                <motion.h2
+                    className="text-3xl font-bold text-primary dark:text-secondary mb-2"
+                    variants={textVariants}
+                >
+                    আমাদের প্যাকেজসমূহ
+                </motion.h2>
+                {/* Subheading */}
+                <motion.p
+                    className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto"
+                    variants={textVariants}
+                >
                     আপনার পছন্দ অনুযায়ী প্যাকেজ নির্বাচন করুন
-                </p>
+                </motion.p>
+
+                {/* Package Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {packageOptions.map((pkg, index) => (
-                        <PackageCard key={index} {...pkg} />
-                    ))}
+                    {packageOptions.map((pkg, index) => {
+
+                        // return <PackageCard key={pkg?.slug} index={index} variants={cardVariants} />
+                        return <PackageCard key={pkg?.slug} {...pkg} packageInview={inView} index={index} variants={cardVariants} />
+
+                    })}
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 };
 

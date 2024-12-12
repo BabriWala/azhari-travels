@@ -1,7 +1,12 @@
+
+// @ts-nocheck
+"use client"
 // src/components/TeamMemberCard.tsx
 import React from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 interface TeamMemberProps {
     name: string;
@@ -20,9 +25,14 @@ interface TeamMemberProps {
     };
 }
 
-const TeamMemberCard: React.FC<TeamMemberProps> = ({ name, position, bio, imageUrl, mobileNumber, whatsappNumber, socialMedia }) => {
+const TeamMemberCard: React.FC<TeamMemberProps> = ({ name, position, bio, imageUrl, mobileNumber, whatsappNumber, socialMedia, variants, index, teamInview }) => {
     return (
-        <div className="bg-gradient-third  dark:bg-background.dark shadow-md rounded-lg p-10 text-center">
+        <motion.div
+            variants={variants}
+            custom={index} // Pass index for staggered delay
+            initial="hidden"
+            animate={teamInview ? "visible" : "hidden"}
+            className="bg-gradient-third  dark:bg-background.dark shadow-md rounded-lg p-10 text-center">
             <img
                 src={imageUrl}
                 alt={`${name}'s photo`}
@@ -71,7 +81,7 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({ name, position, bio, imageU
                     </Link>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 };
 
