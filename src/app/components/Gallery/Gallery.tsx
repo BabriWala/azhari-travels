@@ -86,11 +86,11 @@ const Gallery: React.FC = () => {
             ref={ref}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="py-12 md:pb-32 bg-gradient-secondary dark:bg-background.dark">
+            className="py-12 md:pb-32 bg-gradient-secondary ">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.h2
                     variants={textVariants}
-                    className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                    className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
                     গ্যালারী
                 </motion.h2>
 

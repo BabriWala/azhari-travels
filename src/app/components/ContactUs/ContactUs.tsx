@@ -35,9 +35,9 @@ const ContactUs: React.FC = () => {
     };
 
     return (
-        <section className="py-12 bg-gradient-primary dark:bg-background.dark">
+        <section className="py-12 bg-gradient-primary ">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
                     যোগাযোগ
                 </h2>
                 {submitted ? (
@@ -46,7 +46,7 @@ const ContactUs: React.FC = () => {
                         <span className="block sm:inline"> আপনার ম্যাসেজটি পাঠানো হয়েছে</span>
                     </div>
                 ) : (
-                    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                    <form onSubmit={handleSubmit} className="bg-white  rounded-lg shadow-md p-6">
                         {error && (
                             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                                 <strong className="font-bold">Error!</strong>
@@ -54,7 +54,7 @@ const ContactUs: React.FC = () => {
                             </div>
                         )}
                         <div className="mb-4">
-                            <label className="block text-primary dark:text-text.dark mb-2" htmlFor="name">
+                            <label className="block text-primary  mb-2" htmlFor="name">
                                 নাম
                             </label>
                             <input
@@ -63,13 +63,13 @@ const ContactUs: React.FC = () => {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-gradient-primary dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                className="shadow border rounded w-full py-2 px-3 text-primary  bg-gradient-primary  focus:outline-none focus:shadow-outline"
                                 placeholder="আপনার নাম"
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-primary dark:text-text.dark mb-2" htmlFor="email">
+                            <label className="block text-primary  mb-2" htmlFor="email">
                                 ইমেইল
                             </label>
                             <input
@@ -78,13 +78,13 @@ const ContactUs: React.FC = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-gradient-primary dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                className="shadow border rounded w-full py-2 px-3 text-primary  bg-gradient-primary  focus:outline-none focus:shadow-outline"
                                 placeholder="আপনার ইমেইলটি লিখুন"
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-primary dark:text-text.dark mb-2" htmlFor="message">
+                            <label className="block text-primary  mb-2" htmlFor="message">
                                 বার্তা
                             </label>
                             <textarea
@@ -92,7 +92,7 @@ const ContactUs: React.FC = () => {
                                 name="message"
                                 value={formData.message}
                                 onChange={handleChange}
-                                className="shadow border rounded w-full py-2 px-3 text-primary dark:text-text.dark bg-gradient-primary dark:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                className="shadow border rounded w-full py-2 px-3 text-primary  bg-gradient-primary  focus:outline-none focus:shadow-outline"
                                 rows={4}
                                 placeholder="আপনার বার্তাটি লিখুন............"
                                 required

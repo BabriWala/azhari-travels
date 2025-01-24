@@ -35,11 +35,11 @@ const Navbar: React.FC = () => {
     }, [pathname]);
 
     return (
-        <nav className="fixed top-0 left-0 w-full bg-gradient-third dark:bg-background-dark shadow-md z-50 transition-all">
+        <nav className="fixed top-0 left-0 w-full bg-gradient-third  shadow-md z-50 transition-all">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                 <Link href="/" className='flex items-center gap-2'>
                     <img src='/Logo.png' className="w-8 h-8" />
-                    <span className="text-2xl font-bold text-primary dark:text-primary-dark">আজহারী ট্রাভেলস</span>
+                    <span className="text-2xl font-bold text-primary ">আজহারী ট্রাভেলস</span>
                 </Link>
                 <div className="hidden md:flex items-center space-x-6">
                     {NAV_LINKS.map((link) => (
@@ -54,14 +54,14 @@ const Navbar: React.FC = () => {
                 </div>
                 <button
                     onClick={handleMenuToggle}
-                    className="md:hidden text-primary dark:text-text-dark focus:outline-none"
+                    className="md:hidden text-primary  focus:outline-none"
                     aria-label="Toggle Menu"
                 >
                     {menuOpen ? <Icon icon={"oui:cross"} className="h-6 w-6"></Icon> : <Icon icon="fe:bar" className="h-6 w-6"></Icon>}
                 </button>
             </div>
             {menuOpen && (
-                <div className="md:hidden bg-gradient-third dark:bg-background-dark">
+                <div className="md:hidden bg-gradient-third ">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         {NAV_LINKS.map((link) => (
                             <NavbarLink

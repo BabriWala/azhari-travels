@@ -42,7 +42,7 @@ const TipsCard: React.FC<TipsCardProps> = ({ title, description, type, variants,
                 <h3 className={`text-xl font-semibold ${type === "do" ? "text-green-700" : "text-red-700"}`}>
                     {title}
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 mt-2">{description}</p>
+                <p className="text-gray-700  mt-2">{description}</p>
             </div>
         </motion.div>
     );

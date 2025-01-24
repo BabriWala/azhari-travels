@@ -47,9 +47,9 @@ const steps: Step[] = [
 
 const HowWeWork: React.FC = () => {
     return (
-        <section className="py-10 md:pb-20 bg-gradient-secondary dark:bg-background.dark pt-32">
+        <section className="py-10 md:pb-20 bg-gradient-secondary  pt-32">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
                     আমরা যেভাবে কাজ করে থাকি
                 </h2>
                 <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-primary before:to-transparent">
@@ -58,9 +58,9 @@ const HowWeWork: React.FC = () => {
                     <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
                         <div className="flex items-center justify-center w-16 h-16 rounded-full borde  bg-primary group-[.is-active]:bg-emerald-500 text-primary group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/4 md:group-even:translate-x-1/4">
-                            <div className="w-16 h-16 bg-gradient-third dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md">
+                            <div className="w-16 h-16 bg-gradient-third  rounded-full flex items-center justify-center shadow-md">
                                 <Icon
-                                    className="w-8 h-8 text-primary dark:text-text.dark"
+                                    className="w-8 h-8 text-primary "
                                     icon={steps[0].icon}
                                 />
                             </div>
@@ -78,9 +78,9 @@ const HowWeWork: React.FC = () => {
                     <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
                         <div className="flex items-center justify-center w-16 h-16 rounded-full borde  bg-primary group-[.is-active]:bg-emerald-500 text-primary group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/4 md:group-even:translate-x-1/4">
-                            <div className="w-16 h-16 bg-gradient-third dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md">
+                            <div className="w-16 h-16 bg-gradient-third  rounded-full flex items-center justify-center shadow-md">
                                 <Icon
-                                    className="w-8 h-8 text-primary dark:text-text.dark"
+                                    className="w-8 h-8 text-primary "
                                     icon={steps[1].icon}
                                 />
                             </div>
@@ -98,9 +98,9 @@ const HowWeWork: React.FC = () => {
                     <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
                         <div className="flex items-center justify-center w-16 h-16 rounded-full borde  bg-primary group-[.is-active]:bg-emerald-500 text-primary group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/4 md:group-even:translate-x-1/4">
-                            <div className="w-16 h-16 bg-gradient-third dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md">
+                            <div className="w-16 h-16 bg-gradient-third  rounded-full flex items-center justify-center shadow-md">
                                 <Icon
-                                    className="w-8 h-8 text-primary dark:text-text.dark"
+                                    className="w-8 h-8 text-primary "
                                     icon={steps[2].icon}
                                 />
                             </div>
@@ -118,9 +118,9 @@ const HowWeWork: React.FC = () => {
                     <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
                         <div className="flex items-center justify-center w-16 h-16 rounded-full borde  bg-primary group-[.is-active]:bg-emerald-500 text-primary group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/4 md:group-even:translate-x-1/4">
-                            <div className="w-16 h-16 bg-gradient-third dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md">
+                            <div className="w-16 h-16 bg-gradient-third  rounded-full flex items-center justify-center shadow-md">
                                 <Icon
-                                    className="w-8 h-8 text-primary dark:text-text.dark"
+                                    className="w-8 h-8 text-primary "
                                     icon={steps[3].icon}
                                 />
                             </div>
@@ -136,9 +136,9 @@ const HowWeWork: React.FC = () => {
                     <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
                         <div className="flex items-center justify-center w-16 h-16 rounded-full borde  bg-primary group-[.is-active]:bg-emerald-500 text-primary group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/4 md:group-even:translate-x-1/4">
-                            <div className="w-16 h-16 bg-gradient-third dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md">
+                            <div className="w-16 h-16 bg-gradient-third  rounded-full flex items-center justify-center shadow-md">
                                 <Icon
-                                    className="w-8 h-8 text-primary dark:text-text.dark"
+                                    className="w-8 h-8 text-primary "
                                     icon={steps[4].icon}
                                 />
                             </div>
@@ -156,9 +156,9 @@ const HowWeWork: React.FC = () => {
                     <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
                         <div className="flex items-center justify-center w-16 h-16 rounded-full borde  bg-primary group-[.is-active]:bg-emerald-500 text-primary group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/4 md:group-even:translate-x-1/4">
-                            <div className="w-16 h-16 bg-gradient-third dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md">
+                            <div className="w-16 h-16 bg-gradient-third  rounded-full flex items-center justify-center shadow-md">
                                 <Icon
-                                    className="w-8 h-8 text-primary dark:text-text.dark"
+                                    className="w-8 h-8 text-primary "
                                     icon={steps[5].icon}
                                 />
                             </div>
@@ -174,9 +174,9 @@ const HowWeWork: React.FC = () => {
                     <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
                         <div className="flex items-center justify-center w-16 h-16 rounded-full borde  bg-primary group-[.is-active]:bg-emerald-500 text-primary group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/4 md:group-even:translate-x-1/4">
-                            <div className="w-16 h-16 bg-gradient-third dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md">
+                            <div className="w-16 h-16 bg-gradient-third  rounded-full flex items-center justify-center shadow-md">
                                 <Icon
-                                    className="w-8 h-8 text-primary dark:text-text.dark"
+                                    className="w-8 h-8 text-primary "
                                     icon={steps[6].icon}
                                 />
                             </div>

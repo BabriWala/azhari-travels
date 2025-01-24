@@ -77,12 +77,12 @@ const OurTeam: React.FC = () => {
             ref={ref}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="bg-gradient-secondary dark:bg-background.dark py-10 md:py-20">
+            className="bg-gradient-secondary  py-10 md:py-20">
             <div className="container mx-auto px-4 text-center">
-                <motion.h2 className="text-3xl font-bold text-primary dark:text-secondary mb-2">
+                <motion.h2 className="text-3xl font-bold text-primary  mb-2">
                     আমাদের টিম
                 </motion.h2>
-                <motion.p className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">
+                <motion.p className="text-primary  mb-12 max-w-xl mx-auto">
                     আপনাদের আরামদায়ক ভ্রমণের জন্য আমরা আছি পাশে
                 </motion.p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

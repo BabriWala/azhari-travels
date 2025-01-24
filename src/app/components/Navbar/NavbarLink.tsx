@@ -13,8 +13,8 @@ interface NavbarLinkProps {
 const NavbarLink: React.FC<NavbarLinkProps> = ({ name, href, isActive, onClick }) => {
     const router = useRouter();
     const activeClass = isActive
-        ? 'text-primary font-bold dark:text-blue-400'
-        : 'text-primary font-light dark:text-gray-300';
+        ? 'text-primary font-bold '
+        : 'text-primary font-light ';
 
     return (
         <Link href={href} passHref>

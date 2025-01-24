@@ -35,8 +35,8 @@ const Hero: React.FC<HeroProps> = ({
             className="relative flex items-center justify-center h-[100vh] w-full bg-cover bg-center"
             style={{ backgroundImage: `url(${backgroundImage})` }}
         >
-            <div className="absolute inset-0 bg-black/60 dark:bg-black/40" aria-hidden="true"></div>
-            <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 lg:px-8 text-white dark:text-text-dark max-w-3xl">
+            <div className="absolute inset-0 bg-black/60 " aria-hidden="true"></div>
+            <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 lg:px-8 text-white  max-w-3xl">
                 <motion.h1
                     initial="hidden"
                     animate="visible"
@@ -63,7 +63,7 @@ const Hero: React.FC<HeroProps> = ({
 
 
                     {/* Pop-up menu for contact options */}
-                    <div className="absolute w-full bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gradient-secondary dark:bg-gray-800 text-gray-800 dark:text-white shadow-lg rounded-lg p-3 opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+                    <div className="absolute w-full bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gradient-secondary  text-gray-800  shadow-lg rounded-lg p-3 opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
                         <div className="flex items-center justify-center gap-5">
                             <Link href="https://facebook.com/iamhamzahkhan" target="_blank" rel="noopener noreferrer">
                                 <Icon icon="mdi:facebook" className="text-primary text-3xl hover:text-blue-600 transition-colors duration-200" />

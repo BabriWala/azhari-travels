@@ -63,20 +63,20 @@ const Packages: React.FC = () => {
             ref={ref}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="bg-gradient-secondary dark:bg-background.dark py-10 md:py-20"
+            className="bg-gradient-secondary  py-10 md:py-20"
 
         >
             <div className="container mx-auto px-4 text-center">
                 {/* Heading */}
                 <motion.h2
-                    className="text-3xl font-bold text-primary dark:text-secondary mb-2"
+                    className="text-3xl font-bold text-primary  mb-2"
                     variants={textVariants}
                 >
                     আমাদের প্যাকেজসমূহ
                 </motion.h2>
                 {/* Subheading */}
                 <motion.p
-                    className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto"
+                    className="text-primary  mb-12 max-w-xl mx-auto"
                     variants={textVariants}
                 >
                     আপনার পছন্দ অনুযায়ী প্যাকেজ নির্বাচন করুন

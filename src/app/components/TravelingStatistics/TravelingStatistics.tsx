@@ -62,9 +62,9 @@ const TravelingStatistics: React.FC = () => {
             ref={ref}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark">
+            className="py-10 md:py-20 bg-gradient-secondary ">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                <motion.h2 className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
                     পরিসংখ্যান
                 </motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,15 +76,15 @@ const TravelingStatistics: React.FC = () => {
                             initial="hidden"
                             animate={inView ? "visible" : "hidden"}
 
-                            className="bg-gradient-third dark:bg-gray-800 rounded-lg shadow-md p-10 flex flex-col items-center"
+                            className="bg-gradient-third  rounded-lg shadow-md p-10 flex flex-col items-center"
                         >
                             <h3 className="text-4xl font-bold text-primary.DEFAULT mb-2">
                                 {stat.value}+
                             </h3>
-                            <p className="text-lg text-primary dark:text-text.dark font-semibold mb-1">
+                            <p className="text-lg text-primary  font-semibold mb-1">
                                 {stat.title}
                             </p>
-                            <p className="text-primary dark:text-gray-300 text-center">
+                            <p className="text-primary  text-center">
                                 {stat.description}
                             </p>
                         </motion.div>

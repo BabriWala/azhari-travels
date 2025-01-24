@@ -50,16 +50,16 @@ const BlogSection: React.FC = () => {
             ref={ref}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="bg-gradient-secondary dark:bg-background.dark py-10 md:py-20">
+            className="bg-gradient-secondary  py-10 md:py-20">
             <div className="container mx-auto px-4 text-center">
                 <motion.h2
                     variants={textVariants}
-                    className="text-3xl font-bold text-primary dark:text-secondary mb-2">
+                    className="text-3xl font-bold text-primary  mb-2">
                     আমাদের ব্লগ সমূহ
                 </motion.h2>
                 <motion.p
                     variants={textVariants}
-                    className="text-primary dark:text-text.dark mb-12 max-w-xl mx-auto">
+                    className="text-primary  mb-12 max-w-xl mx-auto">
                     ব্লগ বা আর্টিকেল গুলো পড়ে যাবতীয় ইনফরমেশন নিন
                 </motion.p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

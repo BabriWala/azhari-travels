@@ -28,7 +28,7 @@ const ThemeToggleButton: React.FC = () => {
     return (
         <button
             onClick={toggleTheme}
-            className="p-2 rounded-full text-text-light dark:text-text-dark hover:text-primary-light dark:hover:text-primary-dark focus:outline-none"
+            className="p-2 rounded-full text-text-light  hover:text-primary-light focus:outline-none"
             aria-label="Toggle Dark Mode"
         >
             {/* {isDarkMode ? <SunIcon className="h-6 w-6" /> : <MoonIcon className="h-6 w-6" />} */}

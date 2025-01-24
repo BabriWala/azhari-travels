@@ -124,9 +124,9 @@ const HappyClients: React.FC<HappyClientsProps> = ({ type = "" }) => {
             ref={ref}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className={type ? "py-32 md:py-40 bg-gradient-secondary dark:bg-background.dark" : "py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark"}>
+            className={type ? "py-32 md:py-40 bg-gradient-secondary " : "py-10 md:py-20 bg-gradient-secondary "}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                <motion.h2 className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
                     ছাত্রদের অভিব্যক্তি
                 </motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -137,20 +137,20 @@ const HappyClients: React.FC<HappyClientsProps> = ({ type = "" }) => {
                             custom={index} // Pass index for staggered delay
                             initial="hidden"
                             animate={inView ? "visible" : "hidden"}
-                            className="bg-gradient-third dark:bg-gray-800 rounded-lg shadow-md p-10 mb-6 md:mb-0"
+                            className="bg-gradient-third  rounded-lg shadow-md p-10 mb-6 md:mb-0"
                         >
                             <img
                                 src={client.image}
                                 alt={`${client.name}'s picture`}
                                 className="w-24 h-24 object-cover rounded-full mx-auto mb-4"
                             />
-                            <h3 className="text-xl font-semibold text-primary text-center dark:text-text.dark ">
+                            <h3 className="text-xl font-semibold text-primary text-center  ">
                                 {client.name}
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-300 text-center mb-3">
+                            <p className="text-gray-600  text-center mb-3">
                                 {client.address}
                             </p>
-                            <p className="text-gray-600 dark:text-gray-300 text-center">
+                            <p className="text-gray-600  text-center">
                                 "{client.feedback}"
                             </p>
                         </motion.div>
@@ -159,7 +159,7 @@ const HappyClients: React.FC<HappyClientsProps> = ({ type = "" }) => {
             </div>
             {
                 !type && <Link className="inline-block w-full text-center mt-8" href={'/happy-clients'}>
-                    <button className="md:mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
+                    <button className="md:mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white   transition duration-300">
                         আরো অভিব্যক্তি দেখুন
                     </button>
                 </Link>

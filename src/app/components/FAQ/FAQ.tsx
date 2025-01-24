@@ -182,11 +182,11 @@ const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
             ref={ref}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className={type ? "py-32 md:py-40 bg-gradient-secondary dark:bg-background.dark" : "py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark"}>
+            className={type ? "py-32 md:py-40 bg-gradient-secondary " : "py-10 md:py-20 bg-gradient-secondary "}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.h2
 
-                    className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                    className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
                     আল আযহার সম্পর্কে সাধারন জিজ্ঞাসা
                 </motion.h2>
                 <div className="space-y-4">
@@ -199,13 +199,13 @@ const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
                             initial="hidden"
                             animate={inView ? "visible" : "hidden"}
 
-                            className="bg-gradient-third p-4 dark:bg-gray-800 rounded-lg shadow-md"
+                            className="bg-gradient-third p-4  rounded-lg shadow-md"
                         >
                             <button
                                 onClick={() => toggleAnswer(index)}
                                 className="w-full text-left  flex justify-between items-center focus:outline-none"
                             >
-                                <span className="text-lg font-semibold text-primary dark:text-text.dark">
+                                <span className="text-lg font-semibold text-primary ">
                                     {item.question}
                                 </span>
                                 <span className="text-primary.DEFAULT">
@@ -213,8 +213,8 @@ const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
                                 </span>
                             </button>
                             {openIndex === index && (
-                                <div className="py-4 bg-gradient-third rounded-md dark:border-gray-700">
-                                    <p className="text-primary dark:text-gray-300" dangerouslySetInnerHTML={{
+                                <div className="py-4 bg-gradient-third rounded-md ">
+                                    <p className="text-primary " dangerouslySetInnerHTML={{
                                         __html: item.answer
                                     }}>
                                     </p>
@@ -226,7 +226,7 @@ const FAQ: React.FC<FAQProps> = ({ type = "" }) => {
 
                 {
                     !type && <Link className="inline-block w-full text-center mt-8" href={'/frequently-asked-questions'}>
-                        <button className="mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
+                        <button className="mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white   transition duration-300">
                             আল আযহার সম্পর্কে আরো জানুন
                         </button>
                     </Link>

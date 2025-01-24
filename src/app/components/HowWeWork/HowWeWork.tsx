@@ -92,9 +92,9 @@ const HowWeWork: React.FC = () => {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
 
-            className="py-10 md:py-20 bg-gradient-secondary dark:bg-background.dark">
+            className="py-10 md:py-20 bg-gradient-secondary ">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.h2 className="text-3xl md:text-4xl font-bold text-center text-primary dark:text-text.dark mb-8">
+                <motion.h2 className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
                     আমরা যেভাবে কাজ করে থাকি
                 </motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -105,7 +105,7 @@ const HowWeWork: React.FC = () => {
                             custom={index} // Pass index for staggered delay
                             initial="hidden"
                             animate={inView ? "visible" : "hidden"}
-                            className="bg-gradient-third dark:bg-gray-800 rounded-lg shadow-md p-10 flex flex-col items-center text-center"
+                            className="bg-gradient-third  rounded-lg shadow-md p-10 flex flex-col items-center text-center"
                         >
                             <div className="mb-4">
                                 <Icon className="w-10 h-10 text-primary" icon={step.icon}></Icon>
@@ -113,14 +113,14 @@ const HowWeWork: React.FC = () => {
                             <h3 className="text-lg font-bold text-primary.DEFAULT mb-2">
                                 {step.title}
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-300">
+                            <p className="text-gray-600 ">
                                 {step.description}
                             </p>
                         </motion.div>
                     ))}
                 </div>
                 <Link className="inline-block w-full text-center mt-8" href={'/how-we-work'}>
-                    <button className="mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white dark:bg-secondary dark:hover:bg-secondary-light transition duration-300">
+                    <button className="mt-6 px-6 py-2 rounded-md border-2 border-primary hover:font-bold hover:text-primary bg-primary hover:bg-gradient-third text-white   transition duration-300">
                         বিস্তারিত দেখুন
                     </button>
                 </Link>
