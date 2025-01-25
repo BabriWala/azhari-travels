@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "আজহারী ট্রাভেলস",
     description: "আজহারী ট্রাভেলস - আপনার ভ্রমণের জন্য সেরা সঙ্গী। আমাদের সাথে অভিজ্ঞতা করুন অসাধারণ ভ্রমণ, আকর্ষণীয় গন্তব্য ও অনন্য পরিষেবা।",
-    url: "https://azhari-travels.vercel.app/", // Replace with your actual website URL
+    url: "https://azharitravels.com/", // Replace with your actual website URL
     type: "website",
     images: [
       {
-        url: "https://azhari-travels.vercel.app/Logo.png", // Replace with an actual image URL
+        url: "https://azharitravels.com/Logo.svg", // Replace with an actual image URL
         width: 800,
         height: 600,
         alt: "আজহারী ট্রাভেলস - আপনার ভ্রমণের জন্য সেরা সঙ্গী।"

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'; // Import usePathname
 import NavbarLink from './NavbarLink';
 import ThemeToggleButton from './ThemeToggleButton';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import NoticeSection from '../NoticeSection/NoticeSection';
 // import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
 interface NavLink {
@@ -15,11 +16,13 @@ interface NavLink {
 
 const NAV_LINKS: NavLink[] = [
     { name: 'হোম', href: '/' },
+    { name: 'প্যাকেজসমূহ', href: '/#packages' },
+    { name: 'ভিসাসমূহ', href: '/#visas' },
     { name: 'আপনার জিজ্ঞাসা!', href: '/frequently-asked-questions' },
-    { name: 'অভিব্যক্তি', href: '/happy-clients' },
+    { name: 'রিভিউ', href: '/happy-clients' },
     { name: 'আমরা কিভাবে কাজ করি', href: '/how-we-work' },
-    { name: 'নিয়ম কানুন', href: '/terms-and-conditions' },
-    { name: 'রিফান্ড', href: '/refund-policy' },
+    // { name: 'নিয়ম কানুন', href: '/terms-and-conditions' },
+    // { name: 'রিফান্ড', href: '/refund-policy' },
     { name: 'যোগাযোগ', href: 'https://wa.me/+8801877995354' },
 ];
 
@@ -38,7 +41,7 @@ const Navbar: React.FC = () => {
         <nav className="fixed top-0 left-0 w-full bg-gradient-third  shadow-md z-50 transition-all">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                 <Link href="/" className='flex items-center gap-2'>
-                    <img src='/Logo.png' className="w-8 h-8" />
+                    <img src='/logo/Logo.svg' className="w-8 h-8" />
                     <span className="text-2xl font-bold text-primary ">আজহারী ট্রাভেলস</span>
                 </Link>
                 <div className="hidden md:flex items-center space-x-6">
@@ -60,6 +63,7 @@ const Navbar: React.FC = () => {
                     {menuOpen ? <Icon icon={"oui:cross"} className="h-6 w-6"></Icon> : <Icon icon="fe:bar" className="h-6 w-6"></Icon>}
                 </button>
             </div>
+            <NoticeSection></NoticeSection>
             {menuOpen && (
                 <div className="md:hidden bg-gradient-third ">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

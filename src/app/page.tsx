@@ -6,14 +6,17 @@ import Gallery from "./components/Gallery/Gallery";
 import HappyClients from "./components/HappyClients/HappyClients";
 import Hero from "./components/Hero/Hero";
 import HowWeWork from "./components/HowWeWork/HowWeWork";
+import NoticeSection from "./components/NoticeSection/NoticeSection";
 import Packages from "./components/Package/Packages";
 import OurTeam from "./components/Team/OurTeam";
 import TipsSection from "./components/TipsSection/TipsSection";
 import TravelingStatistics from "./components/TravelingStatistics/TravelingStatistics";
+import Visas from "./components/Visa/Visas";
 
 export default function Home() {
   return (
     <>
+
       <Hero
         title="আল আযহার বিশ্ববিদ্যালয়ে পড়ার স্বপ্ন পূরণ করুন আমাদের সাথে "
         description="আজহারী ট্রাভেলস আপনার স্বপ্ন পূরণ করবে স্বল্প খরচে"
@@ -23,11 +26,12 @@ export default function Home() {
       />
       <AboutUs></AboutUs>
       <Packages></Packages>
+      <Visas></Visas>
       <HowWeWork></HowWeWork>
       <TravelingStatistics></TravelingStatistics>
-      <OurTeam></OurTeam>
       <FAQ type=""></FAQ>
       <HappyClients type=""></HappyClients>
+      <OurTeam></OurTeam>
 
 
 

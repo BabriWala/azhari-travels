@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
                                 আপনার জিজ্ঞাসা!
                             </Link>
                             <Link href="/happy-clients" className="text-white  hover:text-white  transition-colors">
-                                অভিব্যক্তি
+                                রিভিউ
                             </Link>
                             <Link href="/how-we-work" className="text-white  hover:text-white  transition-colors">
                                 আমরা কিভাবে কাজ করি

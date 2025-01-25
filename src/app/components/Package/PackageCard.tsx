@@ -33,10 +33,10 @@ const PackageCard = ({ title, price, features, slug, variants, index, isPopular 
             <div>
                 {isPopular && (
                     <span className="bg-primary  text-white px-3 py-1 rounded-full text-xs absolute -top-4 left-4">
-                        Popular
+                        জনপ্রিয়
                     </span>
                 )}
-                <h3 className="text-xl font-semibold text-primary  mb-2">{title}</h3>
+                <h3 className="text-xl font-bold bg-[#FEF0DE] border border-opacity-10 py-1 rounded-tl-3xl mb-5 border-primary   text-primary ">{title}</h3>
                 <p className="text-4xl font-bold text-primary  mb-4">{price}</p>
                 <ul className="grid grid-cols-1 lg:grid-cols-2 gap-2 text-primary ">
                     {features.map((feature, index) => (

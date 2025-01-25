@@ -32,13 +32,42 @@ const config: Config = {
           dark: "#162521", // Dark theme text color
         },
       },
+      animation: {
+        scroll: "scroll 50s linear infinite",
+      },
+      keyframes: {
+        scroll: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+      },
       backgroundImage: {
         "gradient-primary": "linear-gradient(to right, #ffe259, #ffa751)",
         "gradient-secondary": "linear-gradient(to right, #FFEFBA, #FFFFFF)",
         "gradient-third": "linear-gradient(to right, #FFFFFF,#FFEFBA)",
+        "gradient-highlight":
+          "linear-gradient(90deg, hsla(33, 94%, 57%, 1) 0%, hsla(335, 67%, 53%, 1) 100%)",
       },
+      // backgroundImage: {
+      //   "gradient-primary":
+      //     "linear-gradient(0deg, hsla(33, 94%, 57%, 1) 0%, hsla(335, 67%, 53%, 1) 100%)",
+      //   "gradient-secondary":
+      //     "linear-gradient(0deg, hsla(33, 94%, 57%, 1) 0%, hsla(335, 67%, 53%, 1) 100%)",
+      //   "gradient-third":
+      //     "linear-gradient(0deg, hsla(33, 94%, 57%, 1) 0%, hsla(335, 67%, 53%, 1) 100%)",
+      // },
     },
   },
   plugins: [],
 };
 export default config;
+
+// background: hsla(33, 94%, 57%, 1);
+
+// background: linear-gradient(0deg, hsla(33, 94%, 57%, 1) 0%, hsla(335, 67%, 53%, 1) 100%);
+
+// background: -moz-linear-gradient(0deg, hsla(33, 94%, 57%, 1) 0%, hsla(335, 67%, 53%, 1) 100%);
+
+// background: -webkit-linear-gradient(0deg, hsla(33, 94%, 57%, 1) 0%, hsla(335, 67%, 53%, 1) 100%);
+
+// filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F89B29", endColorstr="#D7377B", GradientType=1 );

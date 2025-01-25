@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 import React from "react";
+import CountUp from "react-countup";
 
 interface Statistic {
     title: string;
@@ -15,18 +16,23 @@ interface Statistic {
 const statistics: Statistic[] = [
     {
         title: "আল আযহার বিশ্ববিদ্যালয়",
-        value: 42,
+        value: 92,
         description: "বিশ্ববিদ্যালয় এ ভর্তি",
     },
     {
         title: "ওমরাহ + মিশর ভ্রমণ",
-        value: 6,
+        value: 35,
         description: "ওমরাহ এবং মিশর ভ্রমণ",
     },
     {
         title: "ভিসা প্রসেসিং চলমান",
-        value: 46,
+        value: 212,
         description: "বর্তমান ভিসা প্রসেসিং চলমান",
+    },
+    {
+        title: "শ্রীলংকা ভ্রমণ",
+        value: 17,
+        description: "শ্রীলংকা ভিসা এবং ভ্রমণ",
     },
 ];
 
@@ -79,7 +85,14 @@ const TravelingStatistics: React.FC = () => {
                             className="bg-gradient-third  rounded-lg shadow-md p-10 flex flex-col items-center"
                         >
                             <h3 className="text-4xl font-bold text-primary.DEFAULT mb-2">
-                                {stat.value}+
+                                {inView && (
+                                    <CountUp
+                                        start={0}
+                                        end={stat.value}
+                                        duration={4}
+                                        separator=","
+                                    />
+                                )}+
                             </h3>
                             <p className="text-lg text-primary  font-semibold mb-1">
                                 {stat.title}

@@ -8,25 +8,32 @@ import { motion, Variants } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const packageOptions = [
+
+    {
+        title: "ওমরাহ এবং মিশর ভ্রমণ",
+        slug: "umrah-and-egypt-package",
+        price: "২ লক্ষ ৩০ হাজার",
+        features: ["মিশর ও ওমরাহ ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "টুরিস্ট স্পট", "মক্কা ও মদিনা যিয়ারাহ", "ট্রান্সপোর্ট", "খাবার", "হোটেল", "এন্ট্রি ফি (মিশর)",],
+    },
     {
         title: "স্টুডেন্ট",
         slug: "student-package",
         // price: "১ লক্ষ ২০ হাজার",
-        price: "১ লক্ষ ১০ হাজার",
+        price: "১ লক্ষ ১৫ হাজার",
         features: ["ভিসা", "টিকেট", "অফার লেটার", "ভর্তি", "বাসা",],
-    },
-    {
-        title: "ওমরাহ এবং মিশর ভ্রমণ",
-        slug: "umrah-and-egypt-package",
-        price: "২ লক্ষ ২৫ হাজার",
-        features: ["মিশর ও ওমরাহ ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "টুরিস্ট স্পট", "মক্কা ও মদিনা যিয়ারাহ", "ট্রান্সপোর্ট", "খাবার", "হোটেল", "এন্ট্রি ফি (মিশর)",],
         isPopular: true,
     },
     {
-        title: "ওমরাহ",
+        title: "ওমরাহ (রেগুলার)",
         slug: "umrah-package",
         price: "১ লক্ষ ৩০ হাজার টাকা",
         features: ["ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "ট্রান্সপোর্ট", "মক্কা ও মদিনা যিয়ারহ", "খাবার", "হোটেল",],
+    },
+    {
+        title: "মিশর ভ্রমণ",
+        slug: "egypt-tour",
+        price: "১ লক্ষ ৭০ হাজার টাকা",
+        features: ["ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "ট্রান্সপোর্ট", "দেশীয় খাবার", "হোটেল", "সাইট সিইং"],
     },
 ];
 
@@ -63,6 +70,7 @@ const Packages: React.FC = () => {
             ref={ref}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
+            id="packages"
             className="bg-gradient-secondary  py-10 md:py-20"
 
         >
