@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://azharitravels.com/Logo.svg", // Replace with an actual image URL
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 630,
         alt: "আজহারী ট্রাভেলস - আপনার ভ্রমণের জন্য সেরা সঙ্গী।"
       }
     ]

@@ -125,7 +125,7 @@ const HappyClients: React.FC<HappyClientsProps> = ({ type = "" }) => {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             className={type ? "py-32 md:py-40 bg-gradient-secondary " : "py-10 md:py-20 bg-gradient-secondary "}>
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:pxcode -8">
                 <motion.h2 className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
                     রিভিউ
                 </motion.h2>
