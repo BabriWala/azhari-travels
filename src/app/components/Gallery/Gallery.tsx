@@ -91,7 +91,7 @@ const Gallery: React.FC = () => {
                 <motion.h2
                     variants={textVariants}
                     className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
-                    গ্যালারী
+                    ঐতিহাসিক স্থান সমূহ
                 </motion.h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">

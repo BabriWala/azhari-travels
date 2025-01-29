@@ -1,5 +1,6 @@
 import AboutUs from "./components/AboutUs/AboutUs";
 import BlogSection from "./components/Blog/BlogSection";
+import ClientsGallery from "./components/ClientsGallery/ClientsGallery";
 import ContactUs from "./components/ContactUs/ContactUs";
 import FAQ from "./components/FAQ/FAQ";
 import Gallery from "./components/Gallery/Gallery";
@@ -30,6 +31,7 @@ export default function Home() {
       <HowWeWork></HowWeWork>
       <TravelingStatistics></TravelingStatistics>
       <FAQ type=""></FAQ>
+      <ClientsGallery></ClientsGallery>
       <HappyClients type=""></HappyClients>
       <OurTeam></OurTeam>
 
