@@ -89,18 +89,19 @@ export default async function PackageDetails({
                         </h3>
                         <ul className="space-y-2 ps-10">
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>এয়ার টিকিট ( সরাসরি ফ্লাইট )</li>
+                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সকল পর্যটকীয় স্থানের এন্ট্রি ফি</li>
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>ভিসা</li>
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সম্পূর্ণ ট্রান্সপোর্ট সেবা ( মিশরে ৫ দিনের জন্য রিজার্ভ বাস থাকবে )</li>
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা ও মদিনায় দেশীয় খাবার</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে ৩ বেলা দেশীয় খাবার এবং নাস্তা</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে ৪ তারকা হোটেল ( ৩/৪ জন এক রুমে)</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা ও মদিনায় স্ট্যান্ডার্ড মানের হোটেল ( প্রতি রুমে ৪/৫জন )</li>
+                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে ২ বেলা দেশীয় খাবার এবং নাস্তা (সকাল ও দুপুর)</li>
+                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে ৩ তারকা হোটেল ( ৪ জন এক রুমে)</li>
+                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা ও মদিনায় স্ট্যান্ডার্ড মানের হোটেল ( প্রতি রুমে ৪/৫ জন )</li>
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কায় ঐতিহাসিক স্থানসমূহ পরিদর্শন - জিয়ারা</li>
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মদিনায় ঐতিহাসিক স্থানসমূহ পরিদর্শন - জিয়ারা</li>
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা মদিনায় অভিজ্ঞ মুয়াল্লিম</li>
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে গাইড সার্ভিস</li>
                             <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশর ভ্রমণ</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সকল স্থানে প্রবেশের ফি ( আলেকজান্দ্রিয়া লাইব্রেরী ছাড়া)</li>
+                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সকল স্থানে প্রবেশের ফি</li>
                         </ul>
                     </div>
 
@@ -113,7 +114,7 @@ export default async function PackageDetails({
                         <ul className="space-y-2 ps-10">
                             <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> মক্কা হোটেলঃ (৪০০- ৬০০ মিটার)</li>
                             <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> মদিনা হোটেলঃ (২০০-৪০০ মিটার দূরত্বে)</li>
-                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> মিশর হোটেল : ৪ তারকা হোটেল। গিজা এরিয়াতে।</li>
+                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> মিশর হোটেল : ৩ তারকা হোটেল। গিজা এরিয়াতে।</li>
                         </ul>
                     </div>
 
@@ -167,10 +168,10 @@ export default async function PackageDetails({
                         <ul className="space-y-2 ps-10">
                             <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>১ম দিন:</strong> ঢাকা থেকে কায়রো (রাতে কায়রো পৌছাবে) ইনশাআল্লাহ।</div></li>
                             <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>২য় দিন:</strong> সকালে নাস্তা শেষ করে পুরো দিন পিরামিড, ইজিপ্টিয়ান মিউজিয়াম, সাক্কারা পরিদর্শন এবং নিল নদ ভ্রমণ।</div></li>
-                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>৩য় দিন:</strong> আলেকজান্দ্রিয়ায় ভ্রমণ - নবী দানিয়েল (আঃ), আলেকজান্দ্রিয়া বাতিঘর ও কেল্লা কাইতবাই পরিদর্শন, আলেকজান্দ্রিয়া লাইব্রেরী পরিদর্শন বাহির থেকে।</div></li>
-                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>৪র্থ দিন:</strong> সালাহ উদ্দিন আয়ুবীর কেল্লা, মুহাম্মদ আলী মসজিদ, আমর ইবনে আস মসজিদ এবং আল আজহার পার্ক পরিদর্শন।</div></li>
+                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>৩য় দিন:</strong> সালাহ উদ্দিন আয়ুবীর কেল্লা, মুহাম্মদ আলী মসজিদ, আমর ইবনে আস মসজিদ এবং আল আজহার পার্ক পরিদর্শন।</div></li>
+                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>৪র্থ দিন:</strong> আলেকজান্দ্রিয়ায় ভ্রমণ - নবী দানিয়েল (আঃ), আলেকজান্দ্রিয়া বাতিঘর ও কেল্লা কাইতবাই পরিদর্শন, আলেকজান্দ্রিয়া লাইব্রেরী পরিদর্শন বাহির থেকে।</div></li>
                             <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>৫ম দিন:</strong> তুর পাহাড় এবং সাহারা মরুভুমি ভ্রমণ।</div></li>
-                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>৬ষ্ঠ দিন:</strong> উমরা/দেশের উদ্দেশ্যে রওনা করবো। ইনশাআল্লাহ।</div></li>
+                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> <div><strong>৬ষ্ঠ দিন:</strong> নিজ দায়িত্বে ১দিন মিশর ভ্রমণ করবে এবং রাতের বেলা ওমরা/দেশের উদ্দেশ্যে রওনা করবো। ইনশাআল্লাহ।</div></li>
                         </ul>
                     </div>
 
@@ -182,6 +183,10 @@ export default async function PackageDetails({
                         </h3>
 
                         <ul className="space-y-2 ps-10">
+                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> স্বামী-স্ত্রী এক্সট্রা রুমের অতিরিক্ত খরচ।</li>
+                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> কায়রো এয়ারপর্ট এর ২৫ ডলার।</li>
+                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> মিশরের রাতের খাবার।</li>
+                            <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> উপরের পর্যটকীয় স্থান ব্যতীত অন্যান্য পর্যটকীয় স্থানের খরচ।</li>
                             <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> তায়েফ, বদর ও ওয়াদি জ্বীন জিয়ারাত অন্তর্ভুক্ত নয়।</li>
                             <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> ব্যক্তিগত খরচ।</li>
                         </ul>
@@ -221,7 +226,6 @@ export default async function PackageDetails({
                     <div className="mb-8">
                         <h3 className="text-2xl font-semibold text-primary  mb-4 flex items-center gap-2">
                             <Icon className='w-8 h-8' icon={"mingcute:location-2-fill"}></Icon> <span>মক্কা জিয়ারার স্পটসমূহ :</span>
-
                         </h3>
                         <ul className="space-y-2 ps-10">
                             <li className='flex items-center gap-2'><div><Icon icon={"material-symbols:circle-outline"}></Icon></div> নবীজির বাড়ী</li>
