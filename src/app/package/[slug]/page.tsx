@@ -87,21 +87,21 @@ export default async function PackageDetails({
                         <h3 className="text-2xl font-semibold text-primary  mb-4 flex items-center gap-2">
                             <Icon className='w-8 h-8' icon={"material-symbols:package-outline"}></Icon> <span>প্যাকেজে যা যা থাকছে :</span>
                         </h3>
-                        <ul className="space-y-2 ps-10">
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>এয়ার টিকিট ( সরাসরি ফ্লাইট )</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সকল পর্যটকীয় স্থানের এন্ট্রি ফি</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>ভিসা</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সম্পূর্ণ ট্রান্সপোর্ট সেবা ( মিশরে ৫ দিনের জন্য রিজার্ভ বাস থাকবে )</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা ও মদিনায় দেশীয় খাবার</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে ২ বেলা দেশীয় খাবার এবং নাস্তা (সকাল ও দুপুর)</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে ৩ তারকা হোটেল ( ৪ জন এক রুমে)</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা ও মদিনায় স্ট্যান্ডার্ড মানের হোটেল ( প্রতি রুমে ৪/৫ জন )</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কায় ঐতিহাসিক স্থানসমূহ পরিদর্শন - জিয়ারা</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মদিনায় ঐতিহাসিক স্থানসমূহ পরিদর্শন - জিয়ারা</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা মদিনায় অভিজ্ঞ মুয়াল্লিম</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে গাইড সার্ভিস</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশর ভ্রমণ</li>
-                            <li className='flex items-center gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সকল স্থানে প্রবেশের ফি</li>
+                        <ul className=" gap-1 grid grid-cols-5">
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>এয়ার টিকিট ( সরাসরি ফ্লাইট )</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সকল পর্যটকীয় স্থানের এন্ট্রি ফি</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>ভিসা</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সম্পূর্ণ ট্রান্সপোর্ট সেবা ( মিশরে ৫ দিনের জন্য রিজার্ভ বাস থাকবে )</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা ও মদিনায় দেশীয় খাবার</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে ২ বেলা দেশীয় খাবার এবং নাস্তা (সকাল ও দুপুর)</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে ৩ তারকা হোটেল ( ৪ জন এক রুমে)</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা ও মদিনায় স্ট্যান্ডার্ড মানের হোটেল ( প্রতি রুমে ৪/৫ জন )</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কায় ঐতিহাসিক স্থানসমূহ পরিদর্শন - জিয়ারা</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মদিনায় ঐতিহাসিক স্থানসমূহ পরিদর্শন - জিয়ারা</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মক্কা মদিনায় অভিজ্ঞ মুয়াল্লিম</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশরে গাইড সার্ভিস</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>মিশর ভ্রমণ</li>
+                            <li className='bg-white p-5 rounded-lg shadow-sm flex flex-col gap-2'> <div><Icon icon={"material-symbols:circle-outline"}></Icon> </div>সকল স্থানে প্রবেশের ফি</li>
                         </ul>
                     </div>
 
