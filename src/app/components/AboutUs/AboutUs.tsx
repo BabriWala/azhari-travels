@@ -42,7 +42,7 @@ const AboutUs: React.FC = () => {
                         variants={imageVariants}
                         className="md:w-2/6 mt-6 md:mt-0">
                         <img
-                            src="/about/About.jpg" // Replace with a valid Pexels image link
+                            src="/about/About.webp" // Replace with a valid Pexels image link
                             alt="Travel Experience"
                             className=" h-96 object-cover rounded-lg shadow-lg"
                         />

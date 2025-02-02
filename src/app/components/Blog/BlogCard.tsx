@@ -23,7 +23,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug, variants, index, blogInview }
                 initial="hidden"
                 animate={blogInview ? "visible" : "hidden"}
                 className="bg-gradient-third bg-white shadow-lg rounded-lg overflow-hidden">
-                <img className="w-full h-80 object-cover" src="/blog/Blog_01.jpg" />
+                <img className="w-full h-80 object-cover" src="/blog/Blog_01.webp" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary  mb-2">
                         <Link href={`/blog/${slug}`}>
@@ -48,7 +48,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug, variants, index, blogInview }
                 initial="hidden"
                 animate={blogInview ? "visible" : "hidden"}
                 className="bg-gradient-third bg-white shadow-lg rounded-lg overflow-hidden">
-                <img className="w-full h-80 object-cover" src="/blog/Blog_02.jpg" />
+                <img className="w-full h-80 object-cover" src="/blog/Blog_02.webp" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary  mb-2">
                         <Link href={`/blog/${slug}`}>
@@ -73,7 +73,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug, variants, index, blogInview }
                 initial="hidden"
                 animate={blogInview ? "visible" : "hidden"}
                 className="bg-gradient-third bg-white shadow-lg rounded-lg overflow-hidden">
-                <img className="w-full h-80 object-cover" src="/blog/Blog_03.jpg" />
+                <img className="w-full h-80 object-cover" src="/blog/Blog_03.webp" />
                 <div className="p-6">
                     <h3 className="text-xl font-semibold text-primary  mb-2">
                         <Link href={`/blog/${slug}`}>

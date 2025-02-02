@@ -37,42 +37,42 @@ const galleryItems: GalleryItem[] = [
     {
         id: 1,
         title: "মসজিদ উল হারাম",
-        imageUrl: '/gallery/Gallery_01.jpg',
+        imageUrl: '/gallery/Gallery_01.webp',
     },
     {
         id: 2,
         title: "মহানবী স. এর জন্মস্থান",
-        imageUrl: '/gallery/Gallery_02.jpg',
+        imageUrl: '/gallery/Gallery_02.webp',
     },
     {
         id: 3,
         title: "মসজিদে নববী",
-        imageUrl: '/gallery/Gallery_03.jpg',
+        imageUrl: '/gallery/Gallery_03.webp',
     },
     {
         id: 4,
         title: "পিরামিড",
-        imageUrl: '/gallery/Gallery_04.jpg',
+        imageUrl: '/gallery/Gallery_04.webp',
     },
     {
         id: 5,
         title: "আলেকজান্দ্রিয়া",
-        imageUrl: '/gallery/Gallery_05.jpg',
+        imageUrl: '/gallery/Gallery_05.webp',
     },
     {
         id: 6,
         title: "সাক্কারা",
-        imageUrl: '/gallery/Gallery_06.jpg',
+        imageUrl: '/gallery/Gallery_06.webp',
     },
     {
         id: 6,
         title: "কায়রো শহর",
-        imageUrl: '/gallery/Gallery_07.jpg',
+        imageUrl: '/gallery/Gallery_07.webp',
     },
     {
         id: 6,
         title: "সুলতান সালাহউদ্দিন আইয়ুবীর কেল্লা",
-        imageUrl: '/gallery/Gallery_08.jpg',
+        imageUrl: '/gallery/Gallery_08.webp',
     },
 ];
 

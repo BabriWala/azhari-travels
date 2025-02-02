@@ -12,7 +12,7 @@ const teamMembers = [
     {
         name: "হাফেজ রুম্মান হামযাহ",
         position: "প্রতিষ্ঠাতা",
-        imageUrl: "/team/Team-04.jpg",
+        imageUrl: "/team/Team-04.webp",
         mobileNumber: "+8801877995354",
         whatsappNumber: "+8801877995354",
         socialMedia: {
@@ -23,7 +23,7 @@ const teamMembers = [
     {
         name: "বাবরি ওয়ালা",
         position: "সফটওয়ার ইঞ্জিনিয়ার",
-        imageUrl: "/team/Team-05.jpg",
+        imageUrl: "/team/Team-05.webp",
         mobileNumber: "+8801580580982",
         whatsappNumber: "+8801580580982",
         socialMedia: {
@@ -35,7 +35,7 @@ const teamMembers = [
     {
         name: "হাফেজ মাওলানা মুঈনুল ইসলাম",
         position: "কোষাধক্ষ্য",
-        imageUrl: "/team/Team-06.jpg",
+        imageUrl: "/team/Team-06.webp",
         mobileNumber: "+8801719169191",
         whatsappNumber: "+8801719169191",
         socialMedia: {

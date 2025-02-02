@@ -40,7 +40,7 @@ importers:
         version: 11.2.2
     devDependencies:
       '@iconify/react':
-        specifier: ^5.0.2
+        specifier: ^5.2.0
         version: 5.2.0(react@19.0.0-rc-02c0e824-20241028)
       '@types/node':
         specifier: ^20

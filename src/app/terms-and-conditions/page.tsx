@@ -4,7 +4,7 @@ const TermsAndConditions = () => {
     return (
         <div className="bg-gradient-secondary">
             <img
-                src="/gallery/Gallery_06.jpg"
+                src="/gallery/Gallery_06.webp"
                 alt="Terms and Conditions"
                 className="w-full h-80 mt-[62px] object-cover rounded-t-lg mb-6"
             />
