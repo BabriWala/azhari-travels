@@ -39,13 +39,17 @@ const UEPrice = () => {
                     <div className='p-2 flex flex-col gap-2 bg-green-100 border rounded-md text-green-700'>
                         <div className='flex items-start gap-2'>
                             <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 8l.553-.276A1 1 0 0 1 10 8.618V15a2 2 0 0 0 2 2h.5a2.5 2.5 0 0 0 2.5-2.5V14h-1m-6-3h7" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" /></g></svg>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 8l.553-.276A1 1 0 0 1 10 8.618V15a2 2 0 0 0 2 2h.5a2.5 2.5 0 0 0 2.5-2.5V14h-1m-6-3h7" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" /></g></svg>
+                                </div>
                             </div>
                             <h3 className='font-bold'>২,২৫,০০০/- টাকা মাত্র<br /> <span className='font-medium'>(ফ্যামেলীদের জন্য - জন প্রতি)</span></h3>
                         </div>
                         <div className='flex items-start gap-2'>
                             <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 8l.553-.276A1 1 0 0 1 10 8.618V15a2 2 0 0 0 2 2h.5a2.5 2.5 0 0 0 2.5-2.5V14h-1m-6-3h7" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" /></g></svg>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 8l.553-.276A1 1 0 0 1 10 8.618V15a2 2 0 0 0 2 2h.5a2.5 2.5 0 0 0 2.5-2.5V14h-1m-6-3h7" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" /></g></svg>
+                                </div>
                             </div>
                             <h3 className='font-bold'>২,৩৫,০০০/- টাকা মাত্র<br /> <span className='font-medium'>(স্বামী-স্ত্রীদের জন্য - জন প্রতি)</span> </h3>
                         </div>
@@ -55,7 +59,9 @@ const UEPrice = () => {
                     <div className='p-2 flex flex-col gap-2 bg-green-100 border rounded-md text-green-700'>
                         <div className='flex items-start gap-2'>
                             <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 8l.553-.276A1 1 0 0 1 10 8.618V15a2 2 0 0 0 2 2h.5a2.5 2.5 0 0 0 2.5-2.5V14h-1m-6-3h7" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" /></g></svg>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 8l.553-.276A1 1 0 0 1 10 8.618V15a2 2 0 0 0 2 2h.5a2.5 2.5 0 0 0 2.5-2.5V14h-1m-6-3h7" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" /></g></svg>
+                                </div>
                             </div>
                             <h3 className='font-bold'>১,৭৫,০০০/- টাকা মাত্র </h3>
                         </div>
