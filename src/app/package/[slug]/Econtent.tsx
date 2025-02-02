@@ -1,4 +1,5 @@
-import { Icon } from '@iconify/react/dist/iconify';
+
+import { Icon } from '@iconify/react/dist/iconify.js';
 import React from 'react';
 
 const Econtent = () => {

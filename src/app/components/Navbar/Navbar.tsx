@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation'; // Import usePathname
 import NavbarLink from './NavbarLink';
 import ThemeToggleButton from './ThemeToggleButton';
-import { Icon } from '@iconify/react/dist/iconify.js';
+
 import NoticeSection from '../NoticeSection/NoticeSection';
+import { Icon } from '@iconify/react/dist/iconify.js';
 // import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
 interface NavLink {

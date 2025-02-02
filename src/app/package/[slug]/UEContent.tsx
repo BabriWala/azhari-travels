@@ -1,5 +1,4 @@
 "use client"
-import { Icon } from '@iconify/react/dist/iconify';
 import React, { useState } from 'react';
 import UEPrice from './UEComponents/UEPrice';
 import UEPlace from './UEComponents/UEPlace';

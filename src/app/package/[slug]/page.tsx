@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js';
+
 import React from 'react';
 import UEContent from './UEContent';
 import UContent from './UContent';
