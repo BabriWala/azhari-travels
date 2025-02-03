@@ -44,8 +44,8 @@ const UETimeItinery = () => {
                             </div>
                             <h3 className='font-bold'>
                                 তারিখ: <span className='font-medium'>২ এপ্রিল (সম্ভাব্য তারিখ)</span> <br />
-                                সীট বাকি রয়েছে: <span className='font-medium'>১৫টি</span> <br />
-                                সদস্য: <span className='font-medium'>15 - 20 জন</span>
+                                সীট বাকি রয়েছে: <span className='font-medium'>15টি</span> <br />
+                                সদস্য: <span className='font-medium'>15-20 জন</span>
                             </h3>
                         </div>
                     </div>
