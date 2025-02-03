@@ -8,6 +8,7 @@ import UEINI from './UEComponents/UEINI';
 import UELunch from './UEComponents/UELunch';
 import UETravel from './UEComponents/UETravel';
 import UEProcessing from './UEComponents/UEProcessing';
+import UETimeItinery from './UEComponents/UETimeItinery';
 
 const UEContent = () => {
     // Manage selected pricing plan: "Basic" or "Premium"
@@ -23,9 +24,12 @@ const UEContent = () => {
                 </h2>
                 {/* Hotel Demo Picture */}
                 {/* Egypt Itinery */}
+                {/* Terms & Conditions */}
+                {/* Money Receit */}
 
 
                 <UEPrice></UEPrice>
+                <UETimeItinery></UETimeItinery>
                 <UEPlace></UEPlace>
                 <UEHotel></UEHotel>
                 <UELunch></UELunch>
