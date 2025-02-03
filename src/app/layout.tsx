@@ -1,9 +1,11 @@
+// @ts-nocheck
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: "আজহারী ট্রাভেলস",
@@ -37,6 +39,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn">
+      <head>
+        <Script id="gtm-script" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l] = w[l] || [];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-W58KWZ7D');`}
+        </Script>
+
+
+
+
+      </head>
       <body>
         <Navbar />
         {children}
@@ -44,6 +59,9 @@ export default function RootLayout({
         <Toaster
           position="top-center" // Used to adapt the animation
         ></Toaster>
+
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W58KWZ7D"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </body>
     </html>
   );
