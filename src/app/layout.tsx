@@ -61,7 +61,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         ></Toaster>
 
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W58KWZ7D"
-          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+          height="0" width="0" className="hidden invisible"></iframe></noscript>
       </body>
     </html>
   );
