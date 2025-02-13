@@ -53,8 +53,8 @@ const UELunch = () => {
                             </div>
                             <h3 className='font-bold'>
                                 সকাল: <span className='font-medium'>সেন্ডউইচ, রুটি, ভাজি, ডিম, ফল (ফ্রুটস), ইত্যাদি</span> <br />
-                                দুপুর: <span className='font-medium'>গরু, মুরগী, বড় মাছ, ডিম ইত্যাদি</span> <br />
-                                রাত্র: <span className='font-medium'>নিজ দায়িত্বে</span>
+                                দুপুর: <span className='font-medium'>নিজ ব্যবস্থাপনায়</span> <br />
+                                রাত্র: <span className='font-medium'>নিজ ব্যবস্থাপনায়</span>
                             </h3>
                         </div>
                     </div>

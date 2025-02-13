@@ -11,9 +11,6 @@ import UEProcessing from './UEComponents/UEProcessing';
 import UETimeItinery from './UEComponents/UETimeItinery';
 
 const UEContent = () => {
-    // Manage selected pricing plan: "Basic" or "Premium"
-
-
     return (
         <section className="py-10 md:py-20  text-gray-800 ">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,8 +23,6 @@ const UEContent = () => {
                 {/* Egypt Itinery */}
                 {/* Terms & Conditions */}
                 {/* Money Receit */}
-
-
                 <UEPrice></UEPrice>
                 <UETimeItinery></UETimeItinery>
                 <UEPlace></UEPlace>
@@ -37,18 +32,11 @@ const UEContent = () => {
                 <UEAir></UEAir>
                 <UEINI></UEINI>
                 <UEProcessing></UEProcessing>
-
                 <p className=' text-center pt-10 font-bold'>
                     আল্লাহ আপনার সফরে বরকত দান করুক - আমিন
                     <br />
                     আযহারী ট্রাভেলসের সাথেই থাকুন
-
                 </p>
-
-
-
-
-
             </div>
         </section>
     );
