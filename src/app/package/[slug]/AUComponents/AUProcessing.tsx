@@ -18,7 +18,7 @@ const AUProcessing = () => {
                                 }`}
                         >
                             <div className={`w-4 h-4 rounded-full ${selectedProcessing === "FirstStep" ? " bg-green-700" : "animate-pulse bg-orange-400"}`}></div>
-                            <span>১ম ধাপ</span>
+                            <span>১ম ধাপ {selectedProcessing !== "FirstStep" && <><br /> <strong className='underline'><i>তা দেখতে ক্লিক করুন এখানে</i></strong></>}</span>
 
                         </button>
                         <button
@@ -29,7 +29,7 @@ const AUProcessing = () => {
                                 }`}
                         >
                             <div className={`w-4 h-4  rounded-full  ${selectedProcessing === "SecondStep" ? " bg-green-700" : "animate-pulse bg-orange-400"}`}></div>
-                            <span>২য় ধাপ</span>
+                            <span>২য় ধাপ {selectedProcessing !== "SecondStep" && <><br /> <strong className='underline'><i>তা দেখতে ক্লিক করুন এখানে</i></strong></>}</span>
                         </button>
                         <button
                             onClick={() => setSelectedProcessing("ThirdStep")}
@@ -39,7 +39,7 @@ const AUProcessing = () => {
                                 }`}
                         >
                             <div className={`w-4 h-4  rounded-full  ${selectedProcessing === "ThirdStep" ? " bg-green-700" : "animate-pulse bg-orange-400"}`}></div>
-                            <span>৩য় ধাপ</span>
+                            <span>৩য় ধাপ {selectedProcessing !== "ThirdStep" && <><br /> <strong className='underline'><i>তা দেখতে ক্লিক করুন এখানে</i></strong></>}</span>
                         </button>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ const AUProcessing = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" d="M2 8a6 6 0 1 1 12 0A6 6 0 0 1 2 8m6-7a7 7 0 1 0 0 14A7 7 0 0 0 8 1m1.864 3.144a.516.516 0 0 0-.716 0a.485.485 0 0 0 0 .698a4.386 4.386 0 0 1 0 6.316a.485.485 0 0 0 0 .698a.516.516 0 0 0 .716 0a5.355 5.355 0 0 0 0-7.712m-2.02 1.004a.486.486 0 0 0-.7 0a.515.515 0 0 0 0 .716a3.07 3.07 0 0 1 0 4.27a.515.515 0 0 0 0 .716a.486.486 0 0 0 .7 0c1.536-1.575 1.536-4.127 0-5.702M5.138 6.153a.444.444 0 0 1 .671 0c.925 1.02.925 2.674 0 3.694a.444.444 0 0 1-.67 0a.56.56 0 0 1 0-.741a1.68 1.68 0 0 0 0-2.212a.56.56 0 0 1 0-.741" /></svg>
                             </div>
                             <h3 className='font-bold'>
-                                প্রথমেই ৫০ হাজার টাকা বুকিং মানি অগ্রিম প্রদান করতে হবে
+                                যদি আপনার কাছে যাবতীয় ডকুমেন্টস প্রস্তুত থাকে, তাহলে প্রথমে আপনাকে ৫০,০০০ টাকা অগ্রিম দিয়ে আপনার মিশরের টিকেট রিজার্ভ করতে হবে
                             </h3>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ const AUProcessing = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" d="M2 8a6 6 0 1 1 12 0A6 6 0 0 1 2 8m6-7a7 7 0 1 0 0 14A7 7 0 0 0 8 1m1.864 3.144a.516.516 0 0 0-.716 0a.485.485 0 0 0 0 .698a4.386 4.386 0 0 1 0 6.316a.485.485 0 0 0 0 .698a.516.516 0 0 0 .716 0a5.355 5.355 0 0 0 0-7.712m-2.02 1.004a.486.486 0 0 0-.7 0a.515.515 0 0 0 0 .716a3.07 3.07 0 0 1 0 4.27a.515.515 0 0 0 0 .716a.486.486 0 0 0 .7 0c1.536-1.575 1.536-4.127 0-5.702M5.138 6.153a.444.444 0 0 1 .671 0c.925 1.02.925 2.674 0 3.694a.444.444 0 0 1-.67 0a.56.56 0 0 1 0-.741a1.68 1.68 0 0 0 0-2.212a.56.56 0 0 1 0-.741" /></svg>
                             </div>
                             <h3 className='font-bold'>
-                                ওমরাহ ভিসা, এয়ার টিকিট এর PNR বুঝে পেয়ে ১ লক্ষ টাকা পরিশোধ করতে হবে
+                                টিকেট রিজার্ভ হওয়ার পর আপনাকে ৪০,০০০ টাকা প্রদান করতে হবে। এই ধাপে আপনার মিশরের ভিসা এপ্রুভাল নিশ্চিত করা হবে
                             </h3>
                         </div>
                     </div>
@@ -80,7 +80,7 @@ const AUProcessing = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" d="M2 8a6 6 0 1 1 12 0A6 6 0 0 1 2 8m6-7a7 7 0 1 0 0 14A7 7 0 0 0 8 1m1.864 3.144a.516.516 0 0 0-.716 0a.485.485 0 0 0 0 .698a4.386 4.386 0 0 1 0 6.316a.485.485 0 0 0 0 .698a.516.516 0 0 0 .716 0a5.355 5.355 0 0 0 0-7.712m-2.02 1.004a.486.486 0 0 0-.7 0a.515.515 0 0 0 0 .716a3.07 3.07 0 0 1 0 4.27a.515.515 0 0 0 0 .716a.486.486 0 0 0 .7 0c1.536-1.575 1.536-4.127 0-5.702M5.138 6.153a.444.444 0 0 1 .671 0c.925 1.02.925 2.674 0 3.694a.444.444 0 0 1-.67 0a.56.56 0 0 1 0-.741a1.68 1.68 0 0 0 0-2.212a.56.56 0 0 1 0-.741" /></svg>
                             </div>
                             <h3 className='font-bold'>
-                                মিশরের এপ্রুভাল এবং টিকেট বুঝে পেয়ে বাকি টাকা পরিশোধ করতে হবে
+                                বাকি টাকা পরিশোধ করার পর, পাবেন ওকে টু বোর্ড
                             </h3>
                         </div>
                     </div>

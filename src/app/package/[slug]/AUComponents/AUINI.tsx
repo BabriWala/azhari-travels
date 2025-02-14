@@ -18,7 +18,7 @@ const AUINI = () => {
                                 }`}
                         >
                             <div className={`w-4 h-4 rounded-full ${selectedAUINI === "Included" ? " bg-green-700" : "animate-pulse bg-orange-400"}`}></div>
-                            <span>যা এই প্যাকেজের অন্তর্ভূক্ত <br /> <strong className='underline'><i>তা দেখতে ক্লিক করুন এখানে</i></strong></span>
+                            <span>যা এই প্যাকেজের অন্তর্ভূক্ত {selectedAUINI !== "Included" && <><br /> <strong className='underline'><i>তা দেখতে ক্লিক করুন এখানে</i></strong></>}</span>
 
                         </button>
                         <button
@@ -29,7 +29,7 @@ const AUINI = () => {
                                 }`}
                         >
                             <div className={`w-4 h-4  rounded-full  ${selectedAUINI === "NotIncluded" ? " bg-green-700" : "animate-pulse bg-orange-400"}`}></div>
-                            <span>যা এই প্যাকেজের অন্তর্ভূক্ত নয় <br /> <strong className='underline'><i>তা দেখতে ক্লিক করুন এখানে</i></strong></span>
+                            <span>যা এই প্যাকেজের অন্তর্ভূক্ত নয় {selectedAUINI !== "NotIncluded" && <><br /> <strong className='underline'><i>তা দেখতে ক্লিক করুন এখানে</i></strong></>}</span>
                         </button>
                     </div>
                 </div>

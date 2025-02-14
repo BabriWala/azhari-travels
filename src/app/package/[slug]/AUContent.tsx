@@ -27,12 +27,16 @@ const AUContent = () => {
                 <AUPrice></AUPrice>
                 <AUINI></AUINI>
                 <AUTimeItinery></AUTimeItinery>
+                <AUProcessing></AUProcessing>
+                {/* <p className=' text-center pt-5 font-bold'>
+                   আপনার সচারচর জিজ্ঞাসা
+                </p> */}
                 {/* <AUPlace></AUPlace>
                 <AUHotel></AUHotel>
                 <AULunch></AULunch>
                 <AUTravel></AUTravel>
                 <AUAir></AUAir>
-                <AUProcessing></AUProcessing> */}
+                 */}
                 <p className=' text-center pt-10 font-bold'>
                     আল্লাহ আপনার সফরে বরকত দান করুক - আমিন
                     <br />
