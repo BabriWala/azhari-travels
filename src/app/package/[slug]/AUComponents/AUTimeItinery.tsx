@@ -44,8 +44,6 @@ const AUTimeItinery = () => {
                             <div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m11.5 16l3.5 3.5l6-6m8 2.5a13 13 0 1 1-26 0a13 13 0 0 1 26 0" /></svg></div>
                             <h3 className='font-bold'> শরহে বেকায়া অথবা আলিমের সার্টিফিকেট (সকল বিষয়ে পাশ মার্কস থাকলেই হবে এবং নোটারী মিনিস্ট্রী) </h3>
                         </div>
-
-
                     </div>
                 </>
             }
