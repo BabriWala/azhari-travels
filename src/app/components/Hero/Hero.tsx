@@ -71,10 +71,10 @@ const Hero: React.FC<HeroProps> = ({
                             <Link href="https://m.me/iamhamzahkhan" target="_blank" rel="noopener noreferrer">
                                 <Icon icon="ri:messenger-fill" className="text-primary text-3xl hover:text-blue-600 transition-colors duration-200" />
                             </Link>
-                            <Link href="https://wa.me/+8801580580982" target="_blank" rel="noopener noreferrer">
+                            <Link href="https://wa.me/+8801318185954" target="_blank" rel="noopener noreferrer">
                                 <Icon icon="ri:whatsapp-fill" className="text-primary text-3xl hover:text-green-600 transition-colors duration-200" />
                             </Link>
-                            <Link href="tel:+8801580580982">
+                            <Link href="tel:+8801318185954">
                                 <Icon icon="carbon:phone-filled" className="text-primary text-3xl hover:text-blue-400 transition-colors duration-200" />
                             </Link>
                         </div>

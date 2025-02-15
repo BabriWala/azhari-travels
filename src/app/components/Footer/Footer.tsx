@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
         <>
             {/* WhatsApp Call Icon on the Left */}
             <Link
-                href="https://wa.me/123456789" // replace with the actual WhatsApp number
+                href="https://wa.me/8801318185954" // replace with the actual WhatsApp number
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fixed bottom-8 left-4 z-50 bg-green-500 p-3 rounded-full text-white hover:bg-green-600 transition-colors"
@@ -36,8 +36,8 @@ const Footer: React.FC = () => {
                             <p className="text-white  mt-2 mb-2">
                                 ছাত্রদের স্বপ্ন পূরনের মাধ্যম
                             </p>
-                            <p className="text-white">মোবাইল: +8801877995354</p>
-                            <p className="text-white">হোয়াটসঅ্যাপ: +8801877995354</p>
+                            <p className="text-white">মোবাইল: +8801318185954</p>
+                            <p className="text-white">হোয়াটসঅ্যাপ: +8801318185954</p>
                         </div>
 
                         {/* Navigation Links */}

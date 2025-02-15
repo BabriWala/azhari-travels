@@ -22,7 +22,7 @@ export default function Home() {
         title="আল আযহার বিশ্ববিদ্যালয়ে পড়ার স্বপ্ন পূরণ করুন আমাদের সাথে "
         description="আজহারী ট্রাভেলস আপনার স্বপ্ন পূরণ করবে স্বল্প খরচে"
         buttonText="স্বপ্ন পূরণ করতে ক্লিক করুন"
-        buttonLink="tel:+8801877995354"
+        buttonLink="tel:+8801318185954"
         backgroundImage="https://images.pexels.com/photos/18991579/pexels-photo-18991579/free-photo-of-al-azhar-mosque-in-cairo.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" // Replace with your chosen Pexels image URL
       />
       <AboutUs></AboutUs>

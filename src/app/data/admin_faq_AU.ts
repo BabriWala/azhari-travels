@@ -289,15 +289,15 @@ Account Name : MUHAMMAD RUMMAN UDDIN
 Account Number : 20507030200184112 
 Account Branch Name : Krishi Market, Mohammadpur 
 Sub Branch : Nobodoy Bazar Routing 
-Mobile Number : 01877995354       
+Mobile Number : 01318185954       
 
 Bank Name : Dutch Bangla Bangladesh Ltd  
 Account name : MUHAMMAD RUMMAN UDDIN 
 Account number : 2581580059496 
 Branch Name : Mohammadpur, Dhaka 
-Mobile Number : 01877995354    
+Mobile Number : 01318185954    
 
-Bkash / Nagad : 01877995354
+Bkash / Nagad : 01318185954
 `,
   },
   {
@@ -313,7 +313,7 @@ Account Type : Mudaraba Savings
 Account Branch Name : Krishi Market, Mohammadpur 
 Sub Branch : Nobodoy Bazar Routing 
 Number : 703 
-Mobile Number : 01877995354       
+Mobile Number : 01318185954       
 
 Bank Name : Dutch Bangla Bangladesh Ltd  
 Account name : MUHAMMAD RUMMAN UDDIN 
@@ -321,9 +321,9 @@ Account number : 2581580059496
 Account type : Savings Account  
 Branch Name : Mohammadpur, Dhaka 
 Routing Number : 090263286 
-Mobile Number : 01877995354    
+Mobile Number : 01318185954    
 
-Bkash / Nagad : 01877995354
+Bkash / Nagad : 01318185954
 `,
   },
 ];
