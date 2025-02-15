@@ -32,17 +32,17 @@ const teamMembers = [
             messenger: "https://m.me/babriwala.hazishaheb",
         },
     },
-    {
-        name: "হাফেজ মাওলানা মুঈনুল ইসলাম",
-        position: "কোষাধক্ষ্য",
-        imageUrl: "/team/Team-06.webp",
-        mobileNumber: "+8801719169191",
-        whatsappNumber: "+8801719169191",
-        socialMedia: {
-            facebook: "https://www.facebook.com/md.mainulislam.585",
-            messenger: "https://m.me/md.mainulislam.585",
-        },
-    },
+    // {
+    //     name: "হাফেজ মাওলানা মুঈনুল ইসলাম",
+    //     position: "কোষাধক্ষ্য",
+    //     imageUrl: "/team/Team-06.webp",
+    //     mobileNumber: "+8801719169191",
+    //     whatsappNumber: "+8801719169191",
+    //     socialMedia: {
+    //         facebook: "https://www.facebook.com/md.mainulislam.585",
+    //         messenger: "https://m.me/md.mainulislam.585",
+    //     },
+    // },
 ];
 
 // Variants for text animations
