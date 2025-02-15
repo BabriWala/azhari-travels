@@ -11,7 +11,7 @@ import { useInView } from "react-intersection-observer";
 const teamMembers = [
     {
         name: "হাফেজ রুম্মান হামযাহ",
-        position: "প্রতিষ্ঠাতা প্রাক্তন",
+        position: "প্রতিষ্ঠাতা",
         imageUrl: "/team/Team-04.jpg",
         mobileNumber: "+8801877995354",
         whatsappNumber: "+8801877995354",
