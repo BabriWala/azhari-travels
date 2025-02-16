@@ -33,7 +33,7 @@ export default function Home() {
       <FAQ type=""></FAQ>
       <ClientsGallery></ClientsGallery>
       <HappyClients type=""></HappyClients>
-      <OurTeam></OurTeam>
+      {/* <OurTeam></OurTeam> */}
 
 
 
