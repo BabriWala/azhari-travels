@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
                         <div className="text-center md:text-left">
                             <h2 className="text-2xl font-bold text-white ">আযহারী ট্রাভেলস</h2>
                             <p className="text-white  mt-2 mb-2">
-                                ছাত্রদের স্বপ্ন পূরনের মাধ্যম
+                                স্বপ্ন পূরনের মাধ্যম
                             </p>
                             <p className="text-white">মোবাইল: +8801318185954</p>
                             <p className="text-white">হোয়াটসঅ্যাপ: +8801318185954</p>
@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
                             {/* Social Icons from Iconify */}
                             <div className="flex space-x-4">
                                 <a
-                                    href="https://facebook.com"
+                                    href="https://www.facebook.com/azharitravels2.0/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-white  hover:text-white  transition-colors"
@@ -75,6 +75,14 @@ const Footer: React.FC = () => {
                                     <Icon icon={"ic:twotone-facebook"} width="24" height="24" />
                                 </a>
                                 <a
+                                    href="https://www.facebook.com/AzhariTravelBD"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-white  hover:text-white  transition-colors"
+                                >
+                                    <Icon icon={"ic:twotone-facebook"} width="24" height="24" />
+                                </a>
+                                {/* <a
                                     href="https://twitter.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -97,12 +105,12 @@ const Footer: React.FC = () => {
                                     className="text-white  hover:text-white  transition-colors"
                                 >
                                     <Icon icon={"mage:linkedin"} width="24" height="24" />
-                                </a>
+                                </a> */}
                             </div>
 
                             {/* Address and Contact Info */}
                             <div className="text-white  text-center md:text-right space-y-1">
-                                <p>বাস: ২/এ, রোড: ০৭, নবীনগর হাউজিং<br />  মোহাম্মদপুর, ঢাকা-১২০৭</p>
+                                <p>বাসা-২/এ, রোড-৭, নবীনগর হাউজিং <br />সাদেক এগ্রোর পাশের বিল্ডিং, লোহার গেইট <br />ঢাকা উদ্যান, গাবতলী রোড<br />মোহাম্মাদপুর, ঢাকা ১২০৭</p>
                             </div>
                         </div>
                     </div>
