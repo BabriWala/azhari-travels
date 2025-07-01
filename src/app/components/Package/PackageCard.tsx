@@ -37,7 +37,11 @@ const PackageCard = ({ title, price, features, slug, variants, index, isPopular 
                     </span>
                 )}
                 <h3 className="text-xl font-bold bg-[#FEF0DE] border border-opacity-10 py-1 rounded-tl-3xl mb-5 border-primary   text-primary ">{title}</h3>
-                <p className="text-4xl font-bold text-primary  mb-4">{price}</p>
+                <p
+                    dangerouslySetInnerHTML={{ __html: price }}
+                    className="text-4xl font-bold text-primary mb-4"
+                />
+
                 <ul className="grid grid-cols-1 lg:grid-cols-2 gap-2 text-primary ">
                     {features.map((feature, index) => (
                         <li key={index} className="flex items-start space-x-2">
