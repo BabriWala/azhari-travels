@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
     const pathname = usePathname(); // Use pathname to monitor route changes
 
     const handleMenuToggle = () => setMenuOpen((prev) => !prev);
-
+ 
     // Close the menu when the pathname changes
     useEffect(() => {
         setMenuOpen(false);
