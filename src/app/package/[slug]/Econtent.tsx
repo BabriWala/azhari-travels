@@ -7,7 +7,7 @@ const Econtent = () => {
         <section className="py-10 md:py-20  text-gray-800 ">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-primary  mb-8">
-                    মিশর ভ্রমণ প্যাকেজ - ১,৭০,০০০/-
+                    মিশর ভ্রমণ প্যাকেজ - ১,৫০,০০০/-
                 </h2>
 
                 {/* Package Includes */}
