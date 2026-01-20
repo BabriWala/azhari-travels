@@ -1,10 +1,80 @@
-@tailwind base;
+@import "tailwindcss";
+
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+
+/* ✅ Tailwind v4 theme tokens */
+@theme {
+  /* Colors */
+  --color-primary: #162521;
+  --color-primary-light: #e9d985;
+  --color-primary-dark: #162521;
+  /* softLight was empty in your config, so set a value or remove */
+  --color-primary-softLight: #faf7e7;
+
+  --color-secondary: #e9d985;
+  --color-secondary-light: #9eefe5;
+  --color-secondary-dark: #162521;
+
+  --color-background-light: #e9d985;
+  --color-background-dark: #edfae7;
+  --color-background-lightOdd: #faf7e7;
+  --color-background-lightEven: #f2dccb;
+
+  --color-text-light: #e9d985;
+  --color-text-dark: #162521;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(to right, #ffe259, #ffa751);
+  --gradient-secondary: linear-gradient(to right, #ffefba, #ffffff);
+  --gradient-third: linear-gradient(to right, #ffffff, #ffefba);
+  --gradient-highlight: linear-gradient(
+    90deg,
+    hsla(33, 94%, 57%, 1) 0%,
+    hsla(335, 67%, 53%, 1) 100%
+  );
+}
+
+/* ✅ Custom Gradient Utility Classes */
+.bg-gradient-primary {
+  background-image: var(--gradient-primary);
+}
+
+.bg-gradient-secondary {
+  background-image: var(--gradient-secondary);
+}
+
+.bg-gradient-third {
+  background-image: var(--gradient-third);
+}
+
+.bg-gradient-highlight {
+  background-image: var(--gradient-highlight);
+}
+
+/* ✅ Dark mode overrides (because you use darkMode: "class") */
+.dark {
+  /* Example: map your background/text for dark mode */
+  /* --color-background-light: #162521;
+  --color-text-dark: #edfae7; */
+}
+
+/* ✅ Your keyframes + animation (Tailwind v4 way: just plain CSS) */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 
 html {
   scroll-behavior: smooth;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 /* Declare custom fonts using @font-face */

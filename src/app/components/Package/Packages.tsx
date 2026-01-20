@@ -19,7 +19,7 @@ const packageOptions = [
         title: "স্টুডেন্ট",
         slug: "student-package",
         // price: "১ লক্ষ ২০ হাজার",
-        price: `(১ লক্ষ ৫০ হাজার - ওমরাহ ফ্রী)`,
+        price: `(১ লক্ষ ৬০ হাজার - ওমরাহ ফ্রী)`,
         features: ["ভিসা", "টিকেট", "অফার লেটার", "ভর্তি", "বাসা",],
         isPopular: true,
     },

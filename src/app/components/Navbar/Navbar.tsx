@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
     const pathname = usePathname(); // Use pathname to monitor route changes
 
     const handleMenuToggle = () => setMenuOpen((prev) => !prev);
- 
+
     // Close the menu when the pathname changes
     useEffect(() => {
         setMenuOpen(false);
@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
                     {menuOpen ? <Icon icon={"oui:cross"} className="h-6 w-6"></Icon> : <Icon icon="fe:bar" className="h-6 w-6"></Icon>}
                 </button>
             </div>
-            <NoticeSection></NoticeSection>
+            {/* <NoticeSection></NoticeSection> */}
             {menuOpen && (
                 <div className="md:hidden bg-gradient-third ">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

@@ -16,22 +16,22 @@ interface Statistic {
 const statistics: Statistic[] = [
     {
         title: "আল আযহার বিশ্ববিদ্যালয়",
-        value: 92,
+        value: 350,
         description: "বিশ্ববিদ্যালয় এ ভর্তি",
     },
     {
         title: "ওমরাহ + মিশর ভ্রমণ",
-        value: 35,
+        value: 270,
         description: "ওমরাহ এবং মিশর ভ্রমণ",
     },
     {
         title: "ভিসা প্রসেসিং চলমান",
-        value: 212,
+        value: 70,
         description: "বর্তমান ভিসা প্রসেসিং চলমান",
     },
     {
         title: "শ্রীলংকা ভ্রমণ",
-        value: 17,
+        value: 100,
         description: "শ্রীলংকা ভিসা এবং ভ্রমণ",
     },
 ];

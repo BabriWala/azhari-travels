@@ -18,6 +18,7 @@ export default function Home() {
   return (
     <>
 
+
       <Hero
         title="আল আযহার বিশ্ববিদ্যালয়ে ভর্তি হওয়ার স্বপ্ন পূরণ করুন আমাদের সাথে "
         description="আজহারী ট্রাভেলস আপনার স্বপ্ন পূরণ করবে স্বল্প খরচে"
@@ -28,7 +29,7 @@ export default function Home() {
       <AboutUs></AboutUs>
       <Packages></Packages>
       <Visas></Visas>
-      <HowWeWork></HowWeWork>
+      {/* <HowWeWork></HowWeWork> */}
       <TravelingStatistics></TravelingStatistics>
       <FAQ type=""></FAQ>
       <ClientsGallery></ClientsGallery>

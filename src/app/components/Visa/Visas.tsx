@@ -18,8 +18,8 @@ const visaOptions = [
     {
         title: "মিশর অনারেবল ভিসা",
         slug: "umrah-and-egypt-visa",
-        price: "২৬ হাজার টাকা",
-        delivery_time: 25,
+        price: "১৫ হাজার টাকা",
+        delivery_time: 2,
         features: ["পাসপোর্ট স্ক্যান কপি", "ছবি"],
         isPopular: true,
     },
@@ -27,7 +27,7 @@ const visaOptions = [
         title: "পাকিস্তান ই ভিসা",
         delivery_time: 7,
         slug: "umrah-and-egypt-visa",
-        price: "১০০০ টাকা",
+        price: "৫০০ টাকা",
         features: ["পাসপোর্ট স্ক্যান কপি", "ছবি (ব্যাকগ্রাউ সাদা গ্লাস ছাড়া)"],
     },
     {
@@ -35,7 +35,7 @@ const visaOptions = [
         slug: "umrah-and-egypt-visa",
         delivery_time: 1,
 
-        price: "৪৫০০ টাকা",
+        price: "৩৫০০ টাকা",
         features: ["পাসপোর্ট স্ক্যান কপি", "ছবি (ব্যাকগ্রাউ সাদা গ্লাস ছাড়া)"],
     },
     {
