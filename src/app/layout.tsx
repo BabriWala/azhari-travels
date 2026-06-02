@@ -2,13 +2,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "./components/Navbar/Navbar";
+import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: "আজহারী ট্রাভেলস",
+  title: "Azhari Travels & Tours",
   description: "আজহারী ট্রাভেলস - আপনার ভ্রমণের জন্য সেরা সঙ্গী। আমাদের সাথে অভিজ্ঞতা করুন অসাধারণ ভ্রমণ, আকর্ষণীয় গন্তব্য ও অনন্য পরিষেবা। যেখানেই যান, আপনার স্বপ্নের ট্রিপ আমাদের সাথে হবে সার্থক!",
   keywords: "Traveling, Egypt, Kairo, Makkah, Madinah, Omrah, Feraoun, Nill Nod",
   authors: [
@@ -53,9 +53,11 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 
       </head>
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <Header />
+        <main>
+          {children}
+        </main>
+        {/* <Footer /> */}
         <Toaster
           position="top-center" // Used to adapt the animation
         ></Toaster>

@@ -1,129 +1,250 @@
-// src/components/Footer.tsx
-"use client";
+// @ts-nocheck
+import {
+    Plane,
+    ChevronRight,
+    Phone,
+    Mail,
+    MapPin,
+    Send,
+    ShieldCheck,
+    Clock3,
+    Headphones,
+    Tag,
+    FileText,
+    GraduationCap,
+    BriefcaseBusiness,
+    Landmark,
+} from "lucide-react";
 
-import React from "react";
-import Link from "next/link";
-import { Icon } from "@iconify/react";
+import {
+    FaFacebookF,
+    FaInstagram,
+    FaYoutube,
+    FaWhatsapp,
+} from "react-icons/fa";
 
+const quickLinks = ["Home", "About Us", "Services", "Tours", "Blog", "Contact"];
 
-const Footer: React.FC = () => {
+const services = [
+    { name: "Visa Processing", icon: FileText },
+    { name: "Student Consultancy", icon: GraduationCap },
+    { name: "Tour Packages", icon: BriefcaseBusiness },
+    { name: "Air Ticket", icon: Plane },
+    { name: "Umrah Services", icon: Landmark },
+];
+
+const trustItems = [
+    {
+        title: "Trusted & Reliable",
+        text: "Trusted by thousands of happy clients",
+        icon: ShieldCheck,
+        color: "text-[#ff2f7d]",
+    },
+    {
+        title: "Fast Processing",
+        text: "Quick visa approvals and bookings",
+        icon: Clock3,
+        color: "text-[#2f93ff]",
+    },
+    {
+        title: "Dedicated Support",
+        text: "24/7 support from our travel experts",
+        icon: Headphones,
+        color: "text-[#32d086]",
+    },
+    {
+        title: "Best Price Guarantee",
+        text: "Transparent pricing with no hidden charges",
+        icon: Tag,
+        color: "text-[#ff8a1f]",
+    },
+];
+
+export default function Footer() {
     return (
-        <>
-            {/* WhatsApp Call Icon on the Left */}
-            <Link
-                href="https://wa.me/8801318185954" // replace with the actual WhatsApp number
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fixed bottom-8 left-4 z-50 bg-green-500 p-3 rounded-full text-white hover:bg-green-600 transition-colors"
-            >
-                <Icon icon={"logos:whatsapp-icon"} width="28" height="28" />
-            </Link>
+        <footer className="font-['Inter',sans-serif] bg-[#031b34] text-white">
+            <div className="bg-[radial-gradient(circle_at_top_left,#082b52_0%,#031b34_45%,#021324_100%)]">
+                {/* Top Footer */}
+                <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16 pt-16 lg:pt-20">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.35fr_0.9fr_1.05fr_1.35fr_1.25fr] gap-10 lg:gap-0 pb-16">
+                        {/* Logo */}
+                        <div className="lg:pr-14 lg:border-r lg:border-white/10">
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="relative w-[72px] h-[72px] flex items-center justify-center">
+                                    <div className="absolute w-14 h-14 rounded-full border-[10px] border-[#ff2f7d] border-r-transparent rotate-[-25deg]" />
+                                    <Plane className="relative w-10 h-10 text-white -rotate-12" />
+                                </div>
 
-            {/* Go to Top Button on the Right */}
-            <button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="fixed bottom-8 right-4 z-50 bg-primary p-3 rounded-full border border-transparent hover:border-primary text-white hover:text-white hover:bg-secondary transition-colors"
-            >
-                <Icon icon="bxs:up-arrow"></Icon>
-            </button>
-
-            <footer className="bg-primary  py-10 md:py-20">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0">
-                        {/* Brand and Description */}
-                        <div className="text-center md:text-left">
-                            <h2 className="text-2xl font-bold text-white ">আযহারী ট্রাভেলস</h2>
-                            <p className="text-white  mt-2 mb-2">
-                                স্বপ্ন পূরনের মাধ্যম
-                            </p>
-                            <p className="text-white">মোবাইল: +8801318185954</p>
-                            <p className="text-white">হোয়াটসঅ্যাপ: +8801318185954</p>
-                        </div>
-
-                        {/* Navigation Links */}
-                        <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2">
-                            <Link href="/about" className="text-white  hover:text-white  transition-colors">
-                                হোম
-                            </Link>
-                            <Link href="/frequently-asked-questions" className="text-white  hover:text-white  transition-colors">
-                                আপনার জিজ্ঞাসা!
-                            </Link>
-                            <Link href="/happy-clients" className="text-white  hover:text-white  transition-colors">
-                                রিভিউ
-                            </Link>
-                            <Link href="/how-we-work" className="text-white  hover:text-white  transition-colors">
-                                আমরা কিভাবে কাজ করি
-                            </Link>
-                            <Link href="/terms-and-conditions" className="text-white  hover:text-white  transition-colors">
-                                নিয়ম কানুন
-                            </Link>
-                            <Link href="/refund-policy" className="text-white  hover:text-white  transition-colors">
-                                রিফান্ড
-                            </Link>
-                        </div>
-
-                        {/* Social Media Links and Contact Details */}
-                        <div className="flex flex-col items-center md:items-end space-y-3">
-                            {/* Social Icons from Iconify */}
-                            <div className="flex space-x-4">
-                                <a
-                                    href="https://www.facebook.com/azharitravels2.0/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-white  hover:text-white  transition-colors"
-                                >
-                                    <Icon icon={"ic:twotone-facebook"} width="24" height="24" />
-                                </a>
-                                <a
-                                    href="https://www.facebook.com/AzhariTravelBD"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-white  hover:text-white  transition-colors"
-                                >
-                                    <Icon icon={"ic:twotone-facebook"} width="24" height="24" />
-                                </a>
-                                {/* <a
-                                    href="https://twitter.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-white  hover:text-white  transition-colors"
-                                >
-                                    <Icon icon={"formkit:twitter"} width="24" height="24" />
-                                </a>
-                                <a
-                                    href="https://instagram.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-white  hover:text-white  transition-colors"
-                                >
-                                    <Icon icon={"ant-design:instagram-filled"} width="24" height="24" />
-                                </a>
-                                <a
-                                    href="https://linkedin.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-white  hover:text-white  transition-colors"
-                                >
-                                    <Icon icon={"mage:linkedin"} width="24" height="24" />
-                                </a> */}
+                                <div>
+                                    <h2 className="text-[34px] md:text-[40px] leading-none font-extrabold tracking-[0.16em]">
+                                        AZHARI
+                                    </h2>
+                                    <p className="mt-2 text-[15px] font-bold tracking-[0.18em]">
+                                        TRAVELS & TOURS
+                                    </p>
+                                </div>
                             </div>
 
-                            {/* Address and Contact Info */}
-                            <div className="text-white  text-center md:text-right space-y-1">
-                                <p>বাসা-২/এ, রোড-৭, নবীনগর হাউজিং <br />সাদেক এগ্রোর পাশের বিল্ডিং, লোহার গেইট <br />ঢাকা উদ্যান, গাবতলী রোড<br />মোহাম্মাদপুর, ঢাকা ১২০৭</p>
+                            <p className="text-[#b7c3d4] text-[17px] leading-[2.05] max-w-[310px]">
+                                Azhari Travels & Tours is a trusted travel agency providing visa
+                                processing, tour packages, student consultancy, Umrah services,
+                                and air ticket booking.
+                            </p>
+                        </div>
+
+                        {/* Quick Links */}
+                        <div className="lg:px-12 lg:border-r lg:border-white/10">
+                            <FooterTitle title="Quick Links" />
+                            <ul className="space-y-6">
+                                {quickLinks.map((link) => (
+                                    <li key={link}>
+                                        <a className="flex items-center gap-5 text-[17px] text-white hover:text-[#ff2f7d] transition">
+                                            <ChevronRight className="w-5 h-5 text-[#ff2f7d]" />
+                                            {link}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Services */}
+                        <div className="lg:px-12 lg:border-r lg:border-white/10">
+                            <FooterTitle title="Services" />
+                            <ul className="space-y-6">
+                                {services.map(({ name, icon: Icon }) => (
+                                    <li key={name}>
+                                        <a className="flex items-center gap-5 text-[17px] text-white hover:text-[#ff2f7d] transition">
+                                            <Icon className="w-8 h-8 text-[#ff2f7d]" />
+                                            {name}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Contact */}
+                        <div className="lg:px-12 lg:border-r lg:border-white/10">
+                            <FooterTitle title="Contact Information" />
+
+                            <div className="space-y-7">
+                                <ContactItem icon={Phone} text="+880 1XXX-XXXXXX" color="bg-[#4a163d]" />
+                                <ContactItem icon={Mail} text="info@azharitravels.com" color="bg-[#123f68]" />
+                                <ContactItem icon={MapPin} text="Dhaka, Bangladesh" color="bg-[#16624d]" />
+                            </div>
+
+                            <div className="mt-9 pt-7 border-t border-white/10">
+                                <div className="flex flex-wrap gap-5">
+                                    <Social icon={FaFacebookF} label="Facebook" bg="bg-[#3159ad]" />
+                                    <Social icon={FaInstagram} label="Instagram" bg="bg-gradient-to-br from-[#833ab4] via-[#fd1d1d] to-[#fcb045]" />
+                                    <Social icon={FaYoutube} label="YouTube" bg="bg-[#ff1f1f]" />
+                                    <Social icon={FaWhatsapp} label="WhatsApp" bg="bg-[#36c765]" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Newsletter */}
+                        <div className="lg:pl-12">
+                            <FooterTitle title="Newsletter" />
+
+                            <p className="text-[#b7c3d4] text-[17px] leading-8 mb-7">
+                                Subscribe to receive travel offers, visa updates, and tour
+                                promotions.
+                            </p>
+
+                            <input
+                                type="email"
+                                placeholder="Enter your email address"
+                                className="w-full h-[58px] rounded-lg bg-white/5 border border-white/20 px-5 text-white text-[16px] placeholder:text-[#9daac0] outline-none focus:border-[#ff2f7d]"
+                            />
+
+                            <button className="mt-5 w-full h-[58px] rounded-lg bg-gradient-to-r from-[#ff1f73] to-[#ff7a22] text-white text-[17px] font-extrabold tracking-wide flex items-center justify-center gap-3 hover:opacity-90 transition">
+                                SUBSCRIBE NOW
+                                <Send className="w-5 h-5 fill-white" />
+                            </button>
+
+                            <div className="hidden lg:flex justify-end mt-12 opacity-20">
+                                <Plane className="w-20 h-20 text-white rotate-[-20deg]" />
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-            </footer>
-            {/* Footer Bottom Text */}
-            <div className="text-center text-sm text-white bg-primary  py-5">
-                &copy; {new Date().getFullYear()} <Link href={"https://facebook.com/babriwala.hazishaheb"} target="_blank"><span className="font-bold underline cursor-pointer">বাবরি ওয়ালা</span></Link>. এই ওয়েবসাইটটির স্বত্ত্বাধিকার.
-            </div>
-        </>
-    );
-};
 
-export default Footer;
+                {/* Trust Bar */}
+                <div className="border-y border-white/10">
+                    <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16 py-9">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-9">
+                            {trustItems.map(({ title, text, icon: Icon, color }) => (
+                                <div key={title} className="flex items-start gap-5">
+                                    <Icon className={`w-[58px] h-[58px] shrink-0 ${color}`} />
+                                    <div>
+                                        <h4 className="text-[19px] font-extrabold mb-2">{title}</h4>
+                                        <p className="text-[#b7c3d4] text-[17px] leading-7 max-w-[245px]">
+                                            {text}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Bottom */}
+                <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16 py-8">
+                    <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+                        <p className="text-[#b7c3d4] text-[17px] text-center lg:text-left">
+                            © 2026 Azhari Travels & Tours. All Rights Reserved.
+                        </p>
+
+                        <div className="flex flex-wrap justify-center gap-4">
+                            {["VISA", "Mastercard", "AMERICAN EXPRESS", "bkash", "নগদ"].map(
+                                (item) => (
+                                    <div
+                                        key={item}
+                                        className="h-11 min-w-[92px] px-5 rounded-md bg-white text-[#08305c] flex items-center justify-center text-sm font-extrabold shadow-md"
+                                    >
+                                        {item}
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    );
+}
+
+function FooterTitle({ title }) {
+    return (
+        <div className="mb-8">
+            <h3 className="text-[20px] font-extrabold uppercase tracking-[0.06em]">
+                {title}
+            </h3>
+            <div className="mt-4 w-10 h-[4px] rounded-full bg-[#ff2f7d]" />
+        </div>
+    );
+}
+
+function ContactItem({ icon: Icon, text, color }) {
+    return (
+        <div className="flex items-center gap-5">
+            <div className={`w-[52px] h-[52px] rounded-full ${color} flex items-center justify-center`}>
+                <Icon className="w-6 h-6 text-white" />
+            </div>
+            <p className="text-[17px] text-white">{text}</p>
+        </div>
+    );
+}
+
+function Social({ icon: Icon, label, bg }) {
+    return (
+        <a href="#" className="text-center group">
+            <div
+                className={`w-[52px] h-[52px] rounded-full ${bg} flex items-center justify-center shadow-lg group-hover:scale-105 transition`}
+            >
+                <Icon className="w-6 h-6 text-white" />
+            </div>
+            <p className="mt-2 text-[12px] text-white">{label}</p>
+        </a>
+    );
+}

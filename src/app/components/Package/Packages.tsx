@@ -1,107 +1,109 @@
+import { ArrowRight, CheckCircle2, GraduationCap, Plane, FileCheck, Hotel } from "lucide-react";
 
-// @ts-nocheck
-// src/components/Packages.tsx
-"use client"
-import React from "react";
-import PackageCard from "./PackageCard";
-import { motion, Variants } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-
-const packageOptions = [
-
-    {
-        title: "ওমরাহ এবং মিশর ভ্রমণ",
-        slug: "umrah-and-egypt-package",
-        price: "২ লক্ষ ২০ হাজার",
-        features: ["মিশর ও ওমরাহ ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "টুরিস্ট স্পট", "মক্কা ও মদিনা যিয়ারাহ", "ট্রান্সপোর্ট", "খাবার", "হোটেল", "এন্ট্রি ফি (মিশর)",],
-    },
-    {
-        title: "স্টুডেন্ট",
-        slug: "student-package",
-        // price: "১ লক্ষ ২০ হাজার",
-        price: `(১ লক্ষ ৭৫ হাজার - ওমরাহ ফ্রী)`,
-        features: ["ভিসা", "টিকেট", "অফার লেটার", "ভর্তি", "বাসা",],
-        isPopular: true,
-    },
-    {
-        title: "ওমরাহ (রেগুলার)",
-        slug: "umrah-package",
-        price: "১ লক্ষ ৩০ হাজার টাকা",
-        features: ["ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "ট্রান্সপোর্ট", "মক্কা ও মদিনা যিয়ারহ", "খাবার", "হোটেল",],
-    },
-    {
-        title: "মিশর ভ্রমণ",
-        slug: "egypt-tour",
-        price: "১ লক্ষ ৭০ হাজার টাকা",
-        features: ["ভিসা", "ডিরেক্ট ফ্লাইট টিকেট", "ট্রান্সপোর্ট", "দেশীয় খাবার", "হোটেল", "সাইট সিইং"],
-    },
-];
-
-// Variants for text animations
-const textVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-    exit: { opacity: 0, y: 50, transition: { duration: 0.8 } }, // Slide out
-};
-
-// Variants for package cards with staggered delay
-const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.8, delay: i * 0.5 }, // Delay based on index
-    }),
-    exit: (i: number) => ({
-        opacity: 0,
-        y: 50,
-        transition: { duration: 0.8, delay: i * 0.5 }, // Delay based on index
-    }),
-};
-const Packages: React.FC = () => {
-    const [ref, inView] = useInView({
-        triggerOnce: false,  // Trigger animation only once
-        threshold: 0.1, // Trigger when 20% of section is visible
-    });
-
+export default function PackagesSection() {
+    const packages = [
+        {
+            title: "Al-Azhar Admission",
+            price: "৳1,75,000",
+            tag: "Most Popular",
+            icon: GraduationCap,
+            features: ["Offer Letter", "Visa Support", "Air Ticket", "Admission Help"],
+        },
+        {
+            title: "Egypt Visa",
+            price: "Contact Us",
+            tag: "Fast Process",
+            icon: FileCheck,
+            features: ["Visa Approval", "OK to Board", "Document Check", "Guidance"],
+        },
+        {
+            title: "Umrah Package",
+            price: "Custom",
+            tag: "Spiritual Trip",
+            icon: Plane,
+            features: ["Flight Support", "Hotel Booking", "Transport Guide", "24/7 Help"],
+        },
+        {
+            title: "Hotel Booking",
+            price: "Flexible",
+            tag: "Best Deal",
+            icon: Hotel,
+            features: ["Budget Hotels", "Family Stay", "Location Support", "Easy Booking"],
+        },
+    ];
 
     return (
-        <motion.section
-            ref={ref}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            id="packages"
-            className="bg-gradient-secondary  py-10 md:py-20"
+        <section id="packages" className="bg-[#fff8f1] px-5 py-20 lg:px-8">
+            <div className="mx-auto max-w-7xl">
+                <div className="mb-12 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                    <div>
+                        <p className="mb-3 text-sm font-black uppercase tracking-[0.25em] text-pink-600">
+                            Our Packages
+                        </p>
+                        <h2 className="max-w-2xl text-4xl font-black leading-tight text-[#08103A] sm:text-5xl">
+                            Best Travel Packages For Your Journey
+                        </h2>
+                    </div>
 
-        >
-            <div className="container mx-auto px-4 text-center">
-                {/* Heading */}
-                <motion.h2
-                    className="text-3xl font-bold text-primary  mb-2"
-                    variants={textVariants}
-                >
-                    আমাদের প্যাকেজসমূহ
-                </motion.h2>
-                {/* Subheading */}
-                <motion.p
-                    className="text-primary  mb-12 max-w-xl mx-auto"
-                    variants={textVariants}
-                >
-                    আপনার পছন্দ অনুযায়ী প্যাকেজ নির্বাচন করুন
-                </motion.p>
+                    <p className="max-w-md text-gray-600">
+                        Choose reliable, affordable and complete travel support from Azhari
+                        Travels 2.0.
+                    </p>
+                </div>
 
-                {/* Package Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {packageOptions.map((pkg, index) => {
+                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                    {packages.map((item) => {
+                        const Icon = item.icon;
 
-                        // return <PackageCard key={pkg?.slug} index={index} variants={cardVariants} />
-                        return <PackageCard key={pkg?.slug} {...pkg} packageInview={inView} index={index} variants={cardVariants} />
+                        return (
+                            <div
+                                key={item.title}
+                                className="group rounded-[2rem] bg-white p-6 shadow-md transition hover:-translate-y-2 hover:shadow-2xl"
+                            >
+                                <div className="mb-6 flex items-center justify-between">
+                                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-pink-600 to-orange-400 text-white">
+                                        <Icon size={26} />
+                                    </div>
 
+                                    <span className="rounded-full bg-pink-50 px-4 py-2 text-xs font-bold text-pink-600">
+                                        {item.tag}
+                                    </span>
+                                </div>
+
+                                <h3 className="text-2xl font-black text-[#08103A]">
+                                    {item.title}
+                                </h3>
+
+                                <p className="mt-3 text-3xl font-black bg-gradient-to-r from-pink-600 to-orange-400 bg-clip-text text-transparent">
+                                    {item.price}
+                                </p>
+
+                                <div className="my-6 h-px bg-gray-100" />
+
+                                <ul className="space-y-3">
+                                    {item.features.map((feature) => (
+                                        <li
+                                            key={feature}
+                                            className="flex items-center gap-3 text-sm font-medium text-gray-600"
+                                        >
+                                            <CheckCircle2 size={18} className="text-orange-400" />
+                                            {feature}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <a
+                                    href="#contact"
+                                    className="mt-7 flex items-center justify-between rounded-full bg-[#08103A] px-5 py-4 text-sm font-bold text-white transition group-hover:bg-gradient-to-r group-hover:from-pink-600 group-hover:to-orange-400"
+                                >
+                                    Get Details
+                                    <ArrowRight size={18} />
+                                </a>
+                            </div>
+                        );
                     })}
                 </div>
             </div>
-        </motion.section>
+        </section>
     );
-};
-
-export default Packages;
+}
