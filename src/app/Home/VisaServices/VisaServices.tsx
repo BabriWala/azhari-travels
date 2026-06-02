@@ -4,37 +4,37 @@ const visaServices = [
     {
         title: "Saudi Arabia Visa",
         description: "Umrah, visit, business and transit visa assistance.",
-        image: "/visa-countries/saudi-arabia.jpg",
+        image: "/home/visa-services/saudi_arabia.png",
         tag: "Most Popular",
     },
     {
         title: "UAE Visa",
         description: "Dubai tourist and visit visa processing services.",
-        image: "/visa-countries/uae.jpg",
+        image: "/home/visa-services/dubai.png",
         tag: "Fast Processing",
     },
     {
         title: "Egypt Visa",
         description: "Tourist, student and visit visa support.",
-        image: "/visa-countries/egypt.jpg",
+        image: "/home/visa-services/egypt.png",
         tag: "Student Friendly",
     },
     {
-        title: "Turkey Visa",
-        description: "Tourist and business visa assistance.",
-        image: "/visa-countries/turkey.jpg",
+        title: "Kuwait Visa",
+        description: "Tourist visa assistance.",
+        image: "/home/visa-services/kuwait.png",
         tag: "Tourist Visa",
     },
     {
-        title: "Malaysia Visa",
-        description: "Tourist and student visa processing services.",
-        image: "/visa-countries/malaysia.jpg",
+        title: "Sri Lanka Visa",
+        description: "Tourist visa processing services.",
+        image: "/home/visa-services/sri_lanka.png",
         tag: "Study & Travel",
     },
     {
         title: "Syria Visa",
         description: "Entry approval and visa assistance services.",
-        image: "/visa-countries/syria.jpg",
+        image: "/home/visa-services/syria.png",
         tag: "Entry Approval",
     },
 ];
@@ -128,7 +128,7 @@ export default function VisaServices() {
                                     </p>
                                 </div>
 
-                                <button className="group/btn mt-7 inline-flex w-fit items-center gap-3 rounded-full border border-[#F7025B]/25 bg-[#F7025B]/5 px-5 py-3 font-bold text-[#F7025B] transition-all duration-300 hover:bg-[#F7025B] hover:text-white">
+                                <button className="group/btn cursor-pointer mt-7 inline-flex w-fit items-center gap-3 rounded-full border border-[#F7025B]/25 bg-[#F7025B]/5 px-5 py-3 font-bold text-[#F7025B] transition-all duration-300 hover:bg-[#F7025B] hover:text-white">
                                     View Requirements
                                     <ArrowRight
                                         size={18}
@@ -141,7 +141,7 @@ export default function VisaServices() {
                 </div>
 
                 <div className="mt-12 flex justify-center">
-                    <button className="group inline-flex items-center gap-6 rounded-xl bg-[#F7025B] px-10 py-5 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_45px_rgba(247,2,91,0.35)]">
+                    <button className="group cursor-pointer inline-flex items-center gap-6 rounded-xl bg-[#F7025B] px-10 py-5 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_45px_rgba(247,2,91,0.35)]">
                         View All Visa Services
                         <ArrowRight
                             size={24}
