@@ -191,12 +191,12 @@ export default function PopularTourPackages() {
 
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#06113C]/90 via-[#06113C]/35 to-transparent" />
 
-                                <div className="absolute left-5 top-5 rounded-full bg-white/95 px-4 py-2 text-xs font-black uppercase tracking-[1.5px] shadow-sm backdrop-blur">
+                                <div className="absolute left-5 top-5 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold uppercase tracking-[1.5px] shadow-sm backdrop-blur">
                                     <span style={{ color: item.color }}>{item.type}</span>
                                 </div>
 
                                 <div className="absolute bottom-5 left-5 right-5">
-                                    <h3 className="text-3xl font-black text-white">
+                                    <h3 className="text-3xl font-semibold text-white">
                                         {item.country}
                                     </h3>
 
@@ -222,7 +222,7 @@ export default function PopularTourPackages() {
                                             Package starts from
                                         </p>
                                         <h4
-                                            className="mt-1 text-2xl font-black"
+                                            className="mt-1 text-2xl font-semibold"
                                             style={{ color: item.color }}
                                         >
                                             {item.price}
@@ -257,7 +257,7 @@ export default function PopularTourPackages() {
                                 </div>
 
                                 <button
-                                    className="group/btn mt-7 flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-1"
+                                    className="group/btn mt-7 flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1"
                                     style={{
                                         backgroundColor: item.color,
                                         boxShadow: `0 16px 30px ${item.color}30`,

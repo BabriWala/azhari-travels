@@ -15,6 +15,22 @@ import { GiEgyptianPyramids } from "react-icons/gi";
 import { FaMosque } from "react-icons/fa";
 import { TbBuildingSkyscraper } from "react-icons/tb";
 import { MdOutlineLocationCity } from "react-icons/md";
+import { FaGraduationCap } from "react-icons/fa";
+import { MdOutlinePeopleAlt } from "react-icons/md";
+import { AiOutlineGlobal } from "react-icons/ai";
+import { HiOutlineUsers } from "react-icons/hi2";
+import { MdDocumentScanner } from "react-icons/md";
+import { IoDocuments } from "react-icons/io5";
+import { FaPassport } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
+import { MdLuggage } from "react-icons/md";
+
+
+
+
+
+
+
 
 const services = [
     {
@@ -24,25 +40,25 @@ const services = [
         color: "#F7025B",
     },
     {
-        icon: FileCheck,
+        icon: IoDocuments,
         title: "Offer Letter Assistance",
         text: "Help with securing admission offers.",
         color: "#2563EB",
     },
     {
-        icon: BookOpenCheck,
+        icon: FaPassport,
         title: "Visa Processing",
         text: "Student visa documentation and submission.",
         color: "#16A34A",
     },
     {
-        icon: GraduationCap,
+        icon: FaGraduationCap,
         title: "Scholarship Guidance",
         text: "Information on available scholarships.",
         color: "#7C3AED",
     },
     {
-        icon: Home,
+        icon: FaHome,
         title: "Accommodation Support",
         text: "Student housing assistance.",
         color: "#F97316",
@@ -57,7 +73,7 @@ const services = [
 
 const highlights = [
     {
-        icon: Users,
+        icon: HiOutlineUsers,
         title: "Expert Guidance",
         text: "Experienced consultants to guide you at every step.",
         color: "#F7025B",
@@ -69,7 +85,7 @@ const highlights = [
         color: "#2563EB",
     },
     {
-        icon: Globe2,
+        icon: AiOutlineGlobal,
         title: "Global Opportunities",
         text: "Connecting students to top universities worldwide.",
         color: "#16A34A",
@@ -78,28 +94,28 @@ const highlights = [
 
 const destinations = [
     {
-        icon: GiEgyptianPyramids,
         name: "Egypt",
+        image: "/home/visa-services/egypt.png",
         color: "#F7025B",
     },
     {
-        icon: MdOutlineLocationCity,
-        name: "Malaysia",
+        name: "Sri Lanka",
+        image: "/home/visa-services/sri_lanka.png",
         color: "#2563EB",
     },
     {
-        icon: FaMosque,
-        name: "Turkey",
+        name: "Syrira",
+        image: "/home/visa-services/syria.png",
         color: "#F97316",
     },
     {
-        icon: FaMosque,
         name: "Saudi Arabia",
+        image: "/home/visa-services/saudi_arabia.png",
         color: "#16A34A",
     },
     {
-        icon: TbBuildingSkyscraper,
         name: "UAE",
+        image: "/home/visa-services/dubai.png",
         color: "#7C3AED",
     },
 ];
@@ -116,14 +132,14 @@ export default function StudentConsultancy() {
                     {/* Left Content */}
                     <div>
                         <div className="mb-8 inline-flex items-center gap-3 rounded-xl border border-[#F7025B]/20 bg-white px-5 py-3 text-[#F7025B] shadow-sm">
-                            <GraduationCap size={24} />
+                            <FaGraduationCap size={24} />
 
-                            <span className="text-sm font-black uppercase tracking-[3px]">
+                            <span className="text-sm font-semibold uppercase tracking-[3px]">
                                 Student Consultancy
                             </span>
                         </div>
 
-                        <h2 className="text-4xl font-black leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
+                        <h2 className="text-4xl font-semibold leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
                             Study Abroad &
                             <br />
                             Student <span className="text-[#F7025B]">Consultancy</span>
@@ -153,7 +169,7 @@ export default function StudentConsultancy() {
                                     </div>
 
                                     <div>
-                                        <h3 className="text-lg font-black text-[#06113C]">
+                                        <h3 className="text-lg font-semibold text-[#06113C]">
                                             {title}
                                         </h3>
 
@@ -171,7 +187,7 @@ export default function StudentConsultancy() {
                         <div className="mb-8 flex items-center justify-center gap-5">
                             <span className="h-[3px] w-12 rounded-full bg-[#F7025B]" />
 
-                            <h3 className="text-2xl font-black text-[#06113C]">
+                            <h3 className="text-2xl font-semibold text-[#06113C]">
                                 Our Services
                             </h3>
 
@@ -195,7 +211,7 @@ export default function StudentConsultancy() {
                                         <Icon size={48} strokeWidth={1.7} />
                                     </div>
 
-                                    <h4 className="mt-6 text-xl font-black text-[#06113C]">
+                                    <h4 className="mt-6 text-xl font-semibold text-[#06113C]">
                                         {title}
                                     </h4>
 
@@ -217,31 +233,42 @@ export default function StudentConsultancy() {
                 <div className="mt-14 grid gap-8 lg:grid-cols-[1.35fr_0.75fr]">
                     {/* Popular Destinations */}
                     <div className="rounded-[28px] border border-white/70 bg-white/95 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.07)] backdrop-blur sm:p-8">
-                        <h3 className="text-2xl font-black text-[#06113C]">
+                        <h3 className="text-2xl font-semibold text-[#06113C]">
                             Popular Destinations
                         </h3>
 
                         <div className="mt-4 h-[3px] w-12 rounded-full bg-[#F7025B]" />
 
-                        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
-                            {destinations.map(({ icon: Icon, name, color }) => (
+                        <div className="mt-6 grid gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+                            {destinations.map(({ name, image, color }) => (
                                 <div
                                     key={name}
-                                    className="group rounded-2xl border border-slate-200 bg-white p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(15,23,42,0.10)]"
+                                    className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]"
                                 >
-                                    <div
-                                        className="mx-auto flex h-24 w-24 items-center justify-center text-5xl transition-transform duration-300 group-hover:scale-110"
-                                        style={{ color }}
-                                    >
-                                        <Icon />
+                                    <div className="relative h-36 overflow-hidden">
+                                        <img
+                                            src={image}
+                                            alt={name}
+                                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        />
+
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+                                        <h4 className="absolute bottom-3 left-3 text-lg font-bold text-white">
+                                            {name}
+                                        </h4>
                                     </div>
 
-                                    <h4 className="mt-4 font-black text-[#06113C]">{name}</h4>
+                                    <div className="p-4">
+                                        <div
+                                            className="h-[3px] w-10 rounded-full"
+                                            style={{ backgroundColor: color }}
+                                        />
 
-                                    <div
-                                        className="mx-auto mt-4 h-[3px] w-9 rounded-full"
-                                        style={{ backgroundColor: color }}
-                                    />
+                                        <p className="mt-3 text-sm font-medium text-slate-600">
+                                            Popular Destination
+                                        </p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -251,11 +278,11 @@ export default function StudentConsultancy() {
                     <div className="rounded-[28px] bg-[#F7025B] p-8 text-white shadow-[0_20px_55px_rgba(247,2,91,0.28)]">
                         <div className="flex flex-col gap-6 sm:flex-row sm:items-center lg:flex-col lg:items-start">
                             <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white text-[#F7025B] shadow-lg">
-                                <GraduationCap size={54} />
+                                <FaGraduationCap size={54} />
                             </div>
 
                             <div>
-                                <h3 className="text-3xl font-black leading-tight">
+                                <h3 className="text-3xl font-semibold leading-tight">
                                     Ready to Begin Your Study Journey?
                                 </h3>
 
