@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import MetaWhatsAppSalesLink from "../../components/MetaWhatsAppSalesLink";
 
 const steps = [
     {
@@ -113,11 +113,14 @@ export default function ProcessingSystemPage() {
                         টিকেট রিজার্ভেশন থেকে ভিসা অনুমোদন, ওকে টু বোর্ড, বিমানবন্দরে স্বাগত, এবং ভর্তি সংক্রান্ত কার্যক্রম পর্যন্ত — আমাদের দল পুরো প্রক্রিয়ায় আপনাকে সহায়তা করবে।
                     </p>
 
-                    <Link href="https://wa.me/+8801318185954" target="_blank">
+                    <MetaWhatsAppSalesLink
+                        href="https://wa.me/+8801318185954"
+                        sectionName="Processing System"
+                    >
                         <button className="mt-6 rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-7 py-3 font-bold text-white shadow-lg transition hover:scale-105 md:mt-0">
                             প্রক্রিয়া শুরু করুন
                         </button>
-                    </Link>
+                    </MetaWhatsAppSalesLink>
 
                 </div>
             </section>

@@ -9,7 +9,7 @@ import {
     ShieldCheck,
     Headphones,
 } from "lucide-react";
-import Link from "next/link";
+import MetaWhatsAppSalesLink from "../../components/MetaWhatsAppSalesLink";
 
 const included = [
     "এয়ার টিকেট",
@@ -196,11 +196,14 @@ export default function AlAzharPackagePage() {
                         </p>
                     </div>
 
-                    <Link href="https://wa.me/+8801318185954" target="_blank">
+                    <MetaWhatsAppSalesLink
+                        href="https://wa.me/+8801318185954"
+                        sectionName="Al-Azhar Package"
+                    >
                         <button className="mt-6 rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-7 py-3 font-bold text-white shadow-lg transition hover:scale-105 md:mt-0">
                             এখনই যোগাযোগ করুন
                         </button>
-                    </Link>
+                    </MetaWhatsAppSalesLink>
                 </div>
             </section>
         </main>

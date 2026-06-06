@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Phone, Mail, MapPin, Menu, X } from "lucide-react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
@@ -17,6 +18,7 @@ import {
     FaWhatsapp,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import MetaWhatsAppSalesLink from "../MetaWhatsAppSalesLink";
 
 const navItems = [
     {
@@ -47,6 +49,8 @@ const navItems = [
 
 export default function Header() {
     const [open, setOpen] = useState(false);
+    const pathname = usePathname();
+    const trackAlAzharSale = pathname === "/al-azhar-university";
 
     return (
         <>
@@ -130,9 +134,10 @@ export default function Header() {
                         </div>
 
                         <div className="hidden lg:block">
-                            <Link
+                            <MetaWhatsAppSalesLink
                                 href="https://wa.me/8801318185954"
-                                target="_blank"
+                                sectionName="Header WhatsApp"
+                                enabled={trackAlAzharSale}
                                 className="relative flex items-center gap-3 rounded-full bg-[#22C55E] px-6 py-3 font-normal text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_35px_rgba(34,197,94,0.35)]"
                             >
                                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#22C55E]">
@@ -142,7 +147,7 @@ export default function Header() {
                                 WhatsApp Us
 
                                 <span className="absolute -right-1 top-0 h-4 w-4 rounded-full border-2 border-white bg-green-400" />
-                            </Link>
+                            </MetaWhatsAppSalesLink>
                         </div>
 
                         <button onClick={() => setOpen(!open)} className="xl:hidden">
@@ -162,14 +167,15 @@ export default function Header() {
                                 </Link>
                             ))}
 
-                            <Link
+                            <MetaWhatsAppSalesLink
                                 href="https://wa.me/8801318185954"
-                                target="_blank"
+                                sectionName="Mobile Header WhatsApp"
+                                enabled={trackAlAzharSale}
                                 className="flex items-center justify-center gap-2 rounded-full bg-[#12B955] px-5 py-3 font-normal text-white"
                             >
                                 <FaWhatsapp />
                                 WhatsApp Us
-                            </Link>
+                            </MetaWhatsAppSalesLink>
                         </div>
                     )}
                 </nav>

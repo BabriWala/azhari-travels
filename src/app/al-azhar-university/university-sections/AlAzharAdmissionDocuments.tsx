@@ -1,5 +1,5 @@
-import Link from "next/link";
 import React from "react";
+import MetaWhatsAppSalesLink from "../../components/MetaWhatsAppSalesLink";
 
 const documents = [
     {
@@ -135,12 +135,15 @@ export default function AlAzharAdmissionDocuments() {
                         notarization, ministry attestation, and admission support. */}
                         কাগজপত্র তৈরি, নোটারি করা, মিনিস্ট্রি অ্যাটেস্টেশন এবং ভর্তির সময় সাহায্যের জন্য আাযহারী ট্রাভেলস এন্ড ট্যুরস এর সাথে যোগাযোগ করুন।
                     </p>
-                    <Link href="https://wa.me/+8801318185954" target="_blank">
+                    <MetaWhatsAppSalesLink
+                        href="https://wa.me/+8801318185954"
+                        sectionName="Admission Documents"
+                    >
                         <button className="mt-6 rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-8 py-3 font-bold text-white shadow-lg transition hover:scale-105">
                             {/* Contact Now */}
                             এখনই যোগাযোগ করুন
                         </button>
-                    </Link>
+                    </MetaWhatsAppSalesLink>
                 </div>
             </section>
         </main>

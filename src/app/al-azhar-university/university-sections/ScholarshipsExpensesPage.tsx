@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import MetaWhatsAppSalesLink from "../../components/MetaWhatsAppSalesLink";
 
 
 const cards = [
@@ -103,12 +103,15 @@ export default function ScholarshipsExpensesPage() {
 
 
 
-                        <Link href="https://wa.me/+8801318185954" target="_blank">
+                        <MetaWhatsAppSalesLink
+                            href="https://wa.me/+8801318185954"
+                            sectionName="Scholarships Expenses"
+                        >
                             <button className="rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-8 py-3 font-bold text-white shadow-lg transition hover:scale-105">
                                 {/* Contact Us */}
                                 আমাদের সাথে যোগাযোগ করুন
                             </button>
-                        </Link>
+                        </MetaWhatsAppSalesLink>
                     </div>
                 </div>
             </section>
