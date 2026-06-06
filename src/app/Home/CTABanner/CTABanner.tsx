@@ -6,6 +6,7 @@ import {
     Tag,
     Plane,
 } from "lucide-react";
+import Link from "next/link";
 
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -49,7 +50,7 @@ export default function CTABanner() {
                                 <span className="h-px w-28 border-t border-dashed border-[#F7025B]" />
                             </div>
 
-                            <h2 className="text-4xl font-black leading-tight text-[#06113C] sm:text-5xl lg:text-7xl">
+                            <h2 className="text-4xl font-semibold leading-tight text-[#06113C] sm:text-5xl lg:text-7xl">
                                 Ready to
                                 <br />
                                 <span className="text-[#F7025B]">Start Your Journey?</span>
@@ -63,17 +64,23 @@ export default function CTABanner() {
                             </p>
 
                             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                                <button className="group inline-flex items-center justify-center gap-4 rounded-xl bg-[#F7025B] px-7 py-5 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_50px_rgba(247,2,91,0.35)]">
-                                    <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/15 transition-transform duration-300 group-hover:scale-110">
-                                        <MessageCircle size={28} fill="white" />
-                                    </span>
-                                    Get Free Consultation
-                                </button>
-
-                                <button className="group inline-flex items-center justify-center gap-4 rounded-xl border-2 border-[#16A34A] bg-white px-7 py-5 text-lg font-bold text-[#16A34A] transition-all duration-300 hover:-translate-y-1 hover:bg-[#16A34A] hover:text-white hover:shadow-[0_20px_40px_rgba(22,163,74,0.22)]">
+                                <Link
+                                    href="https://wa.me/8801318185954?text=Assalamu%20Alaikum,%20I%20would%20like%20to%20know%20more%20about%20your%20services.">
+                                    <button className="group inline-flex items-center justify-center gap-4 rounded-xl bg-[#F7025B] px-7 py-5 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_50px_rgba(247,2,91,0.35)]">
+                                        <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/15 transition-transform duration-300 group-hover:scale-110">
+                                            <MessageCircle size={28} fill="white" />
+                                        </span>
+                                        Get Free Consultation
+                                    </button>
+                                </Link>
+                                <Link
+                                    href="https://wa.me/8801318185954?text=Assalamu%20Alaikum,%20I%20would%20like%20to%20know%20more%20about%20your%20services."
+                                    target="_blank"
+                                    className="group inline-flex items-center justify-center gap-4 rounded-xl border-2 border-[#16A34A] bg-white px-7 py-5 text-lg font-bold text-[#16A34A] transition-all duration-300 hover:-translate-y-1 hover:bg-[#16A34A] hover:text-white hover:shadow-[0_20px_40px_rgba(22,163,74,0.22)]"
+                                >
                                     <FaWhatsapp className="text-4xl transition-transform duration-300 group-hover:scale-110" />
                                     Contact on WhatsApp
-                                </button>
+                                </Link>
                             </div>
                         </div>
 
@@ -89,7 +96,7 @@ export default function CTABanner() {
                                         <div className="h-16 w-px bg-slate-300" />
 
                                         <div>
-                                            <h3 className="text-xl font-black text-[#06113C]">
+                                            <h3 className="text-xl font-semibold text-[#06113C]">
                                                 {title}
                                             </h3>
 
@@ -121,7 +128,7 @@ export default function CTABanner() {
                                     />
 
                                     <div>
-                                        <h3 className="text-lg font-black text-[#06113C]">
+                                        <h3 className="text-lg font-semibold text-[#06113C]">
                                             {title}
                                         </h3>
 

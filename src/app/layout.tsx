@@ -58,6 +58,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           {children}
         </main>
         {/* <Footer /> */}
+        <Footer></Footer>
         <Toaster
           position="top-center" // Used to adapt the animation
         ></Toaster>

@@ -63,7 +63,7 @@ export default function FAQSection() {
                         <span className="h-[2px] w-16 bg-[#F7025B] sm:w-28" />
                     </div>
 
-                    <h2 className="text-4xl font-black leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
+                    <h2 className="text-4xl font-semibold leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
                         Frequently Asked <span className="text-[#F7025B]">Questions</span>
                     </h2>
 
@@ -91,7 +91,7 @@ export default function FAQSection() {
                                     <div className="hidden h-16 w-[3px] rounded-full bg-[#F7025B] sm:block" />
 
                                     <div className="flex-1">
-                                        <h3 className="text-lg font-black text-[#06113C] sm:text-2xl">
+                                        <h3 className="text-lg font-semibold text-[#06113C] sm:text-2xl">
                                             {question}
                                         </h3>
 

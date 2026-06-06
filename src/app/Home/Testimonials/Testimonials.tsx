@@ -39,11 +39,11 @@ export default function Testimonials() {
                 <div className="mx-auto max-w-[850px] text-center">
                     <div className="mb-5 flex items-center justify-center gap-6 text-[#F7025B] sm:gap-8">
                         <span className="h-[2px] w-16 bg-[#F7025B] sm:w-32" />
-                        <span className="text-7xl font-black leading-none">“</span>
+                        <span className="text-7xl font-semibold leading-none">“</span>
                         <span className="h-[2px] w-16 bg-[#F7025B] sm:w-32" />
                     </div>
 
-                    <h2 className="text-4xl font-black leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
+                    <h2 className="text-4xl font-semibold leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
                         What Our <span className="text-[#F7025B]">Clients Say</span>
                     </h2>
 
@@ -60,7 +60,7 @@ export default function Testimonials() {
                             key={item.name}
                             className="group rounded-3xl border border-white/70 bg-white/95 p-8 shadow-[0_16px_45px_rgba(15,23,42,0.06)] backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_26px_65px_rgba(15,23,42,0.12)]"
                         >
-                            <div className="text-6xl font-black leading-none text-[#F7025B] transition-transform duration-300 group-hover:scale-110">
+                            <div className="text-6xl font-semibold leading-none text-[#F7025B] transition-transform duration-300 group-hover:scale-110">
                                 “
                             </div>
 
@@ -84,7 +84,7 @@ export default function Testimonials() {
                                 />
 
                                 <div>
-                                    <h3 className="text-lg font-black text-[#06113C]">
+                                    <h3 className="text-lg font-semibold text-[#06113C]">
                                         {item.name}
                                     </h3>
 

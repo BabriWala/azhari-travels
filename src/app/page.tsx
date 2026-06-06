@@ -36,12 +36,12 @@ export default function Home() {
       <StudentConsultancy></StudentConsultancy>
       <UmrahHajjServices></UmrahHajjServices>
       <PopularServices></PopularServices>
-      <FeaturedDestinations></FeaturedDestinations>
+      {/* <FeaturedDestinations></FeaturedDestinations> */}
       <WhyChooseUs></WhyChooseUs>
-      <Testimonials></Testimonials>
+      {/* <Testimonials></Testimonials> */}
       <FAQSection></FAQSection>
       <CTABanner></CTABanner>
-      <Footer></Footer>
+     
       {/* //<Hero */}
       {/* // title="আল আযহার বিশ্ববিদ্যালয়ে ভর্তি হওয়ার স্বপ্ন পূরণ করুন আমাদের সাথে "
         // description="আজহারী ট্রাভেলস আপনার স্বপ্ন পূরণ করবে স্বল্প খরচে"

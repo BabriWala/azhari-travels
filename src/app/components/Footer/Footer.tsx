@@ -1,19 +1,17 @@
 // @ts-nocheck
 import {
-    Plane,
-    ChevronRight,
-    Phone,
+    Home,
+    Users,
+    Briefcase,
+    Luggage,
+    Pencil,
     Mail,
+    PhoneCall,
     MapPin,
-    Send,
-    ShieldCheck,
-    Clock3,
-    Headphones,
-    Tag,
-    FileText,
+    Plane,
     GraduationCap,
-    BriefcaseBusiness,
-    Landmark,
+    Send,
+    ArrowUpRight,
 } from "lucide-react";
 
 import {
@@ -23,228 +21,200 @@ import {
     FaWhatsapp,
 } from "react-icons/fa";
 
-const quickLinks = ["Home", "About Us", "Services", "Tours", "Blog", "Contact"];
-
-const services = [
-    { name: "Visa Processing", icon: FileText },
-    { name: "Student Consultancy", icon: GraduationCap },
-    { name: "Tour Packages", icon: BriefcaseBusiness },
-    { name: "Air Ticket", icon: Plane },
-    { name: "Umrah Services", icon: Landmark },
+const quickLinks = [
+    { icon: Home, label: "Home" },
+    { icon: Users, label: "About Us" },
+    { icon: Briefcase, label: "Services" },
+    { icon: Luggage, label: "Tours" },
+    { icon: Pencil, label: "Blog" },
+    { icon: Mail, label: "Contact" },
 ];
 
-const trustItems = [
-    {
-        title: "Trusted & Reliable",
-        text: "Trusted by thousands of happy clients",
-        icon: ShieldCheck,
-        color: "text-[#ff2f7d]",
-    },
-    {
-        title: "Fast Processing",
-        text: "Quick visa approvals and bookings",
-        icon: Clock3,
-        color: "text-[#2f93ff]",
-    },
-    {
-        title: "Dedicated Support",
-        text: "24/7 support from our travel experts",
-        icon: Headphones,
-        color: "text-[#32d086]",
-    },
-    {
-        title: "Best Price Guarantee",
-        text: "Transparent pricing with no hidden charges",
-        icon: Tag,
-        color: "text-[#ff8a1f]",
-    },
+const services = [
+    { icon: Briefcase, label: "Visa Processing" },
+    { icon: GraduationCap, label: "Student Consultancy" },
+    { icon: Luggage, label: "Tour Packages" },
+    { icon: Plane, label: "Air Ticket" },
+    { icon: Home, label: "Umrah Services" },
+];
+
+const socials = [
+    { icon: FaFacebookF, label: "Facebook", color: "bg-blue-600" },
+    { icon: FaInstagram, label: "Instagram", color: "bg-pink-500" },
+    { icon: FaYoutube, label: "YouTube", color: "bg-red-600" },
+    { icon: FaWhatsapp, label: "WhatsApp", color: "bg-green-500" },
 ];
 
 export default function Footer() {
     return (
-        <footer className="font-['Inter',sans-serif] bg-[#031b34] text-white">
-            <div className="bg-[radial-gradient(circle_at_top_left,#082b52_0%,#031b34_45%,#021324_100%)]">
-                {/* Top Footer */}
-                <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16 pt-16 lg:pt-20">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.35fr_0.9fr_1.05fr_1.35fr_1.25fr] gap-10 lg:gap-0 pb-16">
-                        {/* Logo */}
-                        <div className="lg:pr-14 lg:border-r lg:border-white/10">
-                            <div className="flex items-center gap-4 mb-8">
-                                <div className="relative w-[72px] h-[72px] flex items-center justify-center">
-                                    <div className="absolute w-14 h-14 rounded-full border-[10px] border-[#ff2f7d] border-r-transparent rotate-[-25deg]" />
-                                    <Plane className="relative w-10 h-10 text-white -rotate-12" />
-                                </div>
+        <footer className="relative overflow-hidden bg-[#031945] px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
+            <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#F7025B]/10 blur-3xl" />
+            <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-[#0F766E]/15 blur-3xl" />
+            <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-                                <div>
-                                    <h2 className="text-[34px] md:text-[40px] leading-none font-extrabold tracking-[0.16em]">
-                                        AZHARI
-                                    </h2>
-                                    <p className="mt-2 text-[15px] font-bold tracking-[0.18em]">
-                                        TRAVELS & TOURS
-                                    </p>
-                                </div>
-                            </div>
-
-                            <p className="text-[#b7c3d4] text-[17px] leading-[2.05] max-w-[310px]">
-                                Azhari Travels & Tours is a trusted travel agency providing visa
-                                processing, tour packages, student consultancy, Umrah services,
-                                and air ticket booking.
+            <div className="relative z-10 mx-auto max-w-[1280px]">
+                <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_1.2fr_1.05fr]">
+                    <div>
+                        <div className="mb-6">
+                            <h2 className="text-4xl font-black tracking-wider sm:text-5xl">
+                                AZHARI
+                            </h2>
+                            <p className="mt-2 text-lg font-bold tracking-[4px] text-[#F7025B] sm:text-xl">
+                                TRAVELS & TOURS
                             </p>
                         </div>
 
-                        {/* Quick Links */}
-                        <div className="lg:px-12 lg:border-r lg:border-white/10">
-                            <FooterTitle title="Quick Links" />
-                            <ul className="space-y-6">
-                                {quickLinks.map((link) => (
-                                    <li key={link}>
-                                        <a className="flex items-center gap-5 text-[17px] text-white hover:text-[#ff2f7d] transition">
-                                            <ChevronRight className="w-5 h-5 text-[#ff2f7d]" />
-                                            {link}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Services */}
-                        <div className="lg:px-12 lg:border-r lg:border-white/10">
-                            <FooterTitle title="Services" />
-                            <ul className="space-y-6">
-                                {services.map(({ name, icon: Icon }) => (
-                                    <li key={name}>
-                                        <a className="flex items-center gap-5 text-[17px] text-white hover:text-[#ff2f7d] transition">
-                                            <Icon className="w-8 h-8 text-[#ff2f7d]" />
-                                            {name}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Contact */}
-                        <div className="lg:px-12 lg:border-r lg:border-white/10">
-                            <FooterTitle title="Contact Information" />
-
-                            <div className="space-y-7">
-                                <ContactItem icon={Phone} text="+880 1XXX-XXXXXX" color="bg-[#4a163d]" />
-                                <ContactItem icon={Mail} text="info@azharitravels.com" color="bg-[#123f68]" />
-                                <ContactItem icon={MapPin} text="Dhaka, Bangladesh" color="bg-[#16624d]" />
-                            </div>
-
-                            <div className="mt-9 pt-7 border-t border-white/10">
-                                <div className="flex flex-wrap gap-5">
-                                    <Social icon={FaFacebookF} label="Facebook" bg="bg-[#3159ad]" />
-                                    <Social icon={FaInstagram} label="Instagram" bg="bg-gradient-to-br from-[#833ab4] via-[#fd1d1d] to-[#fcb045]" />
-                                    <Social icon={FaYoutube} label="YouTube" bg="bg-[#ff1f1f]" />
-                                    <Social icon={FaWhatsapp} label="WhatsApp" bg="bg-[#36c765]" />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Newsletter */}
-                        <div className="lg:pl-12">
-                            <FooterTitle title="Newsletter" />
-
-                            <p className="text-[#b7c3d4] text-[17px] leading-8 mb-7">
-                                Subscribe to receive travel offers, visa updates, and tour
-                                promotions.
-                            </p>
-
-                            <input
-                                type="email"
-                                placeholder="Enter your email address"
-                                className="w-full h-[58px] rounded-lg bg-white/5 border border-white/20 px-5 text-white text-[16px] placeholder:text-[#9daac0] outline-none focus:border-[#ff2f7d]"
-                            />
-
-                            <button className="mt-5 w-full h-[58px] rounded-lg bg-gradient-to-r from-[#ff1f73] to-[#ff7a22] text-white text-[17px] font-extrabold tracking-wide flex items-center justify-center gap-3 hover:opacity-90 transition">
-                                SUBSCRIBE NOW
-                                <Send className="w-5 h-5 fill-white" />
-                            </button>
-
-                            <div className="hidden lg:flex justify-end mt-12 opacity-20">
-                                <Plane className="w-20 h-20 text-white rotate-[-20deg]" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Trust Bar */}
-                <div className="border-y border-white/10">
-                    <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16 py-9">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-9">
-                            {trustItems.map(({ title, text, icon: Icon, color }) => (
-                                <div key={title} className="flex items-start gap-5">
-                                    <Icon className={`w-[58px] h-[58px] shrink-0 ${color}`} />
-                                    <div>
-                                        <h4 className="text-[19px] font-extrabold mb-2">{title}</h4>
-                                        <p className="text-[#b7c3d4] text-[17px] leading-7 max-w-[245px]">
-                                            {text}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Bottom */}
-                <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16 py-8">
-                    <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-                        <p className="text-[#b7c3d4] text-[17px] text-center lg:text-left">
-                            © 2026 Azhari Travels & Tours. All Rights Reserved.
+                        <p className="max-w-[340px] text-base font-medium leading-8 text-white/80 sm:text-lg">
+                            Azhari Travels & Tours is a trusted travel agency providing visa
+                            processing, tour packages, student consultancy, Umrah services,
+                            and air ticket booking.
                         </p>
-
-                        <div className="flex flex-wrap justify-center gap-4">
-                            {["VISA", "Mastercard", "AMERICAN EXPRESS", "bkash", "নগদ"].map(
-                                (item) => (
-                                    <div
-                                        key={item}
-                                        className="h-11 min-w-[92px] px-5 rounded-md bg-white text-[#08305c] flex items-center justify-center text-sm font-extrabold shadow-md"
-                                    >
-                                        {item}
-                                    </div>
-                                )
-                            )}
-                        </div>
                     </div>
+
+                    <FooterColumn title="Quick Links">
+                        {quickLinks.map(({ icon: Icon, label }) => (
+                            <FooterLink key={label} icon={Icon} label={label} />
+                        ))}
+                    </FooterColumn>
+
+                    <FooterColumn title="Services">
+                        {services.map(({ icon: Icon, label }) => (
+                            <FooterLink
+                                key={label}
+                                icon={Icon}
+                                label={label}
+                                iconClass="text-[#F7025B]"
+                            />
+                        ))}
+                    </FooterColumn>
+
+                    <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-1">
+                        <FooterColumn title="Contact Information">
+                            <FooterLink
+                                icon={PhoneCall}
+                                label="+88013 1818 5954"
+                                iconClass="text-[#F7025B]"
+                            />
+                            <FooterLink
+                                icon={Mail}
+                                label="azharitravels.info@gmail.com"
+                                iconClass="text-[#F7025B]"
+                            />
+                            <FooterLink
+                                icon={MapPin}
+                                label="2/A - R#7 - Nabinagar Housing - Mohammadpur - Dhaka"
+                                iconClass="text-[#F7025B]"
+                            />
+                        </FooterColumn>
+
+                        <FooterColumn title="Social Media">
+                            {socials.map(({ icon: Icon, label, color }) => (
+                                <a
+                                    key={label}
+                                    href="#"
+                                    className="group flex items-center gap-5"
+                                >
+                                    <span
+                                        className={`flex h-10 w-10 items-center justify-center rounded-full ${color} transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-110`}
+                                    >
+                                        <Icon className="text-xl text-white" />
+                                    </span>
+
+                                    <span className="text-lg font-medium text-white/80 transition group-hover:text-[#F7025B]">
+                                        {label}
+                                    </span>
+                                </a>
+                            ))}
+                        </FooterColumn>
+                    </div>
+                </div>
+
+                <div className="mt-14 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8 lg:p-10">
+                    <div className="grid gap-8 grid-cols-1 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+                        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+                            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-[#F7025B] ring-1 ring-white/15">
+                                <Mail size={42} />
+                            </div>
+
+                            <div>
+                                <h3 className="text-2xl font-black uppercase">Newsletter</h3>
+                                <p className="mt-3 max-w-[460px] text-base font-medium leading-7 text-white/80">
+                                    Subscribe to receive travel offers, visa updates, and tour
+                                    promotions.
+                                </p>
+                            </div>
+                        </div>
+
+                        <form className="flex flex-col gap-4 sm:flex-row">
+
+                            <div>
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email address"
+                                    className="h-16 inline-block flex-1 rounded-xl border border-white/20 bg-white/10 px-6 text-white outline-none transition placeholder:text-white/45 focus:border-[#F7025B] focus:bg-white/15"
+                                />
+
+                            </div>
+
+                            <button
+                                type="button"
+                                className="group inline-flex h-16 items-center justify-center gap-3 rounded-xl bg-[#F7025B] px-8 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_45px_rgba(247,2,91,0.35)]"
+                            >
+                                <Send
+                                    size={24}
+                                    fill="white"
+                                    className="transition-transform duration-300 group-hover:translate-x-1"
+                                />
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center md:flex-row md:text-left">
+                    <p className="text-base text-white/75">
+                        © 2026 Azhari Travels & Tours. All Rights Reserved.
+                    </p>
+
+                    <a
+                        href="#"
+                        className="inline-flex items-center gap-2 text-base font-semibold text-white/75 transition hover:text-[#F7025B]"
+                    >
+                        Back to top
+                        <ArrowUpRight size={18} />
+                    </a>
                 </div>
             </div>
         </footer>
     );
 }
 
-function FooterTitle({ title }) {
+function FooterColumn({ title, children }) {
     return (
-        <div className="mb-8">
-            <h3 className="text-[20px] font-extrabold uppercase tracking-[0.06em]">
-                {title}
-            </h3>
-            <div className="mt-4 w-10 h-[4px] rounded-full bg-[#ff2f7d]" />
+        <div>
+            <h3 className="text-xl font-black uppercase text-white">{title}</h3>
+            <div className="mt-5 h-[3px] w-12 rounded-full bg-[#F7025B]" />
+            <div className="mt-8 space-y-6">{children}</div>
         </div>
     );
 }
 
-function ContactItem({ icon: Icon, text, color }) {
+function FooterLink({ icon: Icon, label, iconClass = "text-white" }) {
     return (
-        <div className="flex items-center gap-5">
-            <div className={`w-[52px] h-[52px] rounded-full ${color} flex items-center justify-center`}>
-                <Icon className="w-6 h-6 text-white" />
+        <a
+            href="#"
+            className="group flex items-center gap-5 text-lg font-medium text-white/80 transition hover:text-[#F7025B]"
+        >
+            <div>
+                <Icon
+                    size={26}
+                    className={`${iconClass} transition-transform duration-300 group-hover:scale-110`}
+                    strokeWidth={1.7}
+                />
             </div>
-            <p className="text-[17px] text-white">{text}</p>
-        </div>
-    );
-}
-
-function Social({ icon: Icon, label, bg }) {
-    return (
-        <a href="#" className="text-center group">
-            <div
-                className={`w-[52px] h-[52px] rounded-full ${bg} flex items-center justify-center shadow-lg group-hover:scale-105 transition`}
-            >
-                <Icon className="w-6 h-6 text-white" />
-            </div>
-            <p className="mt-2 text-[12px] text-white">{label}</p>
+            <span>
+                {label}
+            </span>
         </a>
     );
 }

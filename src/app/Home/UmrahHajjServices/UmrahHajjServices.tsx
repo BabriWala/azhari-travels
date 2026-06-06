@@ -86,12 +86,12 @@ export default function UmrahHajjServices() {
                     <div>
                         <div className="mb-10 inline-flex items-center gap-3 rounded-xl border border-[#F7025B]/20 bg-white px-5 py-3 text-[#F7025B] shadow-sm">
                             <FaMosque className="text-2xl" />
-                            <span className="text-sm font-black uppercase tracking-[2px]">
+                            <span className="text-sm font-semibold uppercase tracking-[2px]">
                                 Umrah & Hajj Services
                             </span>
                         </div>
 
-                        <h2 className="text-4xl font-black leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
+                        <h2 className="text-4xl font-semibold leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
                             Umrah & Hajj
                             <br />
                             <span className="text-[#F7025B]">Travel Services</span>
@@ -108,13 +108,13 @@ export default function UmrahHajjServices() {
                     <div>
                         <div className="mb-7 flex items-center justify-center gap-5">
                             <span className="h-[3px] w-16 rounded-full bg-[#F7025B]" />
-                            <h3 className="text-center text-2xl font-black text-[#06113C]">
+                            <h3 className="text-center text-2xl font-semibold text-[#06113C]">
                                 Our Included Services
                             </h3>
                             <span className="h-[3px] w-16 rounded-full bg-[#F7025B]" />
                         </div>
 
-                        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                        <div className="grid gap-5 md:grid-cols-2">
                             {includedServices.map(({ icon: Icon, title, text }) => (
                                 <div
                                     key={title}
@@ -125,7 +125,7 @@ export default function UmrahHajjServices() {
                                     </div>
 
                                     <div>
-                                        <h4 className="text-xl font-black text-[#06113C]">
+                                        <h4 className="text-xl font-semibold text-[#06113C]">
                                             {title}
                                         </h4>
                                         <p className="mt-3 text-base font-medium leading-7 text-slate-600">
@@ -142,7 +142,7 @@ export default function UmrahHajjServices() {
                     <div>
                         <div className="mb-8 flex items-center justify-center gap-5">
                             <span className="h-[3px] w-16 rounded-full bg-[#F7025B]" />
-                            <h3 className="text-center text-2xl font-black text-[#06113C]">
+                            <h3 className="text-center text-2xl font-semibold text-[#06113C]">
                                 Our Umrah Packages
                             </h3>
                             <span className="h-[3px] w-16 rounded-full bg-[#F7025B]" />
@@ -166,7 +166,7 @@ export default function UmrahHajjServices() {
                                         <Icon size={46} />
                                     </div>
 
-                                    <h4 className="text-2xl font-black text-[#06113C]">
+                                    <h4 className="text-2xl font-semibold text-[#06113C]">
                                         {title}
                                     </h4>
 
@@ -205,7 +205,7 @@ export default function UmrahHajjServices() {
 
                     <div className="flex items-center rounded-3xl border border-[#F7025B]/15 bg-[#F7025B]/5 p-8 shadow-[0_18px_45px_rgba(247,2,91,0.08)]">
                         <div>
-                            <h3 className="text-3xl font-black leading-tight text-[#06113C]">
+                            <h3 className="text-3xl font-semibold leading-tight text-[#06113C]">
                                 Ready for your spiritual journey?
                             </h3>
 

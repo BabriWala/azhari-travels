@@ -59,25 +59,25 @@ const features = [
 const stats = [
     {
         icon: Users,
-        value: "5000+",
+        value: "2000+",
         label: "Clients Served",
         color: "#F7025B",
     },
     {
         icon: Smile,
-        value: "98%",
+        value: "99%",
         label: "Client Satisfaction",
         color: "#2563EB",
     },
     {
         icon: Globe2,
-        value: "25+",
+        value: "10+",
         label: "Destinations",
         color: "#16A34A",
     },
     {
         icon: Award,
-        value: "10+",
+        value: "2+",
         label: "Years Experience",
         color: "#F97316",
     },
@@ -102,7 +102,7 @@ export default function WhyChooseUs() {
                             </span>
                         </div>
 
-                        <h2 className="text-4xl font-black leading-tight text-[#06113C] sm:text-5xl lg:text-7xl">
+                        <h2 className="text-4xl font-semibold leading-tight text-[#06113C] sm:text-5xl lg:text-7xl">
                             Why Thousands
                             <br />
                             <span className="text-[#F7025B]">Choose Us</span>
@@ -178,7 +178,7 @@ export default function WhyChooseUs() {
                                     <Icon size={38} strokeWidth={1.8} style={{ color }} />
                                 </div>
 
-                                <h3 className="mt-5 text-5xl font-black" style={{ color }}>
+                                <h3 className="mt-5 text-5xl font-semibold" style={{ color }}>
                                     {value}
                                 </h3>
 

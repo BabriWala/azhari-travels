@@ -82,12 +82,12 @@ export default function PopularServices() {
                             <MdWorkspacePremium size={24} />
                         </span>
 
-                        <span className="text-sm font-black uppercase tracking-[2px] sm:text-base">
+                        <span className="text-sm font-semibold uppercase tracking-[2px] sm:text-base">
                             Popular Services
                         </span>
                     </div>
 
-                    <h2 className="text-4xl font-black leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
+                    <h2 className="text-4xl font-semibold leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
                         Our Popular <span className="text-[#F7025B]">Services</span>
                     </h2>
 
@@ -110,7 +110,7 @@ export default function PopularServices() {
                             className="group relative min-h-[260px] overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_16px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_65px_rgba(15,23,42,0.12)]"
                         >
                             <div
-                                className="absolute right-0 top-0 flex h-16 w-20 items-start justify-center rounded-bl-[36px] pt-3 text-xl font-black text-white"
+                                className="absolute right-0 top-0 flex h-16 w-20 items-start justify-center rounded-bl-[36px] pt-3 text-xl font-semibold text-white"
                                 style={{ backgroundColor: color }}
                             >
                                 {no}
@@ -126,7 +126,7 @@ export default function PopularServices() {
                                 <Icon size={42} />
                             </div>
 
-                            <h3 className="text-2xl font-black text-[#06113C]">{title}</h3>
+                            <h3 className="text-2xl font-semibold text-[#06113C]">{title}</h3>
 
                             <div
                                 className="my-4 h-[4px] w-11 rounded-full"
