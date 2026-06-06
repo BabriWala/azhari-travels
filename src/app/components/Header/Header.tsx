@@ -27,23 +27,23 @@ const navItems = [
     },
     {
         label: "Visa Services",
-        link: "/"
+        link: "/visa-services"
     },
     {
         label: "Tour Packages",
-        link: "/"
+        link: "/tour-packages"
     },
     {
         label: "About Us",
-        link: "/"
+        link: "/about-us"
     },
     {
         label: "Blog",
-        link: "/"
+        link: "/blog"
     },
     {
         label: "Contact",
-        link: "/"
+        link: "/contact"
     },
 ];
 
@@ -103,7 +103,7 @@ export default function Header() {
             <div className="sticky top-3 z-[9999] mx-auto max-w-7xl px-4 lg:px-0">
                 <nav className="rounded-2xl bg-white px-5 py-5 shadow-[0_18px_45px_rgba(15,23,42,0.12)]">
                     <div className="flex items-center justify-between gap-6">
-                        <div className="flex items-center gap-4">
+                        <Link href="/" className="flex items-center gap-4">
                             <img
                                 src="/Logo.png"
                                 alt="Azhari Travels & Tours"
@@ -114,23 +114,27 @@ export default function Header() {
                             <h1 className=" text-[#06113C] text-2xl font-bold leading-6 ">
                                 Azhari Travels
                             </h1>
-                        </div>
+                        </Link>
 
                         <div className="hidden items-center gap-7 xl:flex">
-                            {navItems.map((item, index) => (
+                            {navItems.map((item) => {
+                                const isActive = pathname === item.link;
+
+                                return (
                                 <Link
                                     key={item.label}
                                     href={item.link}
-                                    className={`relative text-sm font-semibold transition hover:text-[#F7025B] ${index === 0 ? "text-[#F7025B]" : "text-[#06113C]"
+                                    className={`relative text-sm font-semibold transition hover:text-[#F7025B] ${isActive ? "text-[#F7025B]" : "text-[#06113C]"
                                         }`}
                                 >
                                     {item.label}
 
-                                    {index === 0 && (
+                                    {isActive && (
                                         <span className="absolute -bottom-5 left-0 h-[3px] w-full rounded-full bg-[#F7025B]" />
                                     )}
                                 </Link>
-                            ))}
+                                );
+                            })}
                         </div>
 
                         <div className="hidden lg:block">
@@ -161,6 +165,7 @@ export default function Header() {
                                 <Link
                                     key={item.label}
                                     href={item.link}
+                                    onClick={() => setOpen(false)}
                                     className="rounded-xl px-4 py-3 text-sm font-semibold hover:bg-slate-100"
                                 >
                                     {item.label}

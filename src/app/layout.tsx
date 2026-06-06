@@ -7,6 +7,7 @@ import Footer from "./components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
 import Script from 'next/script';
 import MetaPixel from "./components/MetaPixel";
+import ScrollToTop from "./components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "Azhari Travels & Tours",
@@ -55,6 +56,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       </head>
       <body>
         <MetaPixel />
+        <ScrollToTop />
         <Header />
         <main>
           {children}
