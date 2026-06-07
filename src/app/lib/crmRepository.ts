@@ -26,6 +26,8 @@ function statusFilter(includePrivate = false) {
 }
 
 export async function listCrm(collection: AdminCollection, includePrivate = false) {
+    if (shouldSkipLocalSqliteOnVercel()) return [];
+
     try {
         switch (collection) {
             case "services":
@@ -42,12 +44,14 @@ export async function listCrm(collection: AdminCollection, includePrivate = fals
                 return prisma.lead.findMany({ orderBy: [{ updatedAt: "desc" }] }) as Promise<AdminRecord[]>;
         }
     } catch (error) {
-        if (isMissingTableError(error)) return [];
+        if (isReadableDatabaseFallbackError(error)) return [];
         throw error;
     }
 }
 
 export async function getCrmBySlug(collection: AdminCollection, slug: string) {
+    if (shouldSkipLocalSqliteOnVercel()) return null;
+
     try {
         switch (collection) {
             case "services": {
@@ -70,7 +74,7 @@ export async function getCrmBySlug(collection: AdminCollection, slug: string) {
                 return null;
         }
     } catch (error) {
-        if (isMissingTableError(error)) return null;
+        if (isReadableDatabaseFallbackError(error)) return null;
         throw error;
     }
 }
@@ -251,6 +255,16 @@ function reviewDto(record: any) {
     return record;
 }
 
-function isMissingTableError(error: unknown) {
-    return typeof error === "object" && error !== null && "code" in error && error.code === "P2021";
+function shouldSkipLocalSqliteOnVercel() {
+    const databaseUrl = process.env.DATABASE_URL ?? "file:./dev.db";
+    return Boolean(process.env.VERCEL) && databaseUrl.startsWith("file:");
+}
+
+function isReadableDatabaseFallbackError(error: unknown) {
+    if (typeof error === "object" && error !== null && "code" in error && error.code === "P2021") {
+        return true;
+    }
+
+    const message = error instanceof Error ? error.message : String(error);
+    return message.includes("Unable to open the database file") || message.includes("Error code 14");
 }
