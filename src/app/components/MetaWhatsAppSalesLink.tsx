@@ -17,8 +17,8 @@ export default function MetaWhatsAppSalesLink({
     href,
     children,
     sectionName,
-    value = 190000,
-    currency = "BDT",
+    value = 1550,
+    currency = "USD",
     enabled = true,
     className,
 }: MetaWhatsAppSalesLinkProps) {
@@ -26,12 +26,12 @@ export default function MetaWhatsAppSalesLink({
 
     const firePurchase = () => {
         if (!enabled || tracked.current) {
-            return;
+            return Promise.resolve("");
         }
 
         tracked.current = true;
 
-        void trackMetaEvent({
+        return trackMetaEvent({
             eventName: "Purchase",
             customData: {
                 content_name: "Al-Azhar University Package",
@@ -40,34 +40,33 @@ export default function MetaWhatsAppSalesLink({
                 cta_section: sectionName,
                 value,
                 currency,
+                local_value: 190000,
+                local_currency: "BDT",
             },
         });
     };
 
-    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const handleClick = async (event: MouseEvent<HTMLAnchorElement>) => {
         if (!enabled) {
             return;
         }
 
         event.preventDefault();
-        const whatsappWindow = window.open("", "_blank");
 
-        firePurchase();
+        await Promise.race([
+            firePurchase(),
+            new Promise((resolve) => window.setTimeout(resolve, 1200)),
+        ]);
 
         window.setTimeout(() => {
-            if (whatsappWindow) {
-                whatsappWindow.location.href = href;
-                return;
-            }
-
             window.location.href = href;
-        }, 400);
+        }, 2500);
     };
 
     return (
         <a
             href={href}
-            target="_blank"
+            target={enabled ? undefined : "_blank"}
             rel="noopener noreferrer"
             className={className}
             onClick={handleClick}

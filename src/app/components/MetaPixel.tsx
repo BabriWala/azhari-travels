@@ -7,6 +7,9 @@ declare global {
     interface Window {
         fbq?: (...args: unknown[]) => void;
         _fbq?: unknown;
+        dataLayer?: Record<string, unknown>[];
+        __azhariMetaEvents?: Record<string, unknown>[];
+        __azhariMetaPixelInitialized?: boolean;
     }
 }
 
@@ -35,6 +38,58 @@ function createEventId(eventName: string) {
             : Math.random().toString(36).slice(2);
 
     return `${eventName.toLowerCase()}-${Date.now()}-${randomValue}`;
+}
+
+function getGtmEventName(eventName: string) {
+    if (eventName === "Purchase") {
+        return "purchase";
+    }
+
+    return `meta_${eventName.toLowerCase()}`;
+}
+
+function pushGtmEvent({
+    eventName,
+    eventId,
+    customData,
+}: {
+    eventName: string;
+    eventId: string;
+    customData?: Record<string, string | number | boolean | null | undefined>;
+}) {
+    if (typeof window === "undefined") {
+        return;
+    }
+
+    const value = Number(customData?.value ?? 0);
+    const currency = String(customData?.currency ?? "BDT");
+    const eventPayload: Record<string, unknown> = {
+        event: getGtmEventName(eventName),
+        meta_event_name: eventName,
+        event_id: eventId,
+        ...customData,
+    };
+
+    if (eventName === "Purchase") {
+        eventPayload.ecommerce = {
+            currency,
+            value,
+            items: [
+                {
+                    item_name: customData?.content_name ?? "Al-Azhar University Package",
+                    item_category: customData?.content_category ?? "Student Consultancy",
+                    price: value,
+                    quantity: 1,
+                },
+            ],
+        };
+    }
+
+    window.dataLayer = window.dataLayer ?? [];
+    window.dataLayer.push(eventPayload);
+
+    window.__azhariMetaEvents = window.__azhariMetaEvents ?? [];
+    window.__azhariMetaEvents.push(eventPayload);
 }
 
 function ensureMetaPixel() {
@@ -66,7 +121,10 @@ function ensureMetaPixel() {
     script.src = "https://connect.facebook.net/en_US/fbevents.js";
     document.head.appendChild(script);
 
-    window.fbq("init", pixelId);
+    if (!window.__azhariMetaPixelInitialized) {
+        window.fbq("init", pixelId);
+        window.__azhariMetaPixelInitialized = true;
+    }
 
     return true;
 }
@@ -78,6 +136,8 @@ export async function trackMetaEvent({
     sendToBrowser = true,
     sendToServer = true,
 }: MetaEventOptions) {
+    pushGtmEvent({ eventName, eventId, customData });
+
     const canSendBrowserEvent = sendToBrowser && ensureMetaPixel();
 
     if (canSendBrowserEvent && window.fbq) {
