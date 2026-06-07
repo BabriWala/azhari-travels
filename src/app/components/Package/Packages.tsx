@@ -1,36 +1,26 @@
-import { ArrowRight, CheckCircle2, GraduationCap, Plane, FileCheck, Hotel } from "lucide-react";
+import { ArrowRight, CheckCircle2, FileCheck, GraduationCap, Hotel, Plane } from "lucide-react";
+import Link from "next/link";
 
-export default function PackagesSection() {
-    const packages = [
-        {
-            title: "Al-Azhar Admission",
-            price: "৳1,75,000",
-            tag: "Most Popular",
-            icon: GraduationCap,
-            features: ["Offer Letter", "Visa Support", "Air Ticket", "Admission Help"],
-        },
-        {
-            title: "Egypt Visa",
-            price: "Contact Us",
-            tag: "Fast Process",
-            icon: FileCheck,
-            features: ["Visa Approval", "OK to Board", "Document Check", "Guidance"],
-        },
-        {
-            title: "Umrah Package",
-            price: "Custom",
-            tag: "Spiritual Trip",
-            icon: Plane,
-            features: ["Flight Support", "Hotel Booking", "Transport Guide", "24/7 Help"],
-        },
-        {
-            title: "Hotel Booking",
-            price: "Flexible",
-            tag: "Best Deal",
-            icon: Hotel,
-            features: ["Budget Hotels", "Family Stay", "Location Support", "Easy Booking"],
-        },
-    ];
+type PackageItem = {
+    slug: string;
+    title: string;
+    price?: string;
+    category?: string;
+    includes?: string[];
+    featured?: boolean;
+};
+
+const icons = [GraduationCap, Plane, FileCheck, Hotel];
+
+export default function PackagesSection({ items = [] }: { items?: PackageItem[] }) {
+    const packages = items.slice(0, 4).map((item, index) => ({
+        title: item.title,
+        price: item.price || "Custom",
+        tag: item.featured ? "Featured" : item.category || "Package",
+        icon: icons[index % icons.length],
+        href: `/package/${item.slug}`,
+        features: (item.includes?.length ? item.includes : ["Travel support", "Document guidance", "Booking help", "Clear updates"]).slice(0, 4),
+    }));
 
     return (
         <section id="packages" className="bg-[#fff8f1] px-5 py-20 lg:px-8">
@@ -46,8 +36,7 @@ export default function PackagesSection() {
                     </div>
 
                     <p className="max-w-md text-gray-600">
-                        Choose reliable, affordable and complete travel support from Azhari
-                        Travels 2.0.
+                        Choose reliable, affordable and complete travel support from Azhari Travels 2.0.
                     </p>
                 </div>
 
@@ -70,11 +59,9 @@ export default function PackagesSection() {
                                     </span>
                                 </div>
 
-                                <h3 className="text-2xl font-black text-[#08103A]">
-                                    {item.title}
-                                </h3>
+                                <h3 className="text-2xl font-black text-[#08103A]">{item.title}</h3>
 
-                                <p className="mt-3 text-3xl font-black bg-gradient-to-r from-pink-600 to-orange-400 bg-clip-text text-transparent">
+                                <p className="mt-3 bg-gradient-to-r from-pink-600 to-orange-400 bg-clip-text text-3xl font-black text-transparent">
                                     {item.price}
                                 </p>
 
@@ -82,23 +69,20 @@ export default function PackagesSection() {
 
                                 <ul className="space-y-3">
                                     {item.features.map((feature) => (
-                                        <li
-                                            key={feature}
-                                            className="flex items-center gap-3 text-sm font-medium text-gray-600"
-                                        >
+                                        <li key={feature} className="flex items-center gap-3 text-sm font-medium text-gray-600">
                                             <CheckCircle2 size={18} className="text-orange-400" />
                                             {feature}
                                         </li>
                                     ))}
                                 </ul>
 
-                                <a
-                                    href="#contact"
+                                <Link
+                                    href={item.href}
                                     className="mt-7 flex items-center justify-between rounded-full bg-[#08103A] px-5 py-4 text-sm font-bold text-white transition group-hover:bg-gradient-to-r group-hover:from-pink-600 group-hover:to-orange-400"
                                 >
                                     Get Details
                                     <ArrowRight size={18} />
-                                </a>
+                                </Link>
                             </div>
                         );
                     })}

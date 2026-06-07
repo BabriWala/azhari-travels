@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  role      String   @default("admin")
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  category  String
+  summary   String
+  href      String?
+  image     String?
+  status    String   @default("draft")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TourPackage {
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  title      String
+  subtitle   String
+  category   String
+  image      String?
+  price      String
+  duration   String
+  audience   String
+  route      String
+  href       String?
+  includes   String   @default("[]")
+  itinerary  String   @default("[]")
+  exclusions String   @default("[]")
+  process    String   @default("[]")
+  featured   Boolean  @default(false)
+  status     String   @default("draft")
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model VisaService {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  subtitle     String
+  image        String?
+  duration     String
+  feeNote      String
+  requirements String   @default("[]")
+  process      String   @default("[]")
+  status       String   @default("draft")
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model BlogPost {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  excerpt   String
+  category  String
+  date      String
+  image     String?
+  sections  String   @default("[]")
+  content   String?
+  status    String   @default("draft")
+  featured  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  location  String?
+  rating    Int      @default(5)
+  service   String
+  feedback  String
+  image     String?
+  featured  Boolean  @default(false)
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lead {
+  id               String   @id @default(cuid())
+  name             String
+  phone            String
+  email            String?
+  service          String
+  message          String
+  source           String   @default("website")
+  preferredContact String   @default("phone")
+  status           String   @default("new")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  url       String
+  filename  String
+  mimeType  String
+  size      Int
+  alt       String?
+  category  String   @default("general")
+  createdAt DateTime @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String?
+  message   String
+  createdAt DateTime @default(now())
+}

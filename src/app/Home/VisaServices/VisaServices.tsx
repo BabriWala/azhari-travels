@@ -1,43 +1,13 @@
+import Link from "next/link";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
-const visaServices = [
-    {
-        title: "Saudi Arabia Visa",
-        description: "Umrah, visit, business and transit visa assistance.",
-        image: "/home/visa-services/saudi_arabia.png",
-        tag: "Most Popular",
-    },
-    {
-        title: "UAE Visa",
-        description: "Dubai tourist and visit visa processing services.",
-        image: "/home/visa-services/dubai.png",
-        tag: "Fast Processing",
-    },
-    {
-        title: "Egypt Visa",
-        description: "Tourist, student and visit visa support.",
-        image: "/home/visa-services/egypt.png",
-        tag: "Student Friendly",
-    },
-    {
-        title: "Kuwait Visa",
-        description: "Tourist visa assistance.",
-        image: "/home/visa-services/kuwait.png",
-        tag: "Tourist Visa",
-    },
-    {
-        title: "Sri Lanka Visa",
-        description: "Tourist visa processing services.",
-        image: "/home/visa-services/sri_lanka.png",
-        tag: "Study & Travel",
-    },
-    {
-        title: "Syria Visa",
-        description: "Entry approval and visa assistance services.",
-        image: "/home/visa-services/syria.png",
-        tag: "Entry Approval",
-    },
-];
+type VisaItem = {
+    slug: string;
+    title: string;
+    subtitle?: string;
+    image?: string;
+    duration?: string;
+};
 
 const trustItems = [
     { title: "100% Reliable", text: "Trusted visa assistance" },
@@ -46,7 +16,9 @@ const trustItems = [
     { title: "Secure & Safe", text: "Your documents are in safe hands" },
 ];
 
-export default function VisaServices() {
+export default function VisaServices({ items = [] }: { items?: VisaItem[] }) {
+    const visaServices = items.slice(0, 6);
+
     return (
         <section className="relative overflow-hidden bg-white px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(247,2,91,0.05),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(15,118,110,0.06),transparent_35%)]" />
@@ -96,7 +68,7 @@ export default function VisaServices() {
 
                 {/* New Card Design */}
                 <div className="mt-14 grid gap-6 lg:grid-cols-2">
-                    {visaServices.map((item) => (
+                    {visaServices.map((item, index) => (
                         <div
                             key={item.title}
                             className="group grid overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_26px_65px_rgba(15,23,42,0.13)] sm:grid-cols-[220px_1fr]"
@@ -111,7 +83,7 @@ export default function VisaServices() {
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#06113C]/70 via-transparent to-transparent sm:bg-gradient-to-r" />
 
                                 <span className="absolute left-4 top-4 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold uppercase tracking-[1.5px] text-[#F7025B] shadow-sm">
-                                    {item.tag}
+                                    {index === 0 ? "Most Popular" : item.duration || "Visa Support"}
                                 </span>
                             </div>
 
@@ -124,30 +96,30 @@ export default function VisaServices() {
                                     <div className="my-4 h-[4px] w-14 rounded-full bg-[#F7025B]" />
 
                                     <p className="text-base font-medium leading-8 text-slate-600">
-                                        {item.description}
+                                        {item.subtitle}
                                     </p>
                                 </div>
 
-                                <button className="group/btn cursor-pointer mt-7 inline-flex w-fit items-center gap-3 rounded-full border border-[#F7025B]/25 bg-[#F7025B]/5 px-5 py-3 font-bold text-[#F7025B] transition-all duration-300 hover:bg-[#F7025B] hover:text-white">
+                                <Link href={`/visa-services/${item.slug}`} className="group/btn cursor-pointer mt-7 inline-flex w-fit items-center gap-3 rounded-full border border-[#F7025B]/25 bg-[#F7025B]/5 px-5 py-3 font-bold text-[#F7025B] transition-all duration-300 hover:bg-[#F7025B] hover:text-white">
                                     View Requirements
                                     <ArrowRight
                                         size={18}
                                         className="transition-transform duration-300 group-hover/btn:translate-x-1"
                                     />
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     ))}
                 </div>
 
                 <div className="mt-12 flex justify-center">
-                    <button className="group cursor-pointer inline-flex items-center gap-6 rounded-xl bg-[#F7025B] px-10 py-5 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_45px_rgba(247,2,91,0.35)]">
+                    <Link href="/visa-services" className="group cursor-pointer inline-flex items-center gap-6 rounded-xl bg-[#F7025B] px-10 py-5 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_45px_rgba(247,2,91,0.35)]">
                         View All Visa Services
                         <ArrowRight
                             size={24}
                             className="transition-transform duration-300 group-hover:translate-x-1"
                         />
-                    </button>
+                    </Link>
                 </div>
             </div>
         </section>

@@ -1,220 +1,151 @@
-// @ts-nocheck
-import {
-    Home,
-    Users,
-    Briefcase,
-    Luggage,
-    Pencil,
-    Mail,
-    PhoneCall,
-    MapPin,
-    Plane,
-    GraduationCap,
-    Send,
-    ArrowUpRight,
-} from "lucide-react";
-
-import {
-    FaFacebookF,
-    FaInstagram,
-    FaYoutube,
-    FaWhatsapp,
-} from "react-icons/fa";
+import Link from "next/link";
+import { ReactNode } from "react";
+import { ArrowUpRight, Briefcase, Mail, MapPin, PhoneCall, Plane, Send } from "lucide-react";
+import { FaFacebookF, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 
 const quickLinks = [
-    { icon: Home, label: "Home" },
-    { icon: Users, label: "About Us" },
-    { icon: Briefcase, label: "Services" },
-    { icon: Luggage, label: "Tours" },
-    { icon: Pencil, label: "Blog" },
-    { icon: Mail, label: "Contact" },
+    { label: "Home", href: "/" },
+    { label: "Visa Services", href: "/visa-services" },
+    { label: "Tour Packages", href: "/tour-packages" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
 ];
 
-const services = [
-    { icon: Briefcase, label: "Visa Processing" },
-    { icon: GraduationCap, label: "Student Consultancy" },
-    { icon: Luggage, label: "Tour Packages" },
-    { icon: Plane, label: "Air Ticket" },
-    { icon: Home, label: "Umrah Services" },
+const serviceLinks = [
+    { label: "Al-Azhar Admission", href: "/package/student-package" },
+    { label: "Umrah Package", href: "/package/umrah-package" },
+    { label: "Umrah & Egypt", href: "/package/umrah-and-egypt-package" },
+    { label: "Egypt Tour", href: "/package/egypt-tour" },
+];
+
+const legalLinks = [
+    { label: "Terms & Conditions", href: "/terms-and-conditions" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Refund Policy", href: "/refund-policy" },
 ];
 
 const socials = [
-    { icon: FaFacebookF, label: "Facebook", color: "bg-blue-600" },
-    { icon: FaInstagram, label: "Instagram", color: "bg-pink-500" },
-    { icon: FaYoutube, label: "YouTube", color: "bg-red-600" },
-    { icon: FaWhatsapp, label: "WhatsApp", color: "bg-green-500" },
+    { icon: FaFacebookF, label: "Facebook", href: "https://www.facebook.com/azharitravels2.0" },
+    { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/azhari_travels_and_tours/" },
+    { icon: FaYoutube, label: "YouTube", href: "https://www.youtube.com/@azhari_travels" },
 ];
 
 export default function Footer() {
     return (
-        <footer className="relative overflow-hidden bg-[#031945] px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
-            <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#F7025B]/10 blur-3xl" />
-            <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-[#0F766E]/15 blur-3xl" />
-            <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-            <div className="relative z-10 mx-auto max-w-[1280px]">
-                <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.25fr_1fr_1.2fr_1.05fr]">
-                    <div>
-                        <div className="mb-6">
-                            <h2 className="text-4xl font-black tracking-wider sm:text-5xl">
-                                AZHARI
-                            </h2>
-                            <p className="mt-2 text-lg font-bold tracking-[4px] text-[#F7025B] sm:text-xl">
-                                TRAVELS & TOURS
-                            </p>
-                        </div>
-
-                        <p className="max-w-[340px] text-base font-medium leading-8 text-white/80 sm:text-lg">
-                            Azhari Travels & Tours is a trusted travel agency providing visa
-                            processing, tour packages, student consultancy, Umrah services,
-                            and air ticket booking.
+        <footer className="bg-[#06113C] px-3 py-14 text-white sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl">
+                <div className="grid gap-8 lg:grid-cols-[1.25fr_0.85fr_0.95fr_1.1fr]">
+                    <div className="min-w-0 rounded-2xl bg-white/[0.06] p-5 ring-1 ring-white/10 sm:p-7">
+                        <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
+                            <img src="/Logo.svg" alt="Azhari Travels" className="h-14 w-14 rounded-2xl bg-white p-2" />
+                            <div className="min-w-0">
+                                <h2 className="truncate text-2xl font-black">Azhari Travels</h2>
+                                <p className="text-sm font-bold text-[#FF7A1A]">Travels & Tours</p>
+                            </div>
+                        </Link>
+                        <p className="mt-6 max-w-sm break-words text-base font-medium leading-8 text-white/72">
+                            Visa processing, Umrah planning, Egypt student consultancy and curated tour support from one organized team.
                         </p>
+
+                        <div className="mt-7 flex flex-wrap gap-3">
+                            {socials.map(({ icon: Icon, label, href }) => (
+                                <Link
+                                    key={label}
+                                    href={href}
+                                    target="_blank"
+                                    className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-white transition hover:-translate-y-1 hover:bg-[#F7025B]"
+                                    aria-label={label}
+                                >
+                                    <Icon size={20} />
+                                </Link>
+                            ))}
+                            <Link
+                                href="https://wa.me/8801318185954"
+                                target="_blank"
+                                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F7025B] text-white transition hover:-translate-y-1 hover:bg-[#FF7A1A]"
+                                aria-label="WhatsApp"
+                            >
+                                <FaWhatsapp size={21} />
+                            </Link>
+                        </div>
                     </div>
 
                     <FooterColumn title="Quick Links">
-                        {quickLinks.map(({ icon: Icon, label }) => (
-                            <FooterLink key={label} icon={Icon} label={label} />
+                        {quickLinks.map((item) => (
+                            <FooterLink key={item.href} {...item} />
                         ))}
                     </FooterColumn>
 
-                    <FooterColumn title="Services">
-                        {services.map(({ icon: Icon, label }) => (
-                            <FooterLink
-                                key={label}
-                                icon={Icon}
-                                label={label}
-                                iconClass="text-[#F7025B]"
-                            />
+                    <FooterColumn title="Packages">
+                        {serviceLinks.map((item) => (
+                            <FooterLink key={item.href} {...item} />
                         ))}
                     </FooterColumn>
 
-                    <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-1">
-                        <FooterColumn title="Contact Information">
-                            <FooterLink
-                                icon={PhoneCall}
-                                label="+88013 1818 5954"
-                                iconClass="text-[#F7025B]"
-                            />
-                            <FooterLink
-                                icon={Mail}
-                                label="azharitravels.info@gmail.com"
-                                iconClass="text-[#F7025B]"
-                            />
-                            <FooterLink
-                                icon={MapPin}
-                                label="2/A - R#7 - Nabinagar Housing - Mohammadpur - Dhaka"
-                                iconClass="text-[#F7025B]"
-                            />
-                        </FooterColumn>
-
-                        <FooterColumn title="Social Media">
-                            {socials.map(({ icon: Icon, label, color }) => (
-                                <a
-                                    key={label}
-                                    href="#"
-                                    className="group flex items-center gap-5"
-                                >
-                                    <span
-                                        className={`flex h-10 w-10 items-center justify-center rounded-full ${color} transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-110`}
-                                    >
-                                        <Icon className="text-xl text-white" />
-                                    </span>
-
-                                    <span className="text-lg font-medium text-white/80 transition group-hover:text-[#F7025B]">
-                                        {label}
-                                    </span>
-                                </a>
-                            ))}
-                        </FooterColumn>
-                    </div>
-                </div>
-
-                <div className="mt-14 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8 lg:p-10">
-                    <div className="grid gap-8 grid-cols-1 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-                        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-                            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-[#F7025B] ring-1 ring-white/15">
-                                <Mail size={42} />
-                            </div>
-
-                            <div>
-                                <h3 className="text-2xl font-black uppercase">Newsletter</h3>
-                                <p className="mt-3 max-w-[460px] text-base font-medium leading-7 text-white/80">
-                                    Subscribe to receive travel offers, visa updates, and tour
-                                    promotions.
-                                </p>
-                            </div>
+                    <div className="min-w-0 rounded-2xl bg-white/[0.06] p-5 ring-1 ring-white/10 sm:p-7">
+                        <div className="flex items-center gap-3">
+                            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F7025B]/20 text-[#F7025B]">
+                                <Briefcase size={22} />
+                            </span>
+                            <h3 className="text-xl font-black">Contact</h3>
                         </div>
 
-                        <form className="flex flex-col gap-4 sm:flex-row">
+                        <div className="mt-6 space-y-4 text-sm font-semibold leading-7 text-white/76">
+                            <p className="flex min-w-0 gap-3"><PhoneCall className="mt-1 shrink-0 text-[#FF7A1A]" size={18} /> <span className="min-w-0 break-words">+88013 1818 5954</span></p>
+                            <p className="flex min-w-0 gap-3"><Mail className="mt-1 shrink-0 text-[#FF7A1A]" size={18} /> <span className="min-w-0 break-all">azharitravels.info@gmail.com</span></p>
+                            <p className="flex min-w-0 gap-3"><MapPin className="mt-1 shrink-0 text-[#FF7A1A]" size={18} /> <span className="min-w-0 break-words">2/A - R#7 - Nabinagar Housing - Mohammadpur - Dhaka</span></p>
+                        </div>
 
-                            <div>
-                                <input
-                                    type="email"
-                                    placeholder="Enter your email address"
-                                    className="h-16 inline-block flex-1 rounded-xl border border-white/20 bg-white/10 px-6 text-white outline-none transition placeholder:text-white/45 focus:border-[#F7025B] focus:bg-white/15"
-                                />
-
-                            </div>
-
-                            <button
-                                type="button"
-                                className="group inline-flex h-16 items-center justify-center gap-3 rounded-xl bg-[#F7025B] px-8 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_45px_rgba(247,2,91,0.35)]"
-                            >
-                                <Send
-                                    size={24}
-                                    fill="white"
-                                    className="transition-transform duration-300 group-hover:translate-x-1"
-                                />
-                                Subscribe
+                        <form className="mt-7 flex overflow-hidden rounded-2xl bg-white p-1">
+                            <input
+                                type="email"
+                                placeholder="Email address"
+                                className="min-w-0 flex-1 rounded-xl px-4 text-sm font-semibold text-[#06113C] outline-none placeholder:text-slate-400"
+                            />
+                            <button type="button" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#F7025B] text-white">
+                                <Send size={18} />
                             </button>
                         </form>
                     </div>
                 </div>
 
-                <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center md:flex-row md:text-left">
-                    <p className="text-base text-white/75">
-                        © 2026 Azhari Travels & Tours. All Rights Reserved.
-                    </p>
-
-                    <a
-                        href="#"
-                        className="inline-flex items-center gap-2 text-base font-semibold text-white/75 transition hover:text-[#F7025B]"
-                    >
-                        Back to top
-                        <ArrowUpRight size={18} />
-                    </a>
+                <div className="mt-8 flex min-w-0 flex-col gap-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:p-5 md:flex-row md:items-center md:justify-between">
+                    <div className="flex flex-wrap gap-x-5 gap-y-2">
+                        {legalLinks.map((item) => (
+                            <Link key={item.href} href={item.href} className="text-sm font-bold text-white/70 transition hover:text-[#FF7A1A]">
+                                {item.label}
+                            </Link>
+                        ))}
+                    </div>
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                        <p className="text-sm font-semibold text-white/60">© 2026 Azhari Travels & Tours. All rights reserved.</p>
+                        <Link href="#" className="inline-flex items-center gap-2 text-sm font-bold text-[#FF7A1A]">
+                            Back to top
+                            <ArrowUpRight size={16} />
+                        </Link>
+                    </div>
                 </div>
             </div>
         </footer>
     );
 }
 
-function FooterColumn({ title, children }) {
+function FooterColumn({ title, children }: { title: string; children: ReactNode }) {
     return (
-        <div>
-            <h3 className="text-xl font-black uppercase text-white">{title}</h3>
-            <div className="mt-5 h-[3px] w-12 rounded-full bg-[#F7025B]" />
-            <div className="mt-8 space-y-6">{children}</div>
+        <div className="min-w-0 rounded-2xl bg-white/[0.06] p-5 ring-1 ring-white/10 sm:p-7">
+            <h3 className="text-xl font-black">{title}</h3>
+            <div className="mt-4 h-1 w-12 rounded-full bg-gradient-to-r from-[#F7025B] to-[#FF7A1A]" />
+            <div className="mt-6 grid gap-3">{children}</div>
         </div>
     );
 }
 
-function FooterLink({ icon: Icon, label, iconClass = "text-white" }) {
+function FooterLink({ label, href }: { label: string; href: string }) {
     return (
-        <a
-            href="#"
-            className="group flex items-center gap-5 text-lg font-medium text-white/80 transition hover:text-[#F7025B]"
-        >
-            <div>
-                <Icon
-                    size={26}
-                    className={`${iconClass} transition-transform duration-300 group-hover:scale-110`}
-                    strokeWidth={1.7}
-                />
-            </div>
-            <span>
-                {label}
-            </span>
-        </a>
+        <Link href={href} className="group flex min-w-0 items-center justify-between gap-3 rounded-2xl px-3 py-2 text-sm font-bold text-white/72 transition hover:bg-white/10 hover:text-white">
+            <span className="min-w-0 break-words">{label}</span>
+            <Plane className="text-[#F7025B] opacity-0 transition group-hover:opacity-100" size={15} />
+        </Link>
     );
 }

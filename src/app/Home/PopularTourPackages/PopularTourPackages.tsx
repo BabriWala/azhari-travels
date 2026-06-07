@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
     ArrowRight,
     Plane,
@@ -23,98 +24,26 @@ import {
 } from "react-icons/gi";
 import { MdOutlineLocationCity } from "react-icons/md";
 
-const packages = [
-    {
-        country: "Egypt",
-        type: "Historical Tour",
-        image: "/home/visa-services/egypt.png",
-        color: "#F7025B",
-        duration: "5 Days / 4 Nights",
-        groupSize: "Family Friendly",
-        price: "Custom Price",
-        places: [
-            { icon: FaMosque, name: "Cairo" },
-            { icon: GiEgyptianPyramids, name: "Pyramids" },
-            { icon: FaShip, name: "Nile Cruise" },
-            { icon: FaMosque, name: "Islamic Heritage Tour" },
-        ],
-    },
-    {
-        country: "Kuwait",
-        type: "City Tour",
-        image: "/home/visa-services/kuwait.png",
-        color: "#2563EB",
-        duration: "4 Days / 3 Nights",
-        groupSize: "Group Tour",
-        price: "Custom Price",
-        places: [
-            { icon: MdOutlineLocationCity, name: "Kuwait City" },
-            { icon: GiCastle, name: "Kuwait Towers" },
-            { icon: FaShip, name: "Waterfront Tour" },
-            { icon: FaMosque, name: "Grand Mosque" },
-        ],
-    },
-    {
-        country: "Dubai",
-        type: "Luxury Tour",
-        image: "/home/visa-services/dubai.png",
-        color: "#16A34A",
-        duration: "4 Days / 3 Nights",
-        groupSize: "Couple & Family",
-        price: "Custom Price",
-        places: [
-            { icon: MdOutlineLocationCity, name: "Burj Khalifa" },
-            { icon: GiCamel, name: "Desert Safari" },
-            { icon: FaShip, name: "Dhow Cruise" },
-            { icon: MdOutlineLocationCity, name: "City Tour" },
-        ],
-    },
-    {
-        country: "Sri Lanka",
-        type: "Nature Tour",
-        image: "/home/visa-services/sri_lanka.png",
-        color: "#7C3AED",
-        duration: "5 Days / 4 Nights",
-        groupSize: "Family Friendly",
-        price: "Custom Price",
-        places: [
-            { icon: MdOutlineLocationCity, name: "Colombo" },
-            { icon: GiCastle, name: "Ella" },
-            { icon: FaUmbrellaBeach, name: "Galle" },
-            { icon: FaUmbrellaBeach, name: "Beach Tour" },
-        ],
-    },
-    {
-        country: "Saudi Arabia",
-        type: "Religious Tour",
-        image: "/home/visa-services/saudi_arabia.png",
-        color: "#F59E0B",
-        duration: "7 Days / 6 Nights",
-        groupSize: "Umrah Group",
-        price: "Custom Price",
-        places: [
-            { icon: FaKaaba, name: "Makkah" },
-            { icon: FaMosque, name: "Madinah" },
-            { icon: GiCastle, name: "Historical Sites" },
-            { icon: FaMosque, name: "Ziyarat Tour" },
-        ],
-    },
-    {
-        country: "Syria",
-        type: "Islamic Heritage Tour",
-        image: "/home/visa-services/syria.png",
-        color: "#0F766E",
-        duration: "5 Days / 4 Nights",
-        groupSize: "Group Tour",
-        price: "Custom Price",
-        places: [
-            { icon: FaMosque, name: "Umayyad Mosque" },
-            { icon: FaMosque, name: "Sayyidah Zaynab" },
-            { icon: FaMosque, name: "Sayyidah Ruqayyah" },
-            { icon: MdOutlineLocationCity, name: "Old Damascus" },
-        ],
-    },
-];
+type PackageItem = {
+    slug: string;
+    title: string;
+    subtitle?: string;
+    category?: string;
+    image?: string;
+    price?: string;
+    duration?: string;
+    audience?: string;
+    route?: string;
+    includes?: string[];
+};
+
+const colors = ["#F7025B", "#2563EB", "#16A34A", "#7C3AED", "#F59E0B", "#0F766E"];
+
+function packageType(category?: string) {
+    if (category === "umrah") return "Religious Tour";
+    if (category === "student-consultancy") return "Student Package";
+    return "Tour Package";
+}
 
 const benefits = [
     {
@@ -143,7 +72,25 @@ const benefits = [
     },
 ];
 
-export default function PopularTourPackages() {
+export default function PopularTourPackages({ items = [] }: { items?: PackageItem[] }) {
+    const packages = items.slice(0, 6).map((item, index) => ({
+        country: item.title,
+        type: packageType(item.category),
+        slug: item.slug,
+        image: item.image || "/home/visa-services/egypt.png",
+        color: colors[index % colors.length],
+        duration: item.duration || "Custom itinerary",
+        groupSize: item.audience || "Family Friendly",
+        price: item.price || "Custom Price",
+        places: (item.includes?.length ? item.includes : [item.route, item.subtitle, "Travel support", "Guided service"])
+            .filter(Boolean)
+            .slice(0, 4)
+            .map((name, placeIndex) => ({
+                icon: [FaMosque, GiEgyptianPyramids, FaShip, MdOutlineLocationCity][placeIndex % 4],
+                name: String(name),
+            })),
+    }));
+
     return (
         <section className="relative overflow-hidden bg-gradient-to-b from-[#F8FAFC] via-white to-[#FFF8FB] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
             <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#0F766E]/5 blur-3xl" />
@@ -196,7 +143,7 @@ export default function PopularTourPackages() {
                                 </div>
 
                                 <div className="absolute bottom-5 left-5 right-5">
-                                    <h3 className="text-3xl font-semibold text-white">
+                                    <h3 className="text-2xl font-semibold text-white">
                                         {item.country}
                                     </h3>
 
@@ -256,7 +203,8 @@ export default function PopularTourPackages() {
                                     ))}
                                 </div>
 
-                                <button
+                                <Link
+                                    href={`/package/${item.slug}`}
                                     className="group/btn mt-7 flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1"
                                     style={{
                                         backgroundColor: item.color,
@@ -268,7 +216,7 @@ export default function PopularTourPackages() {
                                         size={20}
                                         className="transition-transform duration-300 group-hover/btn:translate-x-1"
                                     />
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     ))}
@@ -308,10 +256,10 @@ export default function PopularTourPackages() {
 
                 {/* CTA */}
                 <div className="mt-12 flex justify-center">
-                    <button className="group inline-flex items-center gap-8 rounded-xl bg-[#06113C] px-8 py-4 text-lg font-bold text-white shadow-[8px_8px_0_#F7025B] transition-all duration-300 hover:-translate-y-1 hover:shadow-[12px_12px_0_#F7025B]">
+                    <Link href="/tour-packages" className="group inline-flex items-center gap-8 rounded-xl bg-[#06113C] px-8 py-4 text-lg font-bold text-white shadow-[8px_8px_0_#F7025B] transition-all duration-300 hover:-translate-y-1 hover:shadow-[12px_12px_0_#F7025B]">
                         View All Packages
                         <ArrowRight className="text-[#F7025B] transition-transform duration-300 group-hover:translate-x-1" />
-                    </button>
+                    </Link>
                 </div>
             </div>
         </section>

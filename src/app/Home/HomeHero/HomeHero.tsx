@@ -68,7 +68,7 @@ export default function HomeHero() {
     return (
 
 
-        <section className="relative mt-6 overflow-hidden bg-gradient-to-br from-[#FFF7FA] via-[#F8FAFC] to-[#ECFDF5] px-4 pb-16 pt-20 lg:pb-20 lg:pt-24">
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#FFF7FA] via-[#F8FAFC] to-[#ECFDF5] px-4 pb-16 pt-20 lg:pb-20 lg:pt-24">
             <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-[#F7025B]/10 blur-3xl" />
             <div className="absolute bottom-10 right-0 h-80 w-80 rounded-full bg-[#0F766E]/10 blur-3xl" />
 

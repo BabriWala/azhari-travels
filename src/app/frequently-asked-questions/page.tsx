@@ -1,11 +1,10 @@
-import React from 'react';
-import FAQ from '../components/FAQ/FAQ-test';
+import FAQ from '../components/FAQ/FAQ';
 
 
 const page = () => {
     return (
         <div>
-            <FAQ type="Page"></FAQ>
+            <FAQ type="Page" />
         </div>
     );
 };
