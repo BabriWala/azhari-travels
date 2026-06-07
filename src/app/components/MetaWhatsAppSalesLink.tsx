@@ -46,27 +46,18 @@ export default function MetaWhatsAppSalesLink({
         });
     };
 
-    const handleClick = async (event: MouseEvent<HTMLAnchorElement>) => {
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
         if (!enabled) {
             return;
         }
 
-        event.preventDefault();
-
-        await Promise.race([
-            firePurchase(),
-            new Promise((resolve) => window.setTimeout(resolve, 1200)),
-        ]);
-
-        window.setTimeout(() => {
-            window.location.href = href;
-        }, 2500);
+        firePurchase();
     };
 
     return (
         <a
             href={href}
-            target={enabled ? undefined : "_blank"}
+            target="_blank"
             rel="noopener noreferrer"
             className={className}
             onClick={handleClick}
