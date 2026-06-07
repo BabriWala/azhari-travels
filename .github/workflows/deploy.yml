@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -18,11 +19,35 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
+          password: ${{ secrets.PASSWORD }}
           script: |
             set -e
-            cd /root/azhari-travels
-            git pull origin main
+            APP_DIR=/var/www/azhari-travels
+            REPO_URL=https://github.com/BabriWala/azhari-travels.git
+
+            if [ ! -d "$APP_DIR/.git" ]; then
+              BACKUP_DIR=/tmp/azhari-travels-deploy-backup
+              rm -rf "$BACKUP_DIR"
+              mkdir -p "$BACKUP_DIR"
+              [ -f "$APP_DIR/.env.local" ] && cp "$APP_DIR/.env.local" "$BACKUP_DIR/.env.local"
+              [ -f "$APP_DIR/prisma/dev.db" ] && mkdir -p "$BACKUP_DIR/prisma" && cp "$APP_DIR/prisma/dev.db" "$BACKUP_DIR/prisma/dev.db"
+              [ -d "$APP_DIR/public/uploads" ] && mkdir -p "$BACKUP_DIR/public" && cp -a "$APP_DIR/public/uploads" "$BACKUP_DIR/public/uploads"
+              rm -rf "$APP_DIR"
+              git clone "$REPO_URL" "$APP_DIR"
+              [ -f "$BACKUP_DIR/.env.local" ] && cp "$BACKUP_DIR/.env.local" "$APP_DIR/.env.local"
+              [ -f "$BACKUP_DIR/prisma/dev.db" ] && mkdir -p "$APP_DIR/prisma" && cp "$BACKUP_DIR/prisma/dev.db" "$APP_DIR/prisma/dev.db"
+              [ -d "$BACKUP_DIR/public/uploads" ] && mkdir -p "$APP_DIR/public" && cp -a "$BACKUP_DIR/public/uploads" "$APP_DIR/public/uploads"
+            fi
+
+            cd "$APP_DIR"
+            git fetch origin main
+            git reset --hard origin/main
             corepack enable
             pnpm install --frozen-lockfile
+            pnpm prisma db push
+            pnpm db:seed
             pnpm build
-            pm2 reload ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs
+            pm2 reload azhari-travels --update-env || pm2 start ecosystem.config.cjs
+            pm2 save
+            nginx -t
+            systemctl reload nginx

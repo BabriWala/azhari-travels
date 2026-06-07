@@ -67,8 +67,9 @@ export default function VisaServices({ items = [] }: { items?: VisaItem[] }) {
                 </div>
 
                 {/* New Card Design */}
-                <div className="mt-14 grid gap-6 lg:grid-cols-2">
-                    {visaServices.map((item, index) => (
+                {visaServices.length ? (
+                    <div className="mt-14 grid gap-6 lg:grid-cols-2">
+                        {visaServices.map((item, index) => (
                         <div
                             key={item.title}
                             className="group grid overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_26px_65px_rgba(15,23,42,0.13)] sm:grid-cols-[220px_1fr]"
@@ -109,8 +110,13 @@ export default function VisaServices({ items = [] }: { items?: VisaItem[] }) {
                                 </Link>
                             </div>
                         </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="mt-14 rounded-3xl border border-slate-200 bg-white p-8 text-center font-semibold text-slate-600">
+                        No visa services are published yet.
+                    </div>
+                )}
 
                 <div className="mt-12 flex justify-center">
                     <Link href="/visa-services" className="group cursor-pointer inline-flex items-center gap-6 rounded-xl bg-[#F7025B] px-10 py-5 text-lg font-bold text-white shadow-[0_16px_35px_rgba(247,2,91,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e6004f] hover:shadow-[0_24px_45px_rgba(247,2,91,0.35)]">
