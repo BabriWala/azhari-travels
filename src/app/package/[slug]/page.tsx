@@ -17,15 +17,13 @@ import {
     XCircle,
 } from "lucide-react";
 import { tourPackages } from "../../data/apiCatalog";
-import { getCrmBySlug, listCrm } from "../../lib/crmRepository";
+import { getCrmBySlug } from "../../lib/crmRepository";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function generateStaticParams() {
-    const packages = await listCrm("tour-packages");
-    const source = packages.length ? packages : tourPackages;
-    return source.map((pkg) => ({ slug: String(pkg.slug) }));
+export function generateStaticParams() {
+    return [];
 }
 
 export default async function PackageDetails({ params }: { params: Promise<{ slug: string }> }) {

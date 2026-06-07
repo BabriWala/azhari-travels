@@ -3,15 +3,13 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Clock, FileText, WalletCards } fro
 import { notFound } from "next/navigation";
 import { Eyebrow, PageShell, Section, gradientButton } from "../../components/Marketing/PagePrimitives";
 import { visaRequirements } from "../../data/visaRequirements";
-import { getCrmBySlug, listCrm } from "../../lib/crmRepository";
+import { getCrmBySlug } from "../../lib/crmRepository";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function generateStaticParams() {
-    const visas = await listCrm("visa-services");
-    const source = visas.length ? visas : visaRequirements;
-    return source.map((item) => ({ slug: String(item.slug) }));
+export function generateStaticParams() {
+    return [];
 }
 
 export default async function VisaRequirementDetails({ params }: { params: Promise<{ slug: string }> }) {

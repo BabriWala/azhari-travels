@@ -26,42 +26,52 @@ function statusFilter(includePrivate = false) {
 }
 
 export async function listCrm(collection: AdminCollection, includePrivate = false) {
-    switch (collection) {
-        case "services":
-            return prisma.service.findMany({ where: statusFilter(includePrivate), orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] });
-        case "tour-packages":
-            return (await prisma.tourPackage.findMany({ where: statusFilter(includePrivate), orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] })).map(packageDto);
-        case "visa-services":
-            return (await prisma.visaService.findMany({ where: statusFilter(includePrivate), orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] })).map(visaDto);
-        case "blogs":
-            return (await prisma.blogPost.findMany({ where: statusFilter(includePrivate), orderBy: [{ updatedAt: "desc" }] })).map(blogDto);
-        case "reviews":
-            return (await prisma.review.findMany({ where: includePrivate ? undefined : { status: "published" }, orderBy: [{ updatedAt: "desc" }] })).map(reviewDto);
-        case "leads":
-            return prisma.lead.findMany({ orderBy: [{ updatedAt: "desc" }] }) as Promise<AdminRecord[]>;
+    try {
+        switch (collection) {
+            case "services":
+                return prisma.service.findMany({ where: statusFilter(includePrivate), orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] });
+            case "tour-packages":
+                return (await prisma.tourPackage.findMany({ where: statusFilter(includePrivate), orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] })).map(packageDto);
+            case "visa-services":
+                return (await prisma.visaService.findMany({ where: statusFilter(includePrivate), orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] })).map(visaDto);
+            case "blogs":
+                return (await prisma.blogPost.findMany({ where: statusFilter(includePrivate), orderBy: [{ updatedAt: "desc" }] })).map(blogDto);
+            case "reviews":
+                return (await prisma.review.findMany({ where: includePrivate ? undefined : { status: "published" }, orderBy: [{ updatedAt: "desc" }] })).map(reviewDto);
+            case "leads":
+                return prisma.lead.findMany({ orderBy: [{ updatedAt: "desc" }] }) as Promise<AdminRecord[]>;
+        }
+    } catch (error) {
+        if (isMissingTableError(error)) return [];
+        throw error;
     }
 }
 
 export async function getCrmBySlug(collection: AdminCollection, slug: string) {
-    switch (collection) {
-        case "services": {
-            const record = await prisma.service.findFirst({ where: { slug, status: "published" } });
-            return record;
+    try {
+        switch (collection) {
+            case "services": {
+                const record = await prisma.service.findFirst({ where: { slug, status: "published" } });
+                return record;
+            }
+            case "tour-packages": {
+                const record = await prisma.tourPackage.findFirst({ where: { slug, status: "published" } });
+                return record ? packageDto(record) : null;
+            }
+            case "visa-services": {
+                const record = await prisma.visaService.findFirst({ where: { slug, status: "published" } });
+                return record ? visaDto(record) : null;
+            }
+            case "blogs": {
+                const record = await prisma.blogPost.findFirst({ where: { slug, status: "published" } });
+                return record ? blogDto(record) : null;
+            }
+            default:
+                return null;
         }
-        case "tour-packages": {
-            const record = await prisma.tourPackage.findFirst({ where: { slug, status: "published" } });
-            return record ? packageDto(record) : null;
-        }
-        case "visa-services": {
-            const record = await prisma.visaService.findFirst({ where: { slug, status: "published" } });
-            return record ? visaDto(record) : null;
-        }
-        case "blogs": {
-            const record = await prisma.blogPost.findFirst({ where: { slug, status: "published" } });
-            return record ? blogDto(record) : null;
-        }
-        default:
-            return null;
+    } catch (error) {
+        if (isMissingTableError(error)) return null;
+        throw error;
     }
 }
 
@@ -239,4 +249,8 @@ function blogDto(record: any) {
 
 function reviewDto(record: any) {
     return record;
+}
+
+function isMissingTableError(error: unknown) {
+    return typeof error === "object" && error !== null && "code" in error && error.code === "P2021";
 }

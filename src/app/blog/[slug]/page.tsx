@@ -2,15 +2,13 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, CalendarDays, CheckCircle2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { articles } from "../../data/apiCatalog";
-import { getCrmBySlug, listCrm } from "../../lib/crmRepository";
+import { getCrmBySlug } from "../../lib/crmRepository";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function generateStaticParams() {
-    const posts = await listCrm("blogs");
-    const source = posts.length ? posts : articles;
-    return source.map((post) => ({ slug: String(post.slug) }));
+export function generateStaticParams() {
+    return [];
 }
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
