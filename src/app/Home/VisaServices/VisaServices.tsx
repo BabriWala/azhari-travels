@@ -7,6 +7,7 @@ type VisaItem = {
     subtitle?: string;
     image?: string;
     duration?: string;
+    href?: string;
 };
 
 const trustItems = [
@@ -101,7 +102,7 @@ export default function VisaServices({ items = [] }: { items?: VisaItem[] }) {
                                     </p>
                                 </div>
 
-                                <Link href={`/visa-services/${item.slug}`} className="group/btn cursor-pointer mt-7 inline-flex w-fit items-center gap-3 rounded-full border border-[#F7025B]/25 bg-[#F7025B]/5 px-5 py-3 font-bold text-[#F7025B] transition-all duration-300 hover:bg-[#F7025B] hover:text-white">
+                                <Link href={item.href ?? `/visa-services/${item.slug}`} className="group/btn cursor-pointer mt-7 inline-flex w-fit items-center gap-3 rounded-full border border-[#F7025B]/25 bg-[#F7025B]/5 px-5 py-3 font-bold text-[#F7025B] transition-all duration-300 hover:bg-[#F7025B] hover:text-white">
                                     View Requirements
                                     <ArrowRight
                                         size={18}
