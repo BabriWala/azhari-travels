@@ -38,10 +38,10 @@ export default function Footer() {
                 <div className="grid gap-8 lg:grid-cols-[1.25fr_0.85fr_0.95fr_1.1fr]">
                     <div className="min-w-0 rounded-2xl bg-white/[0.06] p-5 ring-1 ring-white/10 sm:p-7">
                         <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
-                            <img src="/Logo.svg" alt="Azhari Travels" className="h-14 w-14 rounded-2xl bg-white p-2" />
+                            <img src="/Logo.png" alt="Azhari Travels" className="h-14 w-14 rounded-2xl bg-white p-2" />
                             <div className="min-w-0">
                                 <h2 className="truncate text-2xl font-black">Azhari Travels</h2>
-                                <p className="text-sm font-bold text-[#FF7A1A]">Travels & Tours</p>
+                                <p className="text-sm font-bold text-[#FF7A1A]">Make Dreams to Reality</p>
                             </div>
                         </Link>
                         <p className="mt-6 max-w-sm break-words text-base font-medium leading-8 text-white/72">
@@ -119,7 +119,7 @@ export default function Footer() {
                         ))}
                     </div>
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                        <p className="text-sm font-semibold text-white/60">© 2026 Azhari Travels & Tours. All rights reserved.</p>
+                        <p className="text-sm font-semibold text-white/60">© 2026 Azhari Travels. All rights reserved.</p>
                         <Link href="#" className="inline-flex items-center gap-2 text-sm font-bold text-[#FF7A1A]">
                             Back to top
                             <ArrowUpRight size={16} />

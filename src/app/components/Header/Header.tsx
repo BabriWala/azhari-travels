@@ -45,7 +45,7 @@ export default function Header() {
                         </span>
                         <span className="min-w-0">
                             <span className="block truncate text-xl font-black leading-6 text-[#06113C]">Azhari Travels</span>
-                            <span className="block text-xs font-bold uppercase tracking-[0.22em] text-[#F7025B]">Travels & Tours</span>
+                            <span className="block text-xs font-bold uppercase tracking-[0.14em] text-[#F7025B]">Make Dreams to Reality</span>
                         </span>
                     </Link>
 

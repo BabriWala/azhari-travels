@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import {
-    AlertTriangle,
     ArrowRight,
     BadgeCheck,
     CheckCircle2,
@@ -39,23 +38,22 @@ const visaTypes = [
     },
     {
         title: "স্টিকার ভিসা",
-        text: "মিশরের স্টিকার ভিসা আপনি বাংলাদেশে অবস্থান করে মিশর এম্বাসি থেকে নিতে পারবেন। তবে এই প্রক্রিয়াটি বেশ সময়সাপেক্ষ এবং জটিল হতে পারে, এবং সবসময় ভিসা সাক্সেস নাও হতে পারে।",
+        text: "মিশরের স্টিকার ভিসা আপনি বাংলাদেশে অবস্থানরত মিশরের এম্বাসি থেকে নিতে পারবেন। তবে এই প্রক্রিয়াটি বেশ সময়সাপেক্ষ এবং জটিল হতে পারে, এবং সবসময় ভিসা সাক্সেস নাও হতে পারে।",
     },
     {
         title: "ভিসা অন অ্যারাইভাল",
-        text: "যাদের UK, USA, Schengen, Australia, New Zealand, Ireland, Canada বা Japan-এর ভ্যালিড ভিসা/রেসিডেন্স রয়েছে তারা শুধুমাত্র ভিসা অন অ্যারাইভাল পেতে পারেন। এই ক্ষেত্রে কনফার্মড রিটার্ন টিকিট, হোটেল বুকিং এবং পর্যাপ্ত ক্যাশ থাকা দরকার। সেক্ষেত্রে সিকিউরিটি অ্যাপ্রুভাল নেওয়ার প্রয়োজন হবে না।",
+        text: "যাদের UK, USA, Schengen, Australia, New Zealand, Ireland, Canada বা Japan-এর ভ্যালিড ভিসা/রেসিডেন্স রয়েছে তারা শুধুমাত্র ভিসা অন অ্যারাইভাল পেতে পারেন। এই ক্ষেত্রে কনফার্মড রিটার্ন টিকিট, হোটেল বুকিং এবং পর্যাপ্ত ডলার ক্যাশ থাকা লাগবে। সেক্ষেত্রে সিকিউরিটি অ্যাপ্রুভাল নেওয়ার প্রয়োজন হবে না।",
     },
     {
         title: "সিকিউরিটি এপ্রুভাল ও ওকে-টু-বোর্ড",
-        text: "যাদের উপরের ভিসা/রেসিডেন্স নেই, তাদের ক্ষেত্রে মিশর সিকিউরিটি অ্যাপ্রুভাল ও ওকে টু বোর্ড নিয়ে মিশর ভ্রমণ করা যাবে। উদাহরণস্বরূপ, সৌদি আরবের বোর্ডিং কাউন্টারে ওকে টু বোর্ড দেখিয়ে বোর্ডিং পাস নিতে হবে। এরপর কায়রো এয়ারপোর্টে পৌঁছানোর পর ইমিগ্রেশন কর্তৃপক্ষের কাছে সিকিউরিটি অ্যাপ্রুভাল দেখিয়ে এন্ট্রি নিতে হবে।",
+        text: "যাদের উপরের ভিসা/রেসিডেন্স নেই, তাদের ক্ষেত্রে মিশরের সিকিউরিটি অ্যাপ্রুভাল ও ওকে টু বোর্ড নিয়ে মিশর ভ্রমণ করা যাবে। উদাহরণস্বরূপ, সৌদি আরবের বোর্ডিং কাউন্টারে ওকে টু বোর্ড দেখিয়ে বোর্ডিং পাস নিতে হবে। এরপর কায়রো এয়ারপোর্টে পৌঁছানোর পর ইমিগ্রেশন কর্তৃপক্ষের কাছে সিকিউরিটি অ্যাপ্রুভাল দেখিয়ে এন্ট্রি নিতে হবে।",
     },
 ];
 
 const serviceNotes = [
+    "সিকিউরিটি এপ্রুভাল সাধারণত সর্বোচ্চ ৫ দিনের মধ্যে পাওয়া যাবে।",
     "কায়রো এয়ারপোর্টে পৌঁছানোর পর ইমিগ্রেশন কর্তৃপক্ষের কাছে সিকিউরিটি অ্যাপ্রুভাল/ভিসা ফাইল দেখিয়ে এন্ট্রি নিতে হবে।",
-    "৩০ ডলার ফি দিয়ে অন-অ্যারাইভাল ভিসা নেওয়ার সুযোগ থাকতে পারে।",
-    "সিকিউরিটি এপ্রুভাল সাধারণত সর্বোচ্চ ৫ দিনের মধ্যে পাওয়া যেতে পারে।",
-    "Azhari Travels এই পেজে শুধুমাত্র মিশর সিকিউরিটি অ্যাপ্রুভাল/ভিসা ফাইল সহায়তা প্রদান করে।",
+    "৩০ ডলার ফি দিয়ে অন-অ্যারাইভাল ভিসা নিতে হবে।",
 ];
 
 export default function EgyptSecurityApprovalPage() {
@@ -68,7 +66,7 @@ export default function EgyptSecurityApprovalPage() {
                             মিশর ভিসা সহায়তা
                         </span>
                         <h1 className="mt-5 text-4xl font-black leading-tight text-[#06113C] sm:text-5xl lg:text-6xl">
-                            মিশর সিকিউরিটি অ্যাপ্রুভাল ভিসা
+                            মিশরের সিকিউরিটি অ্যাপ্রুভাল ভিসা
                         </h1>
                         <p className="mx-auto mt-5 max-w-4xl text-xl font-bold leading-9 text-[#06113C]">
                             যাদের UK, USA, Schengen, Australia, New Zealand, Ireland, Canada বা Japan-এর ভ্যালিড
@@ -129,7 +127,7 @@ export default function EgyptSecurityApprovalPage() {
                         </div>
                     </div>
 
-                    <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.92fr]">
+                    <div className="mt-10 grid gap-6">
                         <div className="rounded-3xl bg-[#06113C] p-7 text-white shadow-[0_24px_70px_rgba(6,17,60,0.18)]">
                             <FileCheck2 className="text-[#FF7A1A]" size={36} />
                             <h2 className="mt-4 text-3xl font-black">সিকিউরিটি এপ্রুভালের প্রক্রিয়া</h2>
@@ -145,21 +143,6 @@ export default function EgyptSecurityApprovalPage() {
                                         <p className="font-bold leading-7">{item}</p>
                                     </div>
                                 ))}
-                            </div>
-                        </div>
-
-                        <div className="rounded-3xl bg-white p-7 shadow-sm ring-1 ring-[#F7025B]/10">
-                            <AlertTriangle className="text-[#F7025B]" size={36} />
-                            <h2 className="mt-4 text-3xl font-black text-[#06113C]">গুরুত্বপূর্ণ সার্ভিস নোট</h2>
-                            <p className="mt-4 leading-8 text-slate-600">
-                                Azhari Travels এই সার্ভিসে টিকিট, হোটেল, এয়ারলাইন বোর্ডিং বা ইমিগ্রেশন এন্ট্রি
-                                গ্যারান্টি প্রদান করে না। আমরা শুধুমাত্র সিকিউরিটি অ্যাপ্রুভাল/ভিসা ফাইল সহায়তা,
-                                ডকুমেন্ট চেক এবং প্রয়োজনীয় গাইডেন্স প্রদান করি।
-                            </p>
-                            <div className="mt-7">
-                                <TrackedWhatsAppLink sectionName="Egypt Security Note CTA" variant="outline">
-                                    যোগাযোগ করতে ক্লিক করুন
-                                </TrackedWhatsAppLink>
                             </div>
                         </div>
                     </div>
