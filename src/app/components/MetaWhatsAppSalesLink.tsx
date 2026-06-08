@@ -9,6 +9,8 @@ type MetaWhatsAppSalesLinkProps = {
     sectionName: string;
     value?: number;
     currency?: string;
+    contentName?: string;
+    contentCategory?: string;
     enabled?: boolean;
     className?: string;
 };
@@ -19,6 +21,8 @@ export default function MetaWhatsAppSalesLink({
     sectionName,
     value = 1550,
     currency = "USD",
+    contentName = "Al-Azhar University Package",
+    contentCategory = "Student Consultancy",
     enabled = true,
     className,
 }: MetaWhatsAppSalesLinkProps) {
@@ -34,8 +38,8 @@ export default function MetaWhatsAppSalesLink({
         return trackMetaEvent({
             eventName: "Purchase",
             customData: {
-                content_name: "Al-Azhar University Package",
-                content_category: "Student Consultancy",
+                content_name: contentName,
+                content_category: contentCategory,
                 contact_channel: "WhatsApp",
                 cta_section: sectionName,
                 value,
