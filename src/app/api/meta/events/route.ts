@@ -8,7 +8,7 @@ type MetaEventRequest = {
 };
 
 const GRAPH_API_VERSION = "v20.0";
-const DEFAULT_PIXEL_ID = "1404228387596184";
+const DEFAULT_PIXEL_ID = "1661121991886447";
 
 function getClientIp(request: NextRequest) {
     const forwardedFor = request.headers.get("x-forwarded-for");

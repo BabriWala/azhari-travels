@@ -28,7 +28,7 @@ type MetaFbq = ((...args: unknown[]) => void) & {
     version?: string;
 };
 
-const defaultPixelId = "1404228387596184";
+const defaultPixelId = "1661121991886447";
 const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? defaultPixelId;
 
 function createEventId(eventName: string) {
@@ -214,6 +214,15 @@ export default function MetaPixel() {
             <Suspense fallback={null}>
                 <MetaPageViewTracker />
             </Suspense>
+            <noscript>
+                <img
+                    height="1"
+                    width="1"
+                    style={{ display: "none" }}
+                    src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+                    alt=""
+                />
+            </noscript>
         </>
     );
 }
