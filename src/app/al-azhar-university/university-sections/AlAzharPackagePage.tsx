@@ -78,16 +78,16 @@ export default function AlAzharPackagePage() {
                             আল-আযহার বিশ্ববিদ্যালয়ে পড়াশোনা করতে ইচ্ছুক শিক্ষার্থীদের জন্য সম্পূর্ণ ভর্তি সহায়তা প্যাকেজ — যার মধ্যে রয়েছে ভিসা, এয়ার টিকেট, ওমরাহ এবং ভর্তি সম্পন্ন হওয়া পর্যন্ত সকল প্রকার সহযোগিতা
                         </p>
 
-                        <div className="mt-8 rounded-3xl bg-[#090d35] p-6 text-white shadow-xl">
+                        {/* <div className="mt-8 rounded-3xl bg-[#090d35] p-6 text-white shadow-xl">
                             <p className="text-sm text-slate-300">প্যাকেজ মূল্য</p>
                             <h2 className="mt-1 text-4xl font-black text-white">
                                 1,90,000/-
                             </h2>
                             <p className="mt-2 text-sm text-slate-300">
-                                {/* One Hundred Seventy-Five Thousand Taka */}
+                               
                                 এক লক্ষ নব্বই হাজার টাকা
                             </p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
