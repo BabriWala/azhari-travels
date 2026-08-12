@@ -25,7 +25,7 @@ const page = () => {
             <AlAzharPackagePage></AlAzharPackagePage>
             <AlAzharAdmissionDocuments></AlAzharAdmissionDocuments>
             <AlAzharNotSuitablePage></AlAzharNotSuitablePage>
-            <ProcessingSystemPage></ProcessingSystemPage>
+            {/* <ProcessingSystemPage></ProcessingSystemPage> */}
             <AdmissionDetailsPage></AdmissionDetailsPage>
             <ImportantNotesPage></ImportantNotesPage>
             <ScholarshipsExpensesPage></ScholarshipsExpensesPage>
