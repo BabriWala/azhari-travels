@@ -179,11 +179,12 @@ export default function AlAzharPackagePage() {
             </section>
 
             {/* Additional Cost */}
-            <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+
+            {/* <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
                 <div className="rounded-4xl bg-linear-to-r from-[#090d35] to-[#151b55] p-6 text-white shadow-xl sm:p-8 md:flex md:items-center md:justify-between">
                     <div>
                         <p className="text-sm text-slate-300">
-                            {/* Estimated Additional Cost */}
+                           
                             আনুমানিক অতিরিক্ত খরচ
 
                         </p>
@@ -205,7 +206,7 @@ export default function AlAzharPackagePage() {
                         </button>
                     </MetaWhatsAppSalesLink>
                 </div>
-            </section>
+            </section> */}
         </main>
     );
 }
