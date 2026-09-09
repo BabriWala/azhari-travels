@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import Script from 'next/script';
 import MetaPixel from "./components/MetaPixel";
 import ScrollToTop from "./components/ScrollToTop";
+import PublicChrome from "./components/PublicChrome";
 
 export const metadata: Metadata = {
   title: "Azhari Travels & Tours",
@@ -59,14 +60,14 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       <body>
         <MetaPixel />
         <ScrollToTop />
-        <Header />
+        <PublicChrome><Header /></PublicChrome>
         <main>
           {children}
         </main>
         {/* <Footer /> */}
 
         
-        <Footer></Footer>
+        <PublicChrome><Footer /></PublicChrome>
         <Toaster
           position="top-center" // Used to adapt the animation
         ></Toaster>

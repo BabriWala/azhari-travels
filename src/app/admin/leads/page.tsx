@@ -1,0 +1,176 @@
+"use client";
+
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { ArrowLeft, ArrowUpRight, Check, ChevronRight, FileSpreadsheet, Loader2, LogOut, MessageSquare, Mic, Paperclip, Plus, RefreshCw, Search, Send, Square, Upload, Users, X } from "lucide-react";
+import "./workspace.css";
+
+type Lead = { id: string; name: string; phone: string; email: string | null; status: string; owner: string; source: string; form: string; labels: string; secondaryPhone: string; whatsapp: string; importedCreated: string; createdAt: string; updatedAt: string; service: string; message: string; preferredContact: string; extraFields: string; _count: { conversations: number } };
+type Named = { id: string; name: string };
+type Entry = { id: string; party: string; author: string; text: string; audioType: string | null; audioName: string | null; createdAt: string };
+type Preview = { imported: number; duplicates: number; warnings: string[]; mapped: { column: string; field: string }[]; preview: Lead[] };
+const date = (value: string) => new Date(value).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+
+function Voice({ id, token }: { id: string; token: string }) {
+    const [url, setUrl] = useState(""), [error, setError] = useState("");
+    useEffect(() => {
+        let active = true, objectUrl = "";
+        fetch(`/api/admin/leads/audio/${id}`, { headers: { Authorization: `Bearer ${token}` } }).then(async r => {
+            if (!r.ok) throw new Error("Audio could not be loaded.");
+            objectUrl = URL.createObjectURL(await r.blob());
+            if (active) setUrl(objectUrl); else URL.revokeObjectURL(objectUrl);
+        }).catch(e => { if (active) setError(e.message); });
+        return () => { active = false; if (objectUrl) URL.revokeObjectURL(objectUrl); };
+    }, [id, token]);
+    return error ? <small role="alert">{error}</small> : url ? <audio controls preload="metadata" src={url} /> : <small>Loading audio…</small>;
+}
+
+export default function LeadsWorkspace() {
+    const [token, setToken] = useState(""), [ready, setReady] = useState(false);
+    const [leads, setLeads] = useState<Lead[]>([]), [stages, setStages] = useState<Named[]>([]), [people, setPeople] = useState<Named[]>([]);
+    const [search, setSearch] = useState(""), [stage, setStage] = useState(""), [owner, setOwner] = useState(""), [source, setSource] = useState("");
+    const [selected, setSelected] = useState<string[]>([]), [activeId, setActiveId] = useState("");
+    const [messages, setMessages] = useState<Entry[]>([]), [messagesLoading, setMessagesLoading] = useState(false);
+    const [busy, setBusy] = useState(false), [loading, setLoading] = useState(false), [notice, setNotice] = useState(""), [error, setError] = useState("");
+    const [importOpen, setImportOpen] = useState(false), [file, setFile] = useState<File | null>(null), [preview, setPreview] = useState<Preview | null>(null);
+    const [manage, setManage] = useState<"stage" | "person" | "">(""), [newName, setNewName] = useState("");
+    const [email, setEmail] = useState(""), [password, setPassword] = useState("");
+    const [text, setText] = useState(""), [party, setParty] = useState("staff"), [author, setAuthor] = useState("");
+    const [audio, setAudio] = useState<File | null>(null), [recording, setRecording] = useState(false), [page, setPage] = useState(1);
+    const recorder = useRef<MediaRecorder | null>(null), stream = useRef<MediaStream | null>(null), recordingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const activeRef = useRef(activeId); activeRef.current = activeId;
+    const active = leads.find(l => l.id === activeId);
+
+    useEffect(() => {
+        if (!activeId && !importOpen && !manage) return;
+        const previous = document.activeElement as HTMLElement | null;
+        const oldOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        const dialog = document.querySelector<HTMLElement>('.lw [role="dialog"]');
+        const focusable = () => Array.from(dialog?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea, summary, audio[controls]') || []);
+        focusable()[0]?.focus();
+        const onKey = (event: KeyboardEvent) => {
+            if (event.key === "Escape" && !busy && !recording) { setActiveId(""); setImportOpen(false); setManage(""); }
+            if (event.key === "Tab") {
+                const items = focusable(), first = items[0], last = items[items.length - 1];
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+            }
+        };
+        document.addEventListener("keydown", onKey);
+        return () => { document.body.style.overflow = oldOverflow; document.removeEventListener("keydown", onKey); previous?.focus(); };
+    }, [activeId, importOpen, manage, busy, recording]);
+
+    useEffect(() => { setToken(localStorage.getItem("azhari_admin_token") || ""); setAuthor(localStorage.getItem("azhari_admin_email") || "Team"); setReady(true); }, []);
+    const api = useCallback(async (path = "", options: RequestInit = {}) => {
+        const response = await fetch(`/api/admin/leads${path}`, { ...options, headers: { Authorization: `Bearer ${token}`, ...options.headers } });
+        const data = await response.json();
+        if (response.status === 401) { setToken(""); localStorage.removeItem("azhari_admin_token"); }
+        if (!response.ok) throw new Error(typeof data.error === "string" ? data.error : data.error?.message || "Request failed. Please retry.");
+        return data;
+    }, [token]);
+    const refresh = useCallback(async () => {
+        setLoading(true);
+        try { const data = await api(); setLeads(data.leads); setStages(data.stages); setPeople(data.people); }
+        catch (e) { setError((e as Error).message); } finally { setLoading(false); }
+    }, [api]);
+    useEffect(() => { if (token) void refresh(); }, [token, refresh]);
+    const loadMessages = useCallback(async (id: string) => {
+        if (!id) return;
+        const data = await api(`/${id}/messages`);
+        if (activeRef.current === id) setMessages(data.messages);
+    }, [api]);
+    useEffect(() => {
+        setMessages([]); setText(""); setAudio(null); setParty("staff");
+        if (!activeId) return;
+        setMessagesLoading(true);
+        loadMessages(activeId).catch(e => setError(e.message)).finally(() => { if (activeRef.current === activeId) setMessagesLoading(false); });
+    }, [activeId, loadMessages]);
+    useEffect(() => {
+        if (!token) return;
+        const timer = setInterval(() => { void refresh(); if (activeRef.current) void loadMessages(activeRef.current).catch(() => {}); }, 30000);
+        return () => clearInterval(timer);
+    }, [token, refresh, loadMessages]);
+    useEffect(() => () => { if (recordingTimer.current) clearTimeout(recordingTimer.current); if (recorder.current) { recorder.current.onstop = null; if (recorder.current.state === "recording") recorder.current.stop(); } stream.current?.getTracks().forEach(t => t.stop()); }, []);
+    const run = async (action: () => Promise<void>) => { setBusy(true); setError(""); setNotice(""); try { await action(); } catch (e) { setError((e as Error).message); } finally { setBusy(false); } };
+    async function login(e: FormEvent) {
+        e.preventDefault(); await run(async () => {
+            const r = await fetch("/api/admin/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) });
+            const data = await r.json(); if (!r.ok) throw new Error("Invalid email or password.");
+            localStorage.setItem("azhari_admin_token", data.data.token); localStorage.setItem("azhari_admin_email", email);
+            setToken(data.data.token); setAuthor(email); setPassword("");
+        });
+    }
+    async function update(ids: string[], field: string, value: string) {
+        if (!value) return;
+        await run(async () => { await api("", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ids, field, value }) }); await refresh(); if (activeId) await loadMessages(activeId); setSelected([]); setNotice("Lead updated."); });
+    }
+    async function importFile(commit: boolean) {
+        if (!file) return;
+        await run(async () => {
+            const form = new FormData(); form.set("file", file); form.set("commit", String(commit));
+            const data = await api("/import", { method: "POST", body: form });
+            if (commit) { setImportOpen(false); setFile(null); setPreview(null); setNotice(`${data.imported} leads imported. ${data.duplicates} duplicates skipped.`); await refresh(); }
+            else setPreview(data);
+        });
+    }
+    async function addName(e: FormEvent) {
+        e.preventDefault(); await run(async () => { await api("", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ kind: manage, name: newName }) }); setNewName(""); await refresh(); setNotice(manage === "stage" ? "Stage added." : "Team member added."); });
+    }
+    async function send(e: FormEvent) {
+        e.preventDefault(); const id = activeId;
+        await run(async () => {
+            const form = new FormData(); form.set("text", text); form.set("party", party); form.set("author", party === "customer" ? active?.name || "Customer" : author); if (audio) form.set("audio", audio);
+            await api(`/${id}/messages`, { method: "POST", body: form });
+            if (activeRef.current === id) { setText(""); setAudio(null); await loadMessages(id); } await refresh();
+        });
+    }
+    async function startRecording() {
+        setError("");
+        try {
+            if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) throw new Error("Recording needs HTTPS and a supported browser. You can attach an audio file instead.");
+            const captureId = activeId;
+            stream.current = await navigator.mediaDevices.getUserMedia({ audio: true });
+            if (activeRef.current !== captureId) { stream.current.getTracks().forEach(t => t.stop()); return; }
+            const instance = new MediaRecorder(stream.current), chunks: BlobPart[] = [];
+            recorder.current = instance;
+            instance.ondataavailable = event => { if (event.data.size) chunks.push(event.data); };
+            instance.onstop = () => {
+                if (recordingTimer.current) clearTimeout(recordingTimer.current);
+                const mime = instance.mimeType || "audio/webm";
+                if (activeRef.current === captureId) setAudio(new File(chunks, `voice-note.${mime.includes("mp4") ? "m4a" : mime.includes("ogg") ? "ogg" : "webm"}`, { type: mime }));
+                stream.current?.getTracks().forEach(t => t.stop()); setRecording(false);
+            };
+            instance.start(); setRecording(true);
+            recordingTimer.current = setTimeout(() => { if (instance.state === "recording") instance.stop(); }, 180000);
+        } catch (e) { stream.current?.getTracks().forEach(t => t.stop()); setError((e as Error).message); }
+    }
+    function chooseLead(id: string) { if (recording || busy) return; setActiveId(id); }
+    const filtered = useMemo(() => leads.filter(l => (!stage || l.status === stage) && (!owner || l.owner === owner) && (!source || l.source === source) && [l.name, l.phone, l.email, l.form, l.labels, l.owner, l.secondaryPhone, l.whatsapp, l.source, l.service].join(" ").toLowerCase().includes(search.toLowerCase())), [leads, search, stage, owner, source]);
+    useEffect(() => { setPage(1); setSelected([]); }, [search, stage, owner, source]);
+    const maxPage = Math.max(1, Math.ceil(filtered.length / 30)), currentPage = Math.min(page, maxPage), visible = filtered.slice((currentPage - 1) * 30, currentPage * 30);
+    const allStages = [...new Set([...stages.map(s => s.name), ...leads.map(l => l.status)])];
+    const allPeople = [...new Set(["Unassigned", ...people.map(p => p.name), ...leads.map(l => l.owner)])];
+
+    if (!ready) return <div className="lw"><div className="lw-login">Loading workspace…</div></div>;
+    if (!token) return <div className="lw"><div className="lw-login"><div className="lw-brand"><img src="/Logo.png" alt="" /> AZHARI <span>LEADS</span></div><h1>Your next journey<br />starts with a conversation.</h1><p>Sign in with your existing admin account to manage your leads.</p><form onSubmit={login}><label>Email<input type="email" required autoComplete="username" value={email} onChange={e => setEmail(e.target.value)} /></label><label>Password<input type="password" required autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} /></label>{error && <p className="lw-error" role="alert">{error}</p>}<button className="lw-primary" disabled={busy}>{busy ? "Signing in…" : "Open lead workspace"}<ArrowUpRight size={17} /></button></form><Link href="/">Back to website</Link></div></div>;
+
+    return <div className="lw">
+        <header className="lw-top"><Link href="/admin/leads" className="lw-brand"><img src="/Logo.png" alt="" />AZHARI <span>LEADS</span></Link><div className="lw-top-actions"><span className="lw-live">Shared workspace</span><Link href="/admin/content">Content admin <ArrowUpRight size={14} /></Link><button aria-label="Sign out" onClick={() => { localStorage.removeItem("azhari_admin_token"); setToken(""); setLeads([]); setActiveId(""); }}><LogOut size={18} /></button></div></header>
+        <div className="lw-container"><div className="lw-heading"><div><div className="lw-eyebrow">RELATIONSHIPS, ONE STEP AT A TIME</div><h1>Lead workspace<span>.</span></h1><p>Every enquiry. Every conversation. A clear next step.</p></div><div className="lw-heading-actions"><button onClick={() => setManage("person")}><Users size={17} />Team</button><button onClick={() => setManage("stage")}><Plus size={17} />Stages</button><button className="lw-primary" onClick={() => { setImportOpen(true); setPreview(null); setFile(null); }}><Upload size={17} />Import leads</button></div></div>
+        <div className="lw-stats"><div><span>Total leads</span><strong>{leads.length.toLocaleString()}</strong><small>Your growing network</small></div><div><span>Unassigned</span><strong>{leads.filter(l => l.owner === "Unassigned").length}</strong><button onClick={() => { setOwner("Unassigned"); setStage(""); }}>Find their next owner <ChevronRight size={14} /></button></div><div><span>Office visits</span><strong>{leads.filter(l => /office visit/i.test(l.status)).length}</strong><small>Moving the conversation forward</small></div><div><span>Conversations</span><strong>{leads.reduce((n, l) => n + l._count.conversations, 0)}</strong><small>Messages & activity recorded</small></div></div>
+        {error && <div className="lw-error lw-banner" role="alert">{error}<button onClick={() => setError("")} aria-label="Dismiss error"><X size={16} /></button></div>}{notice && <div className="lw-notice lw-banner" role="status"><Check size={16} />{notice}<button onClick={() => setNotice("")} aria-label="Dismiss notification"><X size={16} /></button></div>}
+        <div className="lw-board"><div className="lw-board-top"><div><h2>All leads <span>{filtered.length}</span></h2><p>Keep the right people in the loop.</p></div><button aria-label="Refresh leads" disabled={loading} onClick={() => { void refresh(); if (activeId) void loadMessages(activeId).catch(e => setError(e.message)); }}><RefreshCw size={17} className={loading ? "lw-spin" : ""} /></button></div>
+        <div className="lw-filters"><label className="lw-search"><Search size={18} /><input aria-label="Search leads" placeholder="Search name, phone, email, labels…" value={search} onChange={e => setSearch(e.target.value)} /></label><select aria-label="Filter by stage" value={stage} onChange={e => setStage(e.target.value)}><option value="">All stages</option>{allStages.map(s => <option key={s}>{s}</option>)}</select><select aria-label="Filter by owner" value={owner} onChange={e => setOwner(e.target.value)}><option value="">All owners</option>{allPeople.map(p => <option key={p}>{p}</option>)}</select><select aria-label="Filter by source" value={source} onChange={e => setSource(e.target.value)}><option value="">All sources</option>{[...new Set(leads.map(l => l.source))].map(s => <option key={s}>{s}</option>)}</select>{(search || stage || owner || source) && <button onClick={() => { setSearch(""); setStage(""); setOwner(""); setSource(""); }}>Clear</button>}</div>
+        {!!selected.length && <div className="lw-bulk"><strong>{selected.length} selected</strong><select aria-label="Bulk assign owner" disabled={busy} value="" onChange={e => void update(selected, "owner", e.target.value)}><option value="">Assign to…</option>{allPeople.map(p => <option key={p}>{p}</option>)}</select><select aria-label="Bulk change stage" disabled={busy} value="" onChange={e => void update(selected, "status", e.target.value)}><option value="">Move to stage…</option>{stages.map(s => <option key={s.id}>{s.name}</option>)}</select><button onClick={() => setSelected([])}>Clear selection</button></div>}
+        <div className="lw-table"><div className="lw-row lw-table-head"><input type="checkbox" aria-label="Select visible leads" checked={visible.length > 0 && visible.every(l => selected.includes(l.id))} onChange={e => setSelected(e.target.checked ? [...new Set([...selected, ...visible.map(l => l.id)])] : selected.filter(id => !visible.some(l => l.id === id)))} /><span>NAME / CONTACT</span><span>STAGE</span><span>OWNER</span><span>SOURCE</span><span>ACTIVITY</span><span /></div>
+        {visible.map(l => <div className={`lw-row ${activeId === l.id ? "lw-row-active" : ""}`} key={l.id}><input type="checkbox" aria-label={`Select ${l.name}`} checked={selected.includes(l.id)} onChange={e => setSelected(e.target.checked ? [...selected, l.id] : selected.filter(id => id !== l.id))} /><button className="lw-person" onClick={() => chooseLead(l.id)}><span className="lw-avatar">{l.name.slice(0, 1)}</span><span><strong>{l.name}</strong><small>{l.phone || l.email || "No contact details"}</small></span></button><div><span className="lw-stage">{l.status}</span></div><div className="lw-owner">{l.owner === "Unassigned" ? <span className="lw-muted">Unassigned</span> : l.owner}</div><div className="lw-source">{l.source}<small title={l.form}>{l.form || l.service}</small></div><span className="lw-activity"><MessageSquare size={14} />{l._count.conversations}</span><button className="lw-open" aria-label={`Open ${l.name}`} onClick={() => chooseLead(l.id)}><ChevronRight size={18} /></button></div>)}
+        {!visible.length && <div className="lw-empty"><FileSpreadsheet size={38} /><h3>{loading ? "Loading your leads…" : leads.length ? "No matching leads" : "Make room for your next customer"}</h3><p>{leads.length ? "Try another search or clear your filters." : "Import a CSV or Excel file to bring your contacts together."}</p>{!leads.length && !loading && <button className="lw-primary" onClick={() => setImportOpen(true)}><Upload size={17} />Import your first file</button>}</div>}</div>
+        <div className="lw-pagination"><span>{filtered.length ? (currentPage - 1) * 30 + 1 : 0}–{Math.min(currentPage * 30, filtered.length)} of {filtered.length} leads</span><div><button disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)}>Previous</button><span>{currentPage} / {maxPage}</span><button disabled={currentPage >= maxPage} onClick={() => setPage(currentPage + 1)}>Next</button></div></div></div><p className="lw-footnote">Azhari Travels & Tours · Lead management</p></div>
+
+        {active && <div className="lw-overlay" onClick={() => chooseLead("")}><section className="lw-drawer" role="dialog" aria-modal="true" aria-label={`Lead details for ${active.name}`} onClick={e => e.stopPropagation()}><div className="lw-drawer-header"><button onClick={() => chooseLead("")} disabled={recording || busy}><ArrowLeft size={17} />All leads</button><span className="lw-stage">{active.status}</span></div><div className="lw-detail"><span className="lw-avatar lw-avatar-large">{active.name.slice(0, 1)}</span><h2>{active.name}</h2><p>{active.phone || active.email || "Contact details not provided"}</p><div className="lw-contact-links">{active.phone && <a href={`tel:${active.phone.replace(/[^+\d]/g, "")}`}>Call lead <ArrowUpRight size={14} /></a>}{active.whatsapp && <a href={`https://wa.me/${active.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">WhatsApp <ArrowUpRight size={14} /></a>}</div><div className="lw-detail-controls"><label>Assigned to<select disabled={busy} value={active.owner} onChange={e => void update([active.id], "owner", e.target.value)}>{allPeople.map(p => <option key={p}>{p}</option>)}</select></label><label>Current stage<select disabled={busy} value={active.status} onChange={e => void update([active.id], "status", e.target.value)}>{allStages.map(s => <option key={s}>{s}</option>)}</select></label></div><details><summary>Contact & import details</summary><dl>{Object.entries({ Email: active.email, Phone: active.phone, "Secondary phone": active.secondaryPhone, WhatsApp: active.whatsapp, Source: active.source, Form: active.form, Labels: active.labels, Channel: active.preferredContact, Service: active.service, "Original created": active.importedCreated, "Added to workspace": date(active.createdAt), Notes: active.message, ...JSON.parse(active.extraFields || "{}") }).map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{String(v || "—")}</dd></div>)}</dl></details></div><div className="lw-history"><div className="lw-history-heading"><h3>Conversation history</h3><span>{messages.length} entries</span></div><p className="lw-muted">Log conversations from either party. Entries are internal records.</p>{messagesLoading ? <p>Loading history…</p> : !messages.length ? <div className="lw-chat-empty"><MessageSquare size={26} /><p>A new conversation starts here.<br />Add a message or a voice note below.</p></div> : messages.map(m => m.party === "system" ? <div className="lw-system" key={m.id}><Check size={13} /><span>{m.text}<small>{date(m.createdAt)}</small></span></div> : <article className={`lw-message lw-message-${m.party}`} key={m.id}><div><strong>{m.author}</strong><span>{m.party === "customer" ? "Customer" : "Team"}</span></div>{m.text && <p>{m.text}</p>}{m.audioType && <Voice id={m.id} token={token} />}<time>{date(m.createdAt)}</time></article>)}</div><form className="lw-composer" onSubmit={send}><div className="lw-compose-fields"><label>Message from<select value={party} onChange={e => setParty(e.target.value)}><option value="staff">Our team</option><option value="customer">Customer</option></select></label>{party === "staff" && <label>Staff name<input required maxLength={100} value={author} onChange={e => setAuthor(e.target.value)} /></label>}</div><textarea aria-label="Conversation message" placeholder={party === "customer" ? "What did the customer say?" : "Add a message, call summary or follow-up…"} value={text} maxLength={10000} onChange={e => setText(e.target.value)} />{audio && <div className="lw-audio-chip"><Paperclip size={14} /><span>{audio.name}</span><button type="button" aria-label="Remove audio" onClick={() => setAudio(null)}><X size={14} /></button></div>}<div className="lw-compose-actions"><label className="lw-attach" title="Attach audio"><Paperclip size={18} /><span>Audio</span><input type="file" accept="audio/*,.m4a,.webm,.ogg" aria-label="Attach audio file" onChange={e => { const f = e.target.files?.[0]; if (f && f.size > 10 * 1024 * 1024) setError("Audio must be under 10 MB."); else setAudio(f || null); e.target.value = ""; }} /></label><button type="button" className={recording ? "lw-recording" : ""} onClick={() => recording ? recorder.current?.stop() : void startRecording()}>{recording ? <Square size={16} /> : <Mic size={18} />}{recording ? "Stop" : "Record"}</button><button className="lw-primary" disabled={busy || recording || (!text.trim() && !audio)}>{busy ? <Loader2 size={17} className="lw-spin" /> : <Send size={17} />}Save</button></div><small>Audio up to 10 MB · Record up to 3 minutes</small>{error && <p className="lw-error" role="alert">{error}</p>}</form></section></div>}
+
+        {importOpen && <div className="lw-overlay"><section className="lw-modal" role="dialog" aria-modal="true" aria-labelledby="import-title"><div className="lw-modal-heading"><div><div className="lw-eyebrow">GROW YOUR NETWORK</div><h2 id="import-title">Import leads</h2></div><button aria-label="Close import" disabled={busy} onClick={() => setImportOpen(false)}><X size={20} /></button></div><p>Upload your contact export. We’ll match columns and keep existing contacts safe.</p><label className="lw-drop"><FileSpreadsheet size={36} /><strong>{file?.name || "Choose a CSV or Excel file"}</strong><span>.csv or .xlsx · Up to 10 MB / 5,000 leads</span><input type="file" accept=".csv,.xlsx" disabled={busy} onChange={e => { setFile(e.target.files?.[0] || null); setPreview(null); setError(""); }} /></label><small>Excel imports use the first worksheet. Keep phone numbers as text to preserve “+” and leading zeros.</small>{preview && <div className="lw-preview"><h3>{preview.imported} new leads ready</h3><p>{preview.duplicates} duplicates will be skipped. Existing records are preserved.</p><details><summary>{preview.mapped.length} columns matched</summary>{preview.mapped.map(m => <p key={m.field}>{m.column} → {m.field}</p>)}</details><div className="lw-preview-rows">{preview.preview.map((l, i) => <div key={i}><strong>{l.name}</strong><span>{l.phone || l.email}</span><small>{l.status} · {l.owner}</small></div>)}</div>{preview.warnings.length > 0 && <details><summary>{preview.warnings.length} skipped rows</summary>{preview.warnings.map(w => <p key={w}>{w}</p>)}</details>}</div>}{error && <p className="lw-error" role="alert">{error}</p>}<div className="lw-modal-actions"><button disabled={busy} onClick={() => setImportOpen(false)}>Cancel</button><button className="lw-primary" disabled={busy || !file || !!preview && !preview.imported} onClick={() => void importFile(!!preview)}>{busy ? <Loader2 size={16} className="lw-spin" /> : <Upload size={16} />}{busy ? "Processing…" : preview ? `Import ${preview.imported} leads` : "Preview import"}</button></div></section></div>}
+        {manage && <div className="lw-overlay"><section className="lw-modal" role="dialog" aria-modal="true" aria-labelledby="manage-title"><div className="lw-modal-heading"><h2 id="manage-title">{manage === "stage" ? "Your pipeline stages" : "Your team"}</h2><button aria-label="Close settings" onClick={() => { setManage(""); setNewName(""); }}><X size={20} /></button></div><p>{manage === "stage" ? "Add the steps that fit your process, from first contact to office visit and completion." : "Add the people who handle your leads. Team names are assignment labels; access uses the existing admin login."}</p><div className="lw-name-list">{(manage === "stage" ? stages : people).map((n, i) => <div key={n.id}><span>{String(i + 1).padStart(2, "0")}</span>{n.name}</div>)}</div><form onSubmit={addName}><label>{manage === "stage" ? "New stage" : "Team member name"}<input required maxLength={100} placeholder={manage === "stage" ? "e.g. Office visit scheduled" : "e.g. Hanzala Bin Omar"} value={newName} onChange={e => setNewName(e.target.value)} /></label>{error && <p className="lw-error" role="alert">{error}</p>}<button className="lw-primary" disabled={busy || !newName.trim()}><Plus size={16} />{manage === "stage" ? "Add stage" : "Add team member"}</button></form></section></div>}
+    </div>;
+}

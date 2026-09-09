@@ -216,6 +216,18 @@ curl -X POST "http://localhost:3000/api/contact" \
 
 ## Deployment
 
+### Lead workspace
+
+The separate lead workspace is available at `/admin/leads` and linked from the content admin. Sign in with the existing admin credentials. It supports CSV/XLSX preview and import (first worksheet, 10 MB, 5,000 rows), search, stage/source/owner filters, bulk assignment, custom stages, and per-lead conversation history. Staff can log either party's text and attach or record audio. This is an internal conversation log, not a customer messaging portal. Team member names are assignment labels, not separate login accounts.
+
+Imports preserve the supplied export columns and any additional columns, skip contacts already matching a normalized phone, email, or import identity, and preserve existing records. Bengali and international phone text are supported. Store Excel phone cells as text to preserve leading zeros. Duplicate rows are skipped rather than merged.
+
+Run `pnpm exec prisma generate` and `pnpm db:deploy` before starting the updated app. The additive `000002_lead_workspace` migration preserves existing leads. On a database previously created with `db:init:sqlite` without migration records, first verify that its tables match `000001_init` and baseline it with `pnpm exec prisma migrate resolve --applied 000001_init`, then deploy migrations. Back up the database before applying production migrations.
+
+Lead data and private audio are stored in the SQLite database. Production must use persistent, writable storage and include the database in backups; ephemeral serverless storage is not supported. Set `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `ADMIN_API_TOKEN` for production. Audio requests require the admin token. Browser microphone capture needs HTTPS (or localhost); attaching audio also works without microphone access. Audio is limited to 10 MB, recordings to three minutes. Other team changes refresh every 30 seconds or with the refresh button.
+
+Run `pnpm test:leads` for isolated database integration tests. Optionally append a CSV path to validate an export without importing it into the app database.
+
 GitHub Actions deploys `main` to the VPS using `.github/workflows/deploy.yml`.
 
 Required repository secrets:

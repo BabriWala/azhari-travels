@@ -564,6 +564,7 @@ export default function AdminContentPage() {
                             <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-slate-600">
                                 Manage packages, visa services, blog posts, reviews, leads and uploaded media from forms connected to the database.
                             </p>
+                            <a href="/admin/leads" className="mt-3 inline-flex rounded-lg bg-emerald-700 px-4 py-2 text-sm font-bold text-white">Open lead workspace →</a>
                         </div>
 
                         <div className="flex w-full flex-col gap-3 rounded-[18px] bg-[#F8FAFC] p-3 sm:flex-row sm:items-center sm:justify-between lg:max-w-xl">

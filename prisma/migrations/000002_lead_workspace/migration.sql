@@ -1,0 +1,16 @@
+ALTER TABLE "Lead" ADD COLUMN "owner" TEXT NOT NULL DEFAULT 'Unassigned';
+ALTER TABLE "Lead" ADD COLUMN "form" TEXT NOT NULL DEFAULT '';
+ALTER TABLE "Lead" ADD COLUMN "labels" TEXT NOT NULL DEFAULT '';
+ALTER TABLE "Lead" ADD COLUMN "secondaryPhone" TEXT NOT NULL DEFAULT '';
+ALTER TABLE "Lead" ADD COLUMN "whatsapp" TEXT NOT NULL DEFAULT '';
+ALTER TABLE "Lead" ADD COLUMN "importedCreated" TEXT NOT NULL DEFAULT '';
+ALTER TABLE "Lead" ADD COLUMN "extraFields" TEXT NOT NULL DEFAULT '{}';
+ALTER TABLE "Lead" ADD COLUMN "importKey" TEXT;
+CREATE UNIQUE INDEX "Lead_importKey_key" ON "Lead"("importKey");
+CREATE TABLE "LeadStage" ("id" TEXT NOT NULL PRIMARY KEY, "name" TEXT NOT NULL, "sortOrder" INTEGER NOT NULL DEFAULT 0);
+CREATE UNIQUE INDEX "LeadStage_name_key" ON "LeadStage"("name");
+INSERT INTO "LeadStage" ("id", "name", "sortOrder") VALUES ('stage-new','New',0),('stage-contacted','Communicated',1),('stage-informed','Information shared',2),('stage-office','Office visit',3),('stage-qualified','Qualified',4),('stage-documents','Documents collected',5),('stage-processing','Processing',6),('stage-completed','Completed',7),('stage-closed','Closed',8);
+CREATE TABLE "LeadPerson" ("id" TEXT NOT NULL PRIMARY KEY, "name" TEXT NOT NULL);
+CREATE UNIQUE INDEX "LeadPerson_name_key" ON "LeadPerson"("name");
+CREATE TABLE "LeadConversation" ("id" TEXT NOT NULL PRIMARY KEY, "leadId" TEXT NOT NULL, "party" TEXT NOT NULL, "author" TEXT NOT NULL, "text" TEXT NOT NULL DEFAULT '', "audio" BLOB, "audioType" TEXT, "audioName" TEXT, "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, CONSTRAINT "LeadConversation_leadId_fkey" FOREIGN KEY ("leadId") REFERENCES "Lead"("id") ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE INDEX "LeadConversation_leadId_createdAt_idx" ON "LeadConversation"("leadId", "createdAt");

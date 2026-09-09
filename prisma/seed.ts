@@ -8,6 +8,10 @@ function jsonList(value: unknown) {
 }
 
 async function main() {
+    // Also seed stages for deployments that initialize the schema with db push.
+    for (const [sortOrder, name] of ["New", "Communicated", "Information shared", "Office visit", "Qualified", "Documents collected", "Processing", "Completed", "Closed"].entries()) {
+        await prisma.leadStage.upsert({ where: { name }, update: {}, create: { name, sortOrder } });
+    }
     for (const service of services) {
         await prisma.service.upsert({
             where: { slug: service.slug },
