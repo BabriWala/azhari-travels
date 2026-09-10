@@ -10,7 +10,7 @@ export function responseKey(value: string) {
 const metadata = new Set([
     "id", "lead id", "created time", "created at", "created", "ad id", "ad name", "adset id", "adset name",
     "campaign id", "campaign name", "form id", "form name", "is organic", "platform", "lead status",
-    "full name", "name", "phone", "phone number", "email", "email address", "source", "stage", "status", "owner", "labels",
+    "full name", "name", "phone", "phone number", "email", "email address", "source", "stage", "status", "owner", "labels", "retailer item id",
 ]);
 
 export function readExtraFields(json: string): Record<string, string> {

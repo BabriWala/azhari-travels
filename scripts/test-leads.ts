@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 import ExcelJS from "exceljs";
 import { NextRequest } from "next/server";
-import { mapRows, normalizeLeadPhone, parseCsv, readLeadFile } from "../src/app/lib/leadImport";
+import { decodeLeadText, mapRows, normalizeLeadPhone, parseCsv, readLeadFile } from "../src/app/lib/leadImport";
 import { planLeadImport } from "../src/app/lib/leadImportMerge";
 import { matchesResponses, responseEntries, responseKey, searchableResponses } from "../src/app/lib/leadResponses";
 
@@ -29,6 +29,20 @@ async function main() {
         assert.throws(() => mapRows([["Other"], ["x"]]), /Name/);
         assert.throws(() => mapRows([["Name", "Name"], ["x", "y"]]), /unique/);
         assert.equal(mapRows([["Name", "Phone"], ["", "1"], ["OK", "+8800123"]]).warnings.length, 1);
+        const metaTsv = 'id\tcreated_time\tআপনার_শিক্ষার_মাধ্যম_কোনটি?\t"খরচ,_কে_বহন_করবেন?"\tfull_name\tphone\tretailer_item_id\r\nl:sample\t2026-09-10T00:50:12+06:00\tকওমি\t"পরিবার, নিজের আয়\nদুই মাধ্যমেই"\tইলমের পথিক\tp:+8801320450684\t';
+        const le = Buffer.from(metaTsv, "utf16le"), be = Buffer.from(le).swap16();
+        for (const bytes of [Buffer.concat([Buffer.from([0xff, 0xfe]), le]), Buffer.concat([Buffer.from([0xfe, 0xff]), be]), le, be, Buffer.from(metaTsv)]) {
+            const decoded = await readLeadFile(new File([bytes], "meta-export.csv"));
+            assert.equal(decoded.leads.length, 1); assert.equal(decoded.leads[0].name, "ইলমের পথিক");
+            assert.equal(decoded.leads[0].phone, "+8801320450684");
+            assert.equal(responseEntries(decoded.leads[0].extraFields).length, 2);
+            assert.equal(decoded.mapped.find(m => m.field === "name")?.column, "full_name");
+        }
+        assert.equal(decodeLeadText(Buffer.from("\uFEFFName,Phone", "utf8")), "Name,Phone");
+        assert.deepEqual(parseCsv('sep=;\r\nfull_name;phone;answer\r\nTest;+880123;"yes; with help"'), [["full_name", "phone", "answer"], ["Test", "+880123", "yes; with help"]]);
+        assert.deepEqual(parseCsv('full_name;phone;answer\nTest;+880123;"yes, with help"'), [["full_name", "phone", "answer"], ["Test", "+880123", "yes, with help"]]);
+        const shifted = mapRows([["full_name", "phone", "retailer_item_id"], ["p:+8801608730075", "", ""]]);
+        assert.equal(shifted.leads.length, 0); assert.match(shifted.warnings[0], /shifted/);
         const workbook = new ExcelJS.Workbook(); const sheet = workbook.addWorksheet("Leads");
         sheet.addRows([["Name", "Phone", "Owner", "Stage"], ["বাংলা Excel", "+880012345", "Test Owner", "Office visit"]]);
         const xlsx = await workbook.xlsx.writeBuffer();
