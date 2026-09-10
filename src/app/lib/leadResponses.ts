@@ -30,18 +30,21 @@ export function responseMetadata(json: string) {
     return Object.fromEntries(Object.entries(readExtraFields(json)).filter(([question]) => metadata.has(responseKey(question))));
 }
 
-export type ResponseFilter = { question: string; mode: "equals" | "contains" | "answered" | "unanswered"; answer: string };
+export type ResponseFilter = { question: string; mode: "equals" | "contains" | "answered" | "unanswered"; answer: string; answers?: string[] };
 
-export function matchesResponses(json: string, filters: ResponseFilter[]) {
+export function matchesResponses(json: string, filters: ResponseFilter[], combination: "all" | "any" = "all") {
     const entries = responseEntries(json);
-    return filters.every(filter => {
-        if (!filter.question) return true;
+    const active = filters.filter(filter => filter.question && (filter.mode === "answered" || filter.mode === "unanswered" || filter.answer.trim() || filter.mode === "equals" && filter.answers?.length));
+    if (!active.length) return true;
+    const matches = (filter: ResponseFilter) => {
         const answer = entries.find(entry => entry.key === filter.question)?.answer || "";
         if (filter.mode === "answered") return !!answer;
         if (filter.mode === "unanswered") return !answer;
+        if (filter.mode === "equals" && filter.answers?.length) return filter.answers.some(value => responseKey(value) === responseKey(answer));
         if (!filter.answer.trim()) return true;
         return filter.mode === "contains" ? responseKey(answer).includes(responseKey(filter.answer)) : responseKey(answer) === responseKey(filter.answer);
-    });
+    };
+    return combination === "any" ? active.some(matches) : active.every(matches);
 }
 
 export function searchableResponses(json: string) {

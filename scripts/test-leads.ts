@@ -8,6 +8,7 @@ import { NextRequest } from "next/server";
 import { decodeLeadText, mapRows, normalizeLeadPhone, parseCsv, readLeadFile } from "../src/app/lib/leadImport";
 import { planLeadImport } from "../src/app/lib/leadImportMerge";
 import { matchesResponses, responseEntries, responseKey, searchableResponses } from "../src/app/lib/leadResponses";
+import { isWhatsappQuestion, whatsappUrl } from "../src/app/lib/whatsapp";
 
 async function main() {
     mkdirSync(".data", { recursive: true });
@@ -110,6 +111,18 @@ async function main() {
         assert.ok(!matchesResponses(enriched.extraFields, [{ question, mode: "equals", answer: "জেনারেল" }]));
         assert.ok(matchesResponses("{}", [{ question, mode: "unanswered", answer: "" }]));
         assert.ok(!matchesResponses("{}", [{ question, mode: "answered", answer: "" }]));
+        assert.ok(matchesResponses(enriched.extraFields, [{ question, mode: "equals", answer: "", answers: ["কওমি", "জেনারেল"] }]));
+        const multiFilters = [{ question, mode: "equals" as const, answer: "", answers: ["কওমি"] }, { question: responseKey("খরচ_কে_বহন_করবেন?"), mode: "equals" as const, answer: "অন্য উত্তর" }];
+        assert.ok(matchesResponses(enriched.extraFields, multiFilters, "any"));
+        assert.ok(!matchesResponses(enriched.extraFields, multiFilters, "all"));
+        assert.ok(!matchesResponses(enriched.extraFields, [multiFilters[1], { question: "", mode: "equals", answer: "" }], "any"));
+        assert.equal(whatsappUrl("01322626596"), "https://wa.me/8801322626596");
+        assert.equal(whatsappUrl("p:+8801322626596"), "https://wa.me/8801322626596");
+        assert.equal(whatsappUrl("০১৩২২৬২৬৫৯৬"), "https://wa.me/8801322626596");
+        assert.equal(whatsappUrl("0044 7700 900123"), "https://wa.me/447700900123");
+        assert.equal(whatsappUrl("1.32E+09"), null); assert.equal(whatsappUrl("########"), null);
+        assert.equal(whatsappUrl("javascript:alert(123456789)"), null);
+        assert.ok(isWhatsappQuestion("আপনার_whatsapp/হোয়াটসএ্যাপ_নাম্বারটি_দিন"));
         assert.equal((await (await importApi.POST(responseUpload(responseCsv, true))).json()).updated, 0);
         const older = responseCsv.replace("2026-09-05", "2026-09-01").replace("কওমি", "পুরনো উত্তর");
         assert.equal((await (await importApi.POST(responseUpload(older, true))).json()).updated, 0);
@@ -138,6 +151,21 @@ async function main() {
         assert.ok(searchableResponses(workbookAnswers.leads[0].extraFields).includes("কওমি"));
         await prisma.$disconnect();
         assert.equal(await prisma.lead.count(), 2); // Verify persistence after reconnecting.
+        const deletion = (ids: string[], confirmations: number, confirmation: string, auth = true) => request("DELETE", JSON.stringify({ ids, confirmations, confirmation }), auth);
+        assert.equal((await leadsApi.DELETE(deletion([lead.id], 3, "DELETE 1", false))).status, 401);
+        for (const count of [0, 1, 2]) assert.equal((await leadsApi.DELETE(deletion([lead.id], count, "DELETE 1"))).status, 422);
+        assert.equal((await leadsApi.DELETE(deletion([lead.id], 3, "DELETE 2"))).status, 422);
+        assert.equal(await prisma.lead.count(), 2);
+        assert.equal((await (await leadsApi.DELETE(deletion([lead.id], 3, "DELETE 1"))).json()).deleted, 1);
+        assert.equal(await prisma.leadConversation.count({ where: { leadId: lead.id } }), 0);
+        assert.equal((await audioApi.GET(request("GET"), voiceContext)).status, 404);
+        assert.equal(await prisma.lead.count(), 1);
+        assert.equal((await (await leadsApi.DELETE(deletion([lead.id], 3, "DELETE 1"))).json()).deleted, 0);
+        const extra = await prisma.lead.create({ data: { name: "Delete test", phone: "", service: "Test", message: "" } });
+        const remaining = await prisma.lead.findMany({ select: { id: true } });
+        assert.ok(remaining.some(l => l.id === extra.id));
+        assert.equal((await (await leadsApi.DELETE(deletion(remaining.map(l => l.id), 3, "DELETE 2"))).json()).deleted, 2);
+        assert.equal(await prisma.lead.count(), 0);
         console.log("PASS: CSV/XLSX parsing, response enrichment/preview, idempotency, blank/older answer preservation, phone normalization, ambiguous-match protection, response search/combined filters, preserved assignments/history, protected audio and persistence.");
     } finally {
         await prisma.$disconnect(); unlinkSync(path);

@@ -3,6 +3,19 @@ import { requireAdmin } from "../../../lib/adminAuth";
 import { prisma } from "../../../lib/db";
 
 export const runtime = "nodejs";
+export async function DELETE(request: NextRequest) {
+    const denied = requireAdmin(request); if (denied) return denied;
+    const body = await request.json().catch(() => null);
+    if (!body || !Array.isArray(body.ids) || !body.ids.length || body.ids.length > 5000 || !body.ids.every((id: unknown) => typeof id === "string" && id.length > 0) || new Set(body.ids).size !== body.ids.length || body.confirmations !== 3 || body.confirmation !== `DELETE ${body.ids.length}`) {
+        return NextResponse.json({ error: "Complete all three deletion confirmations for the selected leads." }, { status: 422 });
+    }
+    const deleted = await prisma.$transaction(async tx => {
+        // Keep the operation atomic, including private audio and conversation history.
+        await tx.leadConversation.deleteMany({ where: { leadId: { in: body.ids } } });
+        return tx.lead.deleteMany({ where: { id: { in: body.ids } } });
+    });
+    return NextResponse.json({ deleted: deleted.count });
+}
 export async function GET(request: NextRequest) {
     const denied = requireAdmin(request); if (denied) return denied;
     const [leads, stages, people] = await Promise.all([
