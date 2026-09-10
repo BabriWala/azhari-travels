@@ -9,7 +9,7 @@ const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const maxSize = 5 * 1024 * 1024;
 
 export async function POST(request: NextRequest) {
-    const unauthorized = requireAdmin(request);
+    const unauthorized = await requireAdmin(request);
     if (unauthorized) return unauthorized;
 
     const formData = await request.formData();

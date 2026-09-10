@@ -6,7 +6,7 @@ import { planLeadImport } from "../../../../lib/leadImportMerge";
 
 export const runtime = "nodejs";
 export async function POST(request: NextRequest) {
-    const denied = requireAdmin(request); if (denied) return denied;
+    const denied = await requireAdmin(request, true); if (denied) return denied;
     try {
         if (Number(request.headers.get("content-length")) > 11 * 1024 * 1024) throw new Error("File is too large.");
         const data = await request.formData(), file = data.get("file");

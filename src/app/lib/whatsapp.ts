@@ -4,6 +4,7 @@ export function whatsappUrl(value: string) {
     if (!/^[+\d\s().-]+$/.test(text)) return null;
     let digits = text.replace(/\D/g, "");
     if (digits.startsWith("00")) digits = digits.slice(2);
+    if (/^1[3-9]\d{8}$/.test(digits) && !text.startsWith("+") && !text.startsWith("00")) digits = `880${digits}`;
     if (/^01\d{9}$/.test(digits)) digits = `88${digits}`;
     if (!/^[1-9]\d{7,14}$/.test(digits)) return null;
     return `https://wa.me/${digits}`;

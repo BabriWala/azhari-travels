@@ -3,7 +3,7 @@ import { requireAdmin } from "../../../../../lib/adminAuth";
 import { prisma } from "../../../../../lib/db";
 export const runtime = "nodejs";
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-    const denied = requireAdmin(request); if (denied) return denied;
+    const denied = await requireAdmin(request, true); if (denied) return denied;
     const { id } = await context.params;
     const message = await prisma.leadConversation.findUnique({ where: { id }, select: { audio: true, audioType: true } });
     if (!message?.audio) return NextResponse.json({ error: "Audio not found." }, { status: 404 });

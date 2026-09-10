@@ -5,7 +5,7 @@ import { isAdminCollection } from "../../../../lib/contentStore";
 import { deleteCrm, listCrm, saveCrm } from "../../../../lib/crmRepository";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ collection: string }> }) {
-    const unauthorized = requireAdmin(request);
+    const unauthorized = await requireAdmin(request);
     if (unauthorized) return unauthorized;
 
     const { collection } = await params;
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 }
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ collection: string }> }) {
-    const unauthorized = requireAdmin(request);
+    const unauthorized = await requireAdmin(request);
     if (unauthorized) return unauthorized;
 
     const { collection } = await params;
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 }
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ collection: string }> }) {
-    const unauthorized = requireAdmin(request);
+    const unauthorized = await requireAdmin(request);
     if (unauthorized) return unauthorized;
 
     const { collection } = await params;
@@ -70,7 +70,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ collection: string }> }) {
-    const unauthorized = requireAdmin(request);
+    const unauthorized = await requireAdmin(request);
     if (unauthorized) return unauthorized;
 
     const { collection } = await params;
