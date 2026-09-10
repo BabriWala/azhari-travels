@@ -1,0 +1,5 @@
+ALTER TABLE "Lead" ADD COLUMN "notes" TEXT NOT NULL DEFAULT '';
+CREATE TABLE "MessageTemplate" ("id" TEXT NOT NULL PRIMARY KEY,"title" TEXT NOT NULL,"stage" TEXT NOT NULL DEFAULT '',"text" TEXT NOT NULL,"status" TEXT NOT NULL DEFAULT 'active',"createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"updatedAt" DATETIME NOT NULL);
+CREATE TABLE "LeadReminder" ("id" TEXT NOT NULL PRIMARY KEY,"leadId" TEXT NOT NULL,"dueAt" DATETIME NOT NULL,"notes" TEXT NOT NULL DEFAULT '',"status" TEXT NOT NULL DEFAULT 'pending',"author" TEXT NOT NULL,"completedAt" DATETIME,"createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"updatedAt" DATETIME NOT NULL,CONSTRAINT "LeadReminder_leadId_fkey" FOREIGN KEY ("leadId") REFERENCES "Lead"("id") ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE INDEX "LeadReminder_status_dueAt_idx" ON "LeadReminder"("status","dueAt");
+CREATE INDEX "LeadReminder_leadId_idx" ON "LeadReminder"("leadId");

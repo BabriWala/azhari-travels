@@ -4,7 +4,7 @@ import { prisma } from "../../../lib/db";
 
 export const runtime = "nodejs";
 export async function DELETE(request: NextRequest) {
-    const denied = await requireAdmin(request, true); if (denied) return denied;
+    const denied = await requireAdmin(request); if (denied) return denied;
     const body = await request.json().catch(() => null);
     if (!body || !Array.isArray(body.ids) || !body.ids.length || body.ids.length > 5000 || !body.ids.every((id: unknown) => typeof id === "string" && id.length > 0) || new Set(body.ids).size !== body.ids.length || body.confirmations !== 3 || body.confirmation !== `DELETE ${body.ids.length}`) {
         return NextResponse.json({ error: "Complete all three deletion confirmations for the selected leads." }, { status: 422 });
@@ -12,6 +12,7 @@ export async function DELETE(request: NextRequest) {
     if ((body.ids.length > 1 || body.bulk === true) && (await getAdminActor(request))?.role !== "superadmin") return NextResponse.json({error: "Only superadmins can batch delete leads."}, {status:403});
     const deleted = await prisma.$transaction(async tx => {
         // Keep the operation atomic, including private audio and conversation history.
+        await tx.leadReminder.deleteMany({where:{leadId:{in:body.ids}}});
         await tx.leadConversation.deleteMany({ where: { leadId: { in: body.ids } } });
         return tx.lead.deleteMany({ where: { id: { in: body.ids } } });
     });
@@ -20,7 +21,7 @@ export async function DELETE(request: NextRequest) {
 export async function GET(request: NextRequest) {
     const denied = await requireAdmin(request, true); if (denied) return denied;
     const [leads, stages, people] = await Promise.all([
-        prisma.lead.findMany({ orderBy: [{ createdAt: "desc" }, { id: "desc" }], include: { _count: { select: { conversations: true } } } }),
+        prisma.lead.findMany({ orderBy: [{ createdAt: "desc" }, { id: "desc" }], include: { reminders: { orderBy: { dueAt: "asc" } }, _count: { select: { conversations: true } } } }),
         prisma.leadStage.findMany({ orderBy: { sortOrder: "asc" } }), prisma.leadPerson.findMany({ orderBy: { name: "asc" } }),
     ]);
     return NextResponse.json({ leads, stages, people, user: await getAdminActor(request) }, { headers: { "Cache-Control": "no-store" } });
@@ -42,7 +43,7 @@ export async function PATCH(request: NextRequest) {
     const body = await request.json().catch(() => null);
     if (!body || !Array.isArray(body.ids) || !body.ids.length || body.ids.length > 5000 || !body.ids.every((id: unknown) => typeof id === "string") || !["owner", "status"].includes(body.field) || typeof body.value !== "string")
         return NextResponse.json({ error: "Invalid lead update." }, { status: 422 });
-    if (body.field === "status" && (body.ids.length > 1 || body.bulk === true) && (await getAdminActor(request))?.role !== "superadmin") return NextResponse.json({error:"Only superadmins can batch change stages."},{status:403});
+    if ((body.ids.length > 1 || body.bulk === true) && (await getAdminActor(request))?.role !== "superadmin") return NextResponse.json({error:"Only superadmins can use bulk actions."},{status:403});
     const exists = body.field === "status" ? await prisma.leadStage.findUnique({ where: { name: body.value } })
         : body.value === "Unassigned" || await prisma.leadPerson.findUnique({ where: { name: body.value } });
     if (!exists) return NextResponse.json({ error: "Choose an existing stage or team member." }, { status: 422 });
