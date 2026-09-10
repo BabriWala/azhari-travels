@@ -5,7 +5,9 @@ import { resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 import ExcelJS from "exceljs";
 import { NextRequest } from "next/server";
-import { mapRows, parseCsv, readLeadFile } from "../src/app/lib/leadImport";
+import { mapRows, normalizeLeadPhone, parseCsv, readLeadFile } from "../src/app/lib/leadImport";
+import { planLeadImport } from "../src/app/lib/leadImportMerge";
+import { matchesResponses, responseEntries, responseKey, searchableResponses } from "../src/app/lib/leadResponses";
 
 async function main() {
     mkdirSync(".data", { recursive: true });
@@ -32,10 +34,10 @@ async function main() {
         const xlsx = await workbook.xlsx.writeBuffer();
         const excel = await readLeadFile(new File([new Uint8Array(xlsx)], "sample.xlsx"));
         assert.equal(excel.leads[0].phone, "+880012345"); assert.equal(excel.leads[0].name, "বাংলা Excel");
-        if (process.argv[2]) {
-            const sample = await readLeadFile(new File([readFileSync(process.argv[2])], "sample.csv"));
-            assert.ok(sample.leads.length > 0); assert.ok(sample.mapped.some(m => m.field === "secondaryPhone"));
-            console.log(`User CSV parsed: ${sample.leads.length} leads; ${sample.mapped.length} columns matched (read-only).`);
+        for (const samplePath of process.argv.slice(2)) {
+            const sample = await readLeadFile(new File([readFileSync(samplePath)], "sample.csv"));
+            assert.ok(sample.leads.length > 0);
+            console.log(`User CSV parsed: ${sample.leads.length} leads; ${sample.mapped.length} mapped fields; ${responseEntries(sample.leads[0].extraFields).length} response questions (read-only).`);
         }
         assert.equal((await leadsApi.GET(request("GET", undefined, false))).status, 401);
         const csv = "Created,Name,Phone,Owner,Stage,Custom\n09/05/2026 10:11pm,বাংলা Test,+880012345,Test Owner,Qualified,Preserved\n09/05/2026,Duplicate,+880012345,Test Owner,Qualified,Duplicate\n09/05/2026,Second,+88009999,Unassigned,New,Other";
@@ -72,9 +74,57 @@ async function main() {
         assert.equal(response.headers.get("Content-Type"), "audio/wav"); assert.deepEqual(Buffer.from(await response.arrayBuffer()), wav);
         const invalid = new FormData(); invalid.set("party", "customer"); invalid.set("author", "Customer"); invalid.set("audio", new File(["<script>bad</script>"], "bad.mp3", { type: "audio/mpeg" }));
         assert.equal((await messagesApi.POST(request("POST", invalid), context)).status, 422);
+
+        // Enrich existing contacts without replacing staff work or conversation history.
+        const responseCsv = 'id,created_time,form_name,platform,আপনার_শিক্ষার_মাধ্যম_কোনটি?,খরচ_কে_বহন_করবেন?,full_name,phone,lead_status\nl:test-response,2026-09-05T12:00:00Z,Eligibility,fb,কওমি,পরিবার_বহন_করবে,বাংলা Test,p:+880012345,CREATED';
+        const responseUpload = (content: string, commit: boolean) => {
+            const form = new FormData(); form.set("file", new File([content], "responses.csv")); form.set("commit", String(commit)); return request("POST", form);
+        };
+        const responsePreview = await (await importApi.POST(responseUpload(responseCsv, false))).json();
+        assert.equal(responsePreview.imported, 0); assert.equal(responsePreview.updated, 1);
+        assert.equal(responsePreview.preview[0].action, "Update responses");
+        assert.ok(!responseEntries((await prisma.lead.findUniqueOrThrow({ where: { id: lead.id } })).extraFields).some(e => e.answer === "কওমি"));
+        assert.equal((await (await importApi.POST(responseUpload(responseCsv, true))).json()).updated, 1);
+        const enriched = await prisma.lead.findUniqueOrThrow({ where: { id: lead.id } });
+        assert.equal(enriched.owner, "Second Agent"); assert.equal(enriched.status, "Office follow-up");
+        assert.equal(await prisma.leadConversation.count({ where: { leadId: lead.id } }), 4);
+        assert.equal(await prisma.lead.count(), 2);
+        assert.ok(searchableResponses(enriched.extraFields).includes("পরিবার বহন করবে"));
+        assert.ok(!responseEntries(enriched.extraFields).some(e => e.key === "platform"));
+        const question = responseKey("আপনার_শিক্ষার_মাধ্যম_কোনটি?");
+        assert.ok(matchesResponses(enriched.extraFields, [{ question, mode: "equals", answer: "কওমি" }, { question: responseKey("খরচ_কে_বহন_করবেন?"), mode: "contains", answer: "পরিবার" }]));
+        assert.ok(!matchesResponses(enriched.extraFields, [{ question, mode: "equals", answer: "জেনারেল" }]));
+        assert.ok(matchesResponses("{}", [{ question, mode: "unanswered", answer: "" }]));
+        assert.ok(!matchesResponses("{}", [{ question, mode: "answered", answer: "" }]));
+        assert.equal((await (await importApi.POST(responseUpload(responseCsv, true))).json()).updated, 0);
+        const older = responseCsv.replace("2026-09-05", "2026-09-01").replace("কওমি", "পুরনো উত্তর");
+        assert.equal((await (await importApi.POST(responseUpload(older, true))).json()).updated, 0);
+        const blank = responseCsv.replace("কওমি", "");
+        assert.equal((await (await importApi.POST(responseUpload(blank, true))).json()).updated, 0);
+        const newer = responseCsv.replace("2026-09-05", "2026-09-06").replace("কওমি", "জেনারেল");
+        assert.equal((await (await importApi.POST(responseUpload(newer, true))).json()).updated, 1);
+
+        assert.equal(normalizeLeadPhone("p:+8801322626596"), normalizeLeadPhone("01322626596"));
+        assert.equal(normalizeLeadPhone("০১৩২২৬২৬৫৯৬"), normalizeLeadPhone("008801322626596"));
+        const metaRows = mapRows(parseCsv(responseCsv)).leads;
+        assert.equal(metaRows[0].phone, "+880012345"); assert.equal(metaRows[0].form, "Eligibility");
+        assert.equal(metaRows[0].status, "New");
+        const reverseLead = { ...metaRows[0], id: "reverse" };
+        const plainRow = mapRows([["Name", "Phone", "Owner", "Stage"], ["Same person", "+880012345", "Different owner", "Closed"]]).leads;
+        const reverse = planLeadImport([reverseLead], plainRow);
+        assert.equal(reverse.creates.length, 0); assert.equal(reverse.updates.length, 0);
+        const collision = planLeadImport([reverseLead, { ...reverseLead, id: "other", phone: "+880099999", email: "shared@example.com", importKey: "other" }], [{ ...metaRows[0], email: "shared@example.com" }]);
+        assert.equal(collision.creates.length, 0); assert.equal(collision.updates.length, 0); assert.equal(collision.warnings.length, 1);
+        const local = planLeadImport([{ ...reverseLead, phone: "01322626596", importKey: "local" }], [{ ...metaRows[0], phone: "+8801322626596", importKey: "international" }]);
+        assert.equal(local.creates.length, 0);
+        const responseWorkbook = new ExcelJS.Workbook();
+        responseWorkbook.addWorksheet("Responses").addRows(parseCsv(responseCsv));
+        const workbookAnswers = await readLeadFile(new File([new Uint8Array(await responseWorkbook.xlsx.writeBuffer())], "responses.xlsx"));
+        assert.equal(planLeadImport([enriched], workbookAnswers.leads).creates.length, 0);
+        assert.ok(searchableResponses(workbookAnswers.leads[0].extraFields).includes("কওমি"));
         await prisma.$disconnect();
         assert.equal(await prisma.lead.count(), 2); // Verify persistence after reconnecting.
-        console.log("PASS: CSV/XLSX parsing, preview, deduplication, metadata, bulk assignment, custom stages, both-party history, protected audio, validation and database persistence.");
+        console.log("PASS: CSV/XLSX parsing, response enrichment/preview, idempotency, blank/older answer preservation, phone normalization, ambiguous-match protection, response search/combined filters, preserved assignments/history, protected audio and persistence.");
     } finally {
         await prisma.$disconnect(); unlinkSync(path);
     }

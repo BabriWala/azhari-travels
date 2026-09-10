@@ -1,5 +1,13 @@
 import ExcelJS from "exceljs";
 import { createHash } from "node:crypto";
+import { responseKey } from "./leadResponses";
+
+export function normalizeLeadPhone(value: string) {
+    let digits = value.replace(/[০-৯]/g, c => String(c.charCodeAt(0) - 0x09e6)).replace(/\D/g, "");
+    if (digits.startsWith("00")) digits = digits.slice(2);
+    if (/^01\d{9}$/.test(digits)) digits = `88${digits}`;
+    return digits;
+}
 
 export function parseCsv(text: string): string[][] {
     const rows: string[][] = [];
@@ -25,32 +33,32 @@ export function parseCsv(text: string): string[][] {
 const aliases: Record<string, string[]> = {
     name: ["name", "full name", "lead name"], email: ["email address", "email"],
     phone: ["phone", "phone number", "mobile", "mobile number"],
-    source: ["source"], form: ["form", "campaign"], preferredContact: ["channel", "preferred contact"],
-    status: ["stage", "status"], owner: ["owner", "assigned to", "assignee"], labels: ["labels", "tags"],
-    secondaryPhone: ["secondary phone number", "secondary phone"], whatsapp: ["whatsapp number", "whatsapp"],
-    importedCreated: ["created", "created at", "date"], service: ["service"], message: ["message", "notes"],
+    source: ["source", "platform"], form: ["form", "form name", "campaign", "campaign name"], preferredContact: ["channel", "preferred contact"],
+    status: ["stage", "status", "lead status"], owner: ["owner", "assigned to", "assignee"], labels: ["labels", "tags"],
+    secondaryPhone: ["secondary phone number", "secondary phone"], whatsapp: ["whatsapp number", "whatsapp", "আপনার whatsapp/হোয়াটসএ্যাপ নাম্বারটি দিন"],
+    importedCreated: ["created", "created at", "created time", "date"], service: ["service"], message: ["message", "notes"],
 };
 export type ImportedLead = ReturnType<typeof mapRows>["leads"][number];
 export function mapRows(rows: string[][]) {
     if (rows.length < 2) throw new Error("The file needs a header row and at least one lead.");
     if (rows.length > 5001) throw new Error("Import at most 5,000 leads at a time.");
     const headers = rows[0].map(h => h.trim());
-    const normalized = headers.map(h => h.toLowerCase().replace(/[_-]/g, " ").replace(/\s+/g, " "));
+    const normalized = headers.map(h => responseKey(h.replace(/-/g, " ")));
     if (new Set(normalized).size !== normalized.length || normalized.some(h => !h)) throw new Error("Each column needs a unique, nonempty header.");
     if (!normalized.some(h => aliases.name.includes(h))) throw new Error('A "Name" column is required.');
-    const mapped = Object.fromEntries(Object.entries(aliases).map(([key, names]) => [key, normalized.findIndex(h => names.includes(h))]));
+    const mapped = Object.fromEntries(Object.entries(aliases).map(([key, names]) => [key, names.map(n => normalized.indexOf(responseKey(n))).find(i => i >= 0) ?? -1]));
     const warnings: string[] = [];
     const leads = rows.slice(1).flatMap((row, index) => {
         const get = (key: string) => (row[mapped[key]] ?? "").trim();
         if (!get("name")) { warnings.push(`Row ${index + 2}: skipped because the name is empty.`); return []; }
         if (row.length > headers.length || row.some(c => c.length > 10000)) throw new Error(`Row ${index + 2} has extra columns or an oversized cell.`);
-        const phone = get("phone"), email = get("email");
-        const identity = phone.replace(/\D/g, "") || email.toLowerCase() || `${get("name").toLowerCase()}|${get("importedCreated")}`;
+        const phone = get("phone").replace(/^p:\s*/i, ""), email = get("email");
+        const identity = normalizeLeadPhone(phone) || email.toLowerCase() || `${get("name").toLowerCase()}|${get("importedCreated")}`;
         return [{ name: get("name"), phone, email: email || null, source: get("source") || "File import", form: get("form"),
-            preferredContact: get("preferredContact") || "phone", status: get("status") || "New", owner: get("owner") || "Unassigned",
+            preferredContact: get("preferredContact") || "phone", status: get("status") === "CREATED" ? "New" : get("status") || "New", owner: get("owner") || "Unassigned",
             labels: get("labels"), secondaryPhone: get("secondaryPhone"), whatsapp: get("whatsapp"), importedCreated: get("importedCreated"),
             service: get("service") || get("form") || "General enquiry", message: get("message"),
-            extraFields: JSON.stringify(Object.fromEntries(headers.flatMap((h, i) => Object.values(mapped).includes(i) ? [] : [[h, row[i] ?? ""]]))),
+            extraFields: JSON.stringify(Object.fromEntries(headers.flatMap((h, i) => Object.values(mapped).includes(i) && !/[\u0980-\u09ff]/.test(h) && !["created time", "form name", "platform", "lead status"].includes(normalized[i]) ? [] : [[h, (row[i] ?? "").trim()]]))),
             importKey: createHash("sha256").update(identity).digest("hex") }];
     });
     return { leads, warnings, headers, mapped: Object.entries(mapped).filter(([, i]) => i >= 0).map(([field, i]) => ({ field, column: headers[i] })) };
