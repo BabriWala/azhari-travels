@@ -187,6 +187,13 @@ async function main() {
         assert.equal((await templatesApi.DELETE(request("DELETE",JSON.stringify({id:t2.id,confirmation:"DELETE"})))).status,200);
         assert.equal((await followupApi.PATCH(sub("PATCH",{action:"notes",notes:"Important lead context"}),followupContext)).status,200);
         assert.equal((await followupApi.PATCH(sub("PATCH",{action:"notes",notes:""}),followupContext)).status,403);
+        assert.equal((await followupApi.PATCH(sub("PATCH",{action:"add-note",notes:"   "}),followupContext)).status,422);
+        assert.equal((await followupApi.PATCH(sub("PATCH",{action:"add-note",notes:"x".repeat(10001)}),followupContext)).status,422);
+        for (const notes of ["First separate note", "Second separate note"])
+            assert.equal((await followupApi.PATCH(sub("PATCH",{action:"add-note",notes}),followupContext)).status,200);
+        const savedNotes = await prisma.leadConversation.findMany({where:{leadId:lead.id,party:"note"}});
+        assert.deepEqual(savedNotes.map(n=>n.text).sort(),["First separate note","Second separate note"]);
+        assert.ok(savedNotes.every(n=>n.author && n.createdAt));
         const reminderData={action:"create",dueAt:"2026-09-01T09:00:00.000Z",notes:"Call about documents",status:"pending"};
         assert.equal((await followupApi.PATCH(sub("PATCH",{...reminderData,dueAt:"invalid"}),followupContext)).status,422);
         assert.equal((await followupApi.PATCH(sub("PATCH",reminderData),followupContext)).status,200);
@@ -200,6 +207,7 @@ async function main() {
         assert.equal((await followupApi.PATCH(sub("PATCH",{...reminderData,action:"update",id:savedReminder.id}),{params:Promise.resolve({id:otherLeadId})})).status,404);
         assert.equal((await followupApi.DELETE(sub("DELETE",{id:savedReminder.id,confirmation:"DELETE"}),followupContext)).status,403);
         const trackedLead=(await (await leadsApi.GET(sub("GET"))).json()).leads.find((l:{id:string})=>l.id===lead.id);
+        assert.equal(trackedLead.conversations.length,2);assert.ok(trackedLead.conversations.every((n:{text:string})=>n.text.includes("separate note")));
         assert.equal(trackedLead.notes,"Important lead context");assert.equal(trackedLead.reminders.length,1);
         assert.equal((await followupApi.DELETE(request("DELETE",JSON.stringify({id:savedReminder.id,confirmation:"DELETE"})),followupContext)).status,200);
         assert.ok(await prisma.leadConversation.findFirst({where:{leadId:lead.id,text:{startsWith:"Reminder deleted:"}}}));

@@ -6,6 +6,11 @@ export async function PATCH(request:NextRequest,context:Context){
  const denied=await requireAdmin(request,true);if(denied)return denied;const {id}=await context.params;const actor=(await getAdminActor(request))!;
  const b=await request.json().catch(()=>null);if(!b)return NextResponse.json({error:"Invalid follow-up request."},{status:422});
  const lead=await prisma.lead.findUnique({where:{id}});if(!lead)return NextResponse.json({error:"Lead not found."},{status:404});
+ if(b.action==="add-note"){
+  if(typeof b.notes!=="string"||!b.notes.trim()||b.notes.length>10000)return NextResponse.json({error:"Enter a note of 1–10,000 characters."},{status:422});
+  await prisma.leadConversation.create({data:{leadId:id,party:"note",author:actor.name,text:b.notes.trim()}});
+  return NextResponse.json({success:true});
+ }
  if(b.action==="notes"){
   if(typeof b.notes!=="string"||b.notes.length>10000)return NextResponse.json({error:"Notes must be under 10,000 characters."},{status:422});
   if(lead.notes&&!b.notes.trim()&&actor.role!=="superadmin")return NextResponse.json({error:"Only a superadmin can clear saved notes."},{status:403});
