@@ -12,3 +12,13 @@
 .lw-contact-cell,.lw-followups,.lw-reminder-list article{min-width:0}
 
 .lw-reminder-status{display:block;text-transform:capitalize;color:var(--muted);margin-top:2px}
+
+.lw-serial{font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted);overflow-wrap:anywhere}
+@media(max-width:640px){
+ .lw-row{grid-template-columns:18px 32px minmax(0,1fr) 26px;gap:8px}
+ .lw-row>.lw-serial{grid-column:2!important;grid-row:1!important;padding-left:0!important;align-self:start;padding-top:10px}
+ .lw-row>.lw-contact-cell{grid-column:3!important}
+ .lw-row>div:not(.lw-owner):not(.lw-source):not(.lw-contact-cell):not(.lw-serial){grid-column:3}
+ .lw-row>.lw-owner{grid-column:3}
+ .lw-row>.lw-open{grid-column:4}
+}
