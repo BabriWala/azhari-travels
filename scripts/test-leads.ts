@@ -22,7 +22,7 @@ async function main() {
     mkdirSync(".data", { recursive: true });
     const path = resolve(`.data/leads-test-${randomUUID()}.db`);
     const db = new DatabaseSync(path);
-    for (const migration of ["000001_init", "000002_lead_workspace", "000003_admin_sessions", "000004_lead_followups", "000005_lead_uploads", "000006_lead_daily_work"]) db.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
+    for (const migration of ["000001_init", "000002_lead_workspace", "000003_admin_sessions", "000004_lead_followups", "000005_lead_uploads", "000006_lead_daily_work", "000007_upload_names"]) db.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
     db.close();
     process.env.DATABASE_URL = `file:${path.replaceAll("\\", "/")}`;
     process.env.ADMIN_API_TOKEN = "lead-test-token";
@@ -52,11 +52,23 @@ async function main() {
         assert.deepEqual(parseCsv('full_name;phone;answer\nTest;+880123;"yes, with help"'), [["full_name", "phone", "answer"], ["Test", "+880123", "yes, with help"]]);
         const shifted = mapRows([["full_name", "phone", "retailer_item_id"], ["p:+8801608730075", "", ""]]);
         assert.equal(shifted.leads.length, 0); assert.match(shifted.warnings[0], /shifted/);
+        const arbitrary=mapRows([["Product","Amount","Flag"],["Ticket","500","true"],["Hotel","900","false"]],{flexible:true});
+        assert.equal(arbitrary.leads.length,2);assert.equal(arbitrary.leads[0].name,"Record 2");assert.equal(JSON.parse(arbitrary.leads[0].extraFields).Amount,"500");
+        assert.notEqual(arbitrary.leads[0].importKey,arbitrary.leads[1].importKey);
+        const custom=mapRows([["Person","Contact","Custom"],["Example","01712345678","Kept"]],{flexible:true,mapping:{name:0,phone:1}});
+        assert.equal(custom.leads[0].name,"Example");assert.equal(JSON.parse(custom.leads[0].extraFields).Person,"Example");
+        assert.throws(()=>mapRows([["Person","Contact"],["Example","123"]],{flexible:true,mapping:{name:0,phone:0}}),/different valid columns/);
+        assert.equal(mapRows([["","Value","Value"],["a","b","c"]],{flexible:true}).headers.length,3);
         const workbook = new ExcelJS.Workbook(); const sheet = workbook.addWorksheet("Leads");
         sheet.addRows([["Name", "Phone", "Owner", "Stage"], ["বাংলা Excel", "+880012345", "Test Owner", "Office visit"]]);
         const xlsx = await workbook.xlsx.writeBuffer();
         const excel = await readLeadFile(new File([new Uint8Array(xlsx)], "sample.xlsx"));
         assert.equal(excel.leads[0].phone, "+880012345"); assert.equal(excel.leads[0].name, "বাংলা Excel");
+        const secondSheet=workbook.addWorksheet("Other data");secondSheet.addRows([["Report title"],["Item","Quantity"],["Visa",3]]);
+        const multi=await workbook.xlsx.writeBuffer();
+        const selectedSheet=await readLeadFile(new File([new Uint8Array(multi)],"multi.xlsx"),{flexible:true,sheet:"Other data",headerRow:2});
+        assert.equal(selectedSheet.leads.length,1);assert.equal(JSON.parse(selectedSheet.leads[0].extraFields).Quantity,"3");
+        assert.equal(selectedSheet.sheet,"Other data");
         for (const samplePath of process.argv.slice(2)) {
             const sample = await readLeadFile(new File([readFileSync(samplePath)], "sample.csv"));
             assert.ok(sample.leads.length > 0);
@@ -64,7 +76,11 @@ async function main() {
         }
         assert.equal((await leadsApi.GET(request("GET", undefined, false))).status, 401);
         const csv = "Created,Name,Phone,Owner,Stage,Custom\n09/05/2026 10:11pm,বাংলা Test,+880012345,Test Owner,Qualified,Preserved\n09/05/2026,Duplicate,+880012345,Test Owner,Qualified,Duplicate\n09/05/2026,Second,+88009999,Unassigned,New,Other";
-        const upload = (commit: boolean) => { const form = new FormData(); form.set("file", new File([csv], "leads.csv")); form.set("commit", String(commit)); return request("POST", form); };
+        const upload = (commit: boolean) => { const form = new FormData(); form.set("file", new File([csv], "leads.csv")); form.set("commit", String(commit)); form.set("name","September enquiries"); return request("POST", form); };
+        const coverForm=new FormData();coverForm.set("file",new File(["Report title"],"cover.csv"));coverForm.set("inspect","true");
+        assert.equal((await importApi.POST(request("POST",coverForm))).status,200);
+        const inspectForm=new FormData();inspectForm.set("file",new File([csv],"leads.csv"));inspectForm.set("inspect","true");
+        const inspected=await (await importApi.POST(request("POST",inspectForm))).json();assert.ok(inspected.headers.includes("Name"));assert.equal(await prisma.lead.count(),0);
         const preview = await (await importApi.POST(upload(false))).json();
         assert.equal(await prisma.leadUpload.count(),0);
         assert.equal(preview.imported, 2); assert.equal(preview.duplicates, 1); assert.equal(await prisma.lead.count(), 0);
@@ -73,7 +89,7 @@ async function main() {
         assert.equal(await prisma.lead.count(), 2);
         const list = await (await leadsApi.GET(request("GET"))).json();
         const lead = list.leads.find((l: { name: string }) => l.name === "বাংলা Test");
-        assert.equal(lead.uploads.length,2);
+        assert.equal(lead.uploads.length,2);assert.equal(lead.uploads[0].name,"September enquiries");
         assert.ok(lead.uploads.every((b:{filename:string;author:string})=>b.filename==="leads.csv"&&b.author));
         assert.notEqual(lead.uploads[0].id,lead.uploads[1].id);
         assert.equal(JSON.parse(lead.extraFields).Custom, "Preserved");

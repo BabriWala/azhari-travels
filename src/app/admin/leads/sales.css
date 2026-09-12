@@ -45,3 +45,5 @@
 .lw-daily-follow_up{background:#fff7ed;border-color:#fb923c}
 .lw-daily-done{background:#ecfdf5;border-color:#34d399}
 @media(max-width:640px){.lw-daily-work select{font-size:16px!important}.lw-daily-dashboard{padding:16px}}
+
+.lw-import-modal{width:780px}.lw-import-modal fieldset{border:0;padding:0;margin:18px 0;display:grid;gap:14px;min-width:0}.lw-import-mapping{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.lw-import-modal .lw-preview article{border-bottom:1px solid var(--line);padding:10px 0;overflow-wrap:anywhere}.lw-import-modal .lw-preview p{white-space:pre-wrap}@media(max-width:640px){.lw-import-modal input,.lw-import-modal select{font-size:16px!important}}

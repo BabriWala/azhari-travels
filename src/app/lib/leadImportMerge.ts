@@ -27,7 +27,7 @@ export function planLeadImport(existing: ExistingLead[], incoming: ImportedLead[
     const index = new Map<string, Set<string>>(), records = new Map(existing.map(l => [l.id, l]));
     const identities = (lead: Pick<ExistingLead, "phone" | "email" | "importKey" | "extraFields">) => {
         const phone = normalizeLeadPhone(lead.phone), email = lead.email?.trim().toLowerCase();
-        const externalId = Object.entries(readExtraFields(lead.extraFields)).find(([k]) => ["id", "lead id"].includes(responseKey(k)))?.[1];
+        const externalId = lead.importKey?.startsWith("record:") ? undefined : Object.entries(readExtraFields(lead.extraFields)).find(([k]) => ["id", "lead id"].includes(responseKey(k)))?.[1];
         return [phone && `phone:${phone}`, email && `email:${email}`, lead.importKey && `key:${lead.importKey}`, externalId && `external:${externalId}`].filter(Boolean) as string[];
     };
     const add = (lead: ExistingLead) => { for (const key of identities(lead)) { const ids = index.get(key) || new Set(); ids.add(lead.id); index.set(key, ids); } };

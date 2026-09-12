@@ -209,6 +209,7 @@ model LeadReminder {
 }
 
 model LeadUpload {
+  name String @default("")
   id Int @id @default(autoincrement())
   filename String
   author String

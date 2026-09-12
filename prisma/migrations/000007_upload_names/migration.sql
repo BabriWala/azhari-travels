@@ -1,0 +1,1 @@
+ALTER TABLE "LeadUpload" ADD COLUMN "name" TEXT NOT NULL DEFAULT '';
