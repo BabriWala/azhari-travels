@@ -1,0 +1,14 @@
+CREATE TABLE "LeadUpload" (
+ "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ "filename" TEXT NOT NULL,
+ "author" TEXT NOT NULL,
+ "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE "_LeadToLeadUpload" (
+ "A" TEXT NOT NULL,
+ "B" INTEGER NOT NULL,
+ CONSTRAINT "_LeadToLeadUpload_A_fkey" FOREIGN KEY ("A") REFERENCES "Lead" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT "_LeadToLeadUpload_B_fkey" FOREIGN KEY ("B") REFERENCES "LeadUpload" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE UNIQUE INDEX "_LeadToLeadUpload_AB_unique" ON "_LeadToLeadUpload"("A", "B");
+CREATE INDEX "_LeadToLeadUpload_B_index" ON "_LeadToLeadUpload"("B");

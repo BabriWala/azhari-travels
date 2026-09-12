@@ -1,3 +1,4 @@
+import { uploadDay, dayColor } from "../src/app/admin/leads/UploadBadge";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { readFileSync, mkdirSync, unlinkSync } from "node:fs";
@@ -11,10 +12,13 @@ import { matchesResponses, responseEntries, responseKey, searchableResponses } f
 import { isWhatsappQuestion, whatsappUrl } from "../src/app/lib/whatsapp";
 
 async function main() {
+    assert.equal(uploadDay("2026-09-11T18:01:00Z"),"2026-09-12");
+    assert.deepEqual(dayColor("2026-09-11T18:01:00Z"),dayColor("2026-09-12T10:00:00Z"));
+    assert.notDeepEqual(dayColor("2026-09-11T10:00:00Z"),dayColor("2026-09-12T10:00:00Z"));
     mkdirSync(".data", { recursive: true });
     const path = resolve(`.data/leads-test-${randomUUID()}.db`);
     const db = new DatabaseSync(path);
-    for (const migration of ["000001_init", "000002_lead_workspace", "000003_admin_sessions", "000004_lead_followups"]) db.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
+    for (const migration of ["000001_init", "000002_lead_workspace", "000003_admin_sessions", "000004_lead_followups", "000005_lead_uploads"]) db.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
     db.close();
     process.env.DATABASE_URL = `file:${path.replaceAll("\\", "/")}`;
     process.env.ADMIN_API_TOKEN = "lead-test-token";
@@ -58,12 +62,16 @@ async function main() {
         const csv = "Created,Name,Phone,Owner,Stage,Custom\n09/05/2026 10:11pm,বাংলা Test,+880012345,Test Owner,Qualified,Preserved\n09/05/2026,Duplicate,+880012345,Test Owner,Qualified,Duplicate\n09/05/2026,Second,+88009999,Unassigned,New,Other";
         const upload = (commit: boolean) => { const form = new FormData(); form.set("file", new File([csv], "leads.csv")); form.set("commit", String(commit)); return request("POST", form); };
         const preview = await (await importApi.POST(upload(false))).json();
+        assert.equal(await prisma.leadUpload.count(),0);
         assert.equal(preview.imported, 2); assert.equal(preview.duplicates, 1); assert.equal(await prisma.lead.count(), 0);
         assert.equal((await (await importApi.POST(upload(true))).json()).imported, 2);
         assert.equal((await (await importApi.POST(upload(true))).json()).imported, 0);
         assert.equal(await prisma.lead.count(), 2);
         const list = await (await leadsApi.GET(request("GET"))).json();
         const lead = list.leads.find((l: { name: string }) => l.name === "বাংলা Test");
+        assert.equal(lead.uploads.length,2);
+        assert.ok(lead.uploads.every((b:{filename:string;author:string})=>b.filename==="leads.csv"&&b.author));
+        assert.notEqual(lead.uploads[0].id,lead.uploads[1].id);
         assert.equal(JSON.parse(lead.extraFields).Custom, "Preserved");
         assert.ok(list.people.some((p: { name: string }) => p.name === "Test Owner"));
         assert.equal((await leadsApi.POST(request("POST", JSON.stringify({ kind: "stage", name: "Office follow-up" })))).status, 200);
@@ -211,6 +219,22 @@ async function main() {
         assert.equal(trackedLead.notes,"Important lead context");assert.equal(trackedLead.reminders.length,1);
         assert.equal((await followupApi.DELETE(request("DELETE",JSON.stringify({id:savedReminder.id,confirmation:"DELETE"})),followupContext)).status,200);
         assert.ok(await prisma.leadConversation.findFirst({where:{leadId:lead.id,text:{startsWith:"Reminder deleted:"}}}));
+        const manualApi = await import("../src/app/api/admin/leads/create/route");
+        const manual = {name:"Manual contact",phone:"01712345678",email:"manual@example.com",service:"Umrah",notes:"First manual note",owner:"Unassigned",status:lead.status};
+        assert.equal((await manualApi.POST(request("POST",JSON.stringify(manual),false))).status,401);
+        assert.equal((await manualApi.POST(sub("POST",{...manual,name:" "}))).status,422);
+        assert.equal((await manualApi.POST(sub("POST",{...manual,phone:"",email:""}))).status,422);
+        assert.equal((await manualApi.POST(sub("POST",{...manual,email:"invalid"}))).status,422);
+        assert.equal((await manualApi.POST(sub("POST",{...manual,status:"missing-stage"}))).status,422);
+        const manualResponse=await manualApi.POST(sub("POST",manual));assert.equal(manualResponse.status,201);
+        const manualId=(await manualResponse.json()).id;
+        const manualLead=await prisma.lead.findUniqueOrThrow({where:{id:manualId},include:{conversations:true,uploads:true}});
+        assert.equal(manualLead.source,"manual");assert.equal(manualLead.uploads.length,0);
+        assert.ok(manualLead.conversations.some(n=>n.party==="note"&&n.text==="First manual note"&&n.author));
+        assert.equal((await manualApi.POST(sub("POST",{...manual,phone:"+8801712345678",email:""}))).status,409);
+        assert.equal((await manualApi.POST(sub("POST",{...manual,phone:"",email:"MANUAL@example.com"}))).status,409);
+        await prisma.leadConversation.deleteMany({where:{leadId:manualId}});await prisma.lead.delete({where:{id:manualId}});
+        console.log("PASS: upload previews stay read-only, repeat batches preserve membership, manual lead validation, staff access, duplicate detection and first notes.");
         console.log("PASS: multiple templates and statuses, follow-up schedule/completion/rescheduling, notes, audit history, lead scoping and admin-only deletion/bulk actions.");
         const stageApi=await import("../src/app/api/admin/leads/stages/route");
         assert.equal((await stageApi.PATCH(sub("PATCH",{action:"reorder",ids:[]}))).status,403);

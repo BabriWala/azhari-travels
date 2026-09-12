@@ -22,3 +22,15 @@
  .lw-row>.lw-owner{grid-column:3}
  .lw-row>.lw-open{grid-column:4}
 }
+
+.lw-heading-actions{flex-wrap:wrap}
+.lw-upload-info{margin-top:8px;min-width:0}
+.lw-upload-badge{display:flex;flex-direction:column;gap:3px;border:1px solid;border-left-width:4px;border-radius:6px;padding:8px;margin-top:6px;font-size:11px;overflow-wrap:anywhere;white-space:normal}
+.lw-upload-info summary{font-size:11px;margin-top:5px;cursor:pointer}
+.lw-manual-lead fieldset{border:0;padding:0;min-width:0;display:grid;gap:12px;margin-top:18px}
+.lw-manual-lead textarea{min-height:90px;resize:vertical}
+.lw-filters{flex-wrap:wrap}
+.lw-filters select{max-width:100%}
+@media(max-width:640px){.lw-manual-lead input,.lw-manual-lead select,.lw-manual-lead textarea{font-size:16px!important}}
+
+.lw-batch-tag{align-self:flex-start;border-radius:4px;padding:2px 6px;font-weight:600}

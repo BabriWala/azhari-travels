@@ -241,3 +241,5 @@ Required repository secrets:
 - `HOST`
 - `USERNAME`
 - `SSH_KEY`
+
+CSV/XLSX uploads now record a dated batch with filename and uploader, including matched contacts on repeat imports. The CRM shows colored date and batch badges and filters in Asia/Dhaka time. Older records show their CRM creation date with “Upload batch not recorded”; historical batch identities are not inferred. The Add lead form creates one contact without a file, with stage, owner, service and an optional first note; duplicate phone/email contacts are rejected. Apply migration `000005_lead_uploads` (or the existing deployment schema-sync step) and regenerate Prisma before running this version.

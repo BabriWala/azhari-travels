@@ -1,5 +1,6 @@
+import { randomUUID } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { requireAdmin } from "../../../../lib/adminAuth";
+import { requireAdmin, getAdminActor } from "../../../../lib/adminAuth";
 import { prisma } from "../../../../lib/db";
 import { readLeadFile } from "../../../../lib/leadImport";
 import { planLeadImport } from "../../../../lib/leadImportMerge";
@@ -20,7 +21,9 @@ export async function POST(request: NextRequest) {
             if (commit) {
                 for (const name of new Set(fresh.map(l => l.status))) await tx.leadStage.upsert({ where: { name }, update: {}, create: { name, sortOrder: await tx.leadStage.count() } });
                 for (const name of new Set(fresh.map(l => l.owner).filter(n => n !== "Unassigned"))) await tx.leadPerson.upsert({ where: { name }, update: {}, create: { name } });
-                await tx.lead.createMany({ data: fresh });
+                const created = fresh.map(lead=>({...lead,id:randomUUID()}));
+                await tx.lead.createMany({data:created});
+                await tx.leadUpload.create({data:{filename:file.name.slice(0,255),author:(await getAdminActor(request))!.name,leads:{connect:[...plan.matchedIds,...created.map(l=>l.id)].map(id=>({id}))}}});
                 for (const update of plan.updates) await tx.lead.update({ where: { id: update.id }, data: update.data });
             }
             return { committed: commit, imported: fresh.length, updated: plan.updates.length, duplicates: plan.duplicates, warnings: [...parsed.warnings, ...plan.warnings], mapped: parsed.mapped,

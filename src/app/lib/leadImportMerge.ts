@@ -33,6 +33,7 @@ export function planLeadImport(existing: ExistingLead[], incoming: ImportedLead[
     const add = (lead: ExistingLead) => { for (const key of identities(lead)) { const ids = index.get(key) || new Set(); ids.add(lead.id); index.set(key, ids); } };
     existing.forEach(add);
     const seen = new Set<string>(), creates: ImportedLead[] = [], updates: { id: string; data: Enrichment; lead: ExistingLead }[] = [];
+    const matchedIds = new Set<string>();
     let duplicates = 0;
     const warnings: string[] = [];
     incoming.forEach((lead, row) => {
@@ -40,6 +41,7 @@ export function planLeadImport(existing: ExistingLead[], incoming: ImportedLead[
         if (matches.size > 1) { warnings.push(`Data row ${row + 1}: phone, email or lead ID matches multiple contacts; skipped for review.`); return; }
         const id = [...matches][0];
         if (id) {
+            if (!id.startsWith("pending:")) matchedIds.add(id);
             if (seen.has(id)) { duplicates++; return; }
             seen.add(id);
             const record = records.get(id)!;
@@ -53,5 +55,5 @@ export function planLeadImport(existing: ExistingLead[], incoming: ImportedLead[
             creates.push(lead); records.set(record.id, record); seen.add(record.id); add(record);
         }
     });
-    return { creates, updates, duplicates, warnings };
+    return { creates, updates, duplicates, warnings, matchedIds: [...matchedIds] };
 }

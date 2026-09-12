@@ -113,6 +113,7 @@ model Review {
 }
 
 model Lead {
+  uploads LeadUpload[]
   notes String @default("")
   reminders LeadReminder[]
   id               String   @id @default(cuid())
@@ -204,4 +205,12 @@ model LeadReminder {
  updatedAt DateTime @updatedAt
  @@index([status,dueAt])
  @@index([leadId])
+}
+
+model LeadUpload {
+  id Int @id @default(autoincrement())
+  filename String
+  author String
+  createdAt DateTime @default(now())
+  leads Lead[]
 }
