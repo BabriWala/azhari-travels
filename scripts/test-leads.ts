@@ -1,3 +1,4 @@
+import { workDay, dailyStatus } from "../src/app/lib/leadDailyWork";
 import { uploadDay, dayColor } from "../src/app/admin/leads/UploadBadge";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
@@ -12,13 +13,16 @@ import { matchesResponses, responseEntries, responseKey, searchableResponses } f
 import { isWhatsappQuestion, whatsappUrl } from "../src/app/lib/whatsapp";
 
 async function main() {
+    assert.equal(workDay(new Date("2026-09-11T17:59:59Z")),"2026-09-11");
+    assert.equal(workDay(new Date("2026-09-11T18:00:00Z")),"2026-09-12");
+    assert.equal(dailyStatus([{id:"old",day:"2026-09-11",status:"done",author:"Staff",updatedAt:"2026-09-11T10:00:00Z"}],"2026-09-12"),"not_checked");
     assert.equal(uploadDay("2026-09-11T18:01:00Z"),"2026-09-12");
     assert.deepEqual(dayColor("2026-09-11T18:01:00Z"),dayColor("2026-09-12T10:00:00Z"));
     assert.notDeepEqual(dayColor("2026-09-11T10:00:00Z"),dayColor("2026-09-12T10:00:00Z"));
     mkdirSync(".data", { recursive: true });
     const path = resolve(`.data/leads-test-${randomUUID()}.db`);
     const db = new DatabaseSync(path);
-    for (const migration of ["000001_init", "000002_lead_workspace", "000003_admin_sessions", "000004_lead_followups", "000005_lead_uploads"]) db.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
+    for (const migration of ["000001_init", "000002_lead_workspace", "000003_admin_sessions", "000004_lead_followups", "000005_lead_uploads", "000006_lead_daily_work"]) db.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
     db.close();
     process.env.DATABASE_URL = `file:${path.replaceAll("\\", "/")}`;
     process.env.ADMIN_API_TOKEN = "lead-test-token";
@@ -219,6 +223,26 @@ async function main() {
         assert.equal(trackedLead.notes,"Important lead context");assert.equal(trackedLead.reminders.length,1);
         assert.equal((await followupApi.DELETE(request("DELETE",JSON.stringify({id:savedReminder.id,confirmation:"DELETE"})),followupContext)).status,200);
         assert.ok(await prisma.leadConversation.findFirst({where:{leadId:lead.id,text:{startsWith:"Reminder deleted:"}}}));
+        const dailyApi=await import("../src/app/api/admin/leads/[id]/daily-work/route");
+        const dailyContext={params:Promise.resolve({id:lead.id})},day=workDay();
+        assert.equal((await dailyApi.PATCH(request("PATCH",JSON.stringify({status:"done",day}),false),dailyContext)).status,401);
+        assert.equal((await dailyApi.PATCH(sub("PATCH",{status:"invalid",day}),dailyContext)).status,422);
+        assert.equal((await dailyApi.PATCH(sub("PATCH",{status:"done",day:"2000-01-01"}),dailyContext)).status,409);
+        assert.equal((await dailyApi.PATCH(sub("PATCH",{status:"done",day}),{params:Promise.resolve({id:"missing-lead"})})).status,404);
+        await prisma.leadDailyWork.create({data:{leadId:lead.id,day:"2000-01-01",status:"done",author:"Historical staff"}});
+        for(const status of ["checked","follow_up","done","not_checked","done"]){
+            const response=await dailyApi.PATCH(sub("PATCH",{status,day,author:"Spoofed"}),dailyContext);
+            assert.equal(response.status,200);assert.equal((await response.json()).author,"Sales Agent");
+        }
+        assert.equal(await prisma.leadDailyWork.count({where:{leadId:lead.id}}),2);
+        const auditCount=await prisma.leadConversation.count({where:{leadId:lead.id}});
+        await dailyApi.PATCH(sub("PATCH",{status:"done",day}),dailyContext);
+        assert.equal(await prisma.leadConversation.count({where:{leadId:lead.id}}),auditCount);
+        const dailyList=(await (await leadsApi.GET(sub("GET"))).json()).leads;
+        assert.equal(dailyList.find((l:{id:string})=>l.id===lead.id).dailyWork.length,1);
+        assert.equal(dailyList.find((l:{id:string})=>l.id===lead.id).dailyWork[0].status,"done");
+        assert.ok(dailyList.filter((l:{id:string})=>l.id!==lead.id).every((l:{dailyWork:unknown[]})=>l.dailyWork.length===0));
+        console.log("PASS: daily work status transitions, Dhaka midnight reset, history preservation, staff attribution, authentication, lead scoping and idempotent audit history.");
         const manualApi = await import("../src/app/api/admin/leads/create/route");
         const manual = {name:"Manual contact",phone:"01712345678",email:"manual@example.com",service:"Umrah",notes:"First manual note",owner:"Unassigned",status:lead.status};
         assert.equal((await manualApi.POST(request("POST",JSON.stringify(manual),false))).status,401);
@@ -273,6 +297,7 @@ async function main() {
         assert.equal(await prisma.lead.count(), 2);
         assert.equal((await (await leadsApi.DELETE(deletion([lead.id], 3, "DELETE 1"))).json()).deleted, 1);
         assert.equal(await prisma.leadConversation.count({ where: { leadId: lead.id } }), 0);
+        assert.equal(await prisma.leadDailyWork.count({where:{leadId:lead.id}}),0);
         assert.equal((await audioApi.GET(request("GET"), voiceContext)).status, 404);
         assert.equal(await prisma.lead.count(), 1);
         assert.equal((await (await leadsApi.DELETE(deletion([lead.id], 3, "DELETE 1"))).json()).deleted, 0);

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin, getAdminActor } from "../../../lib/adminAuth";
+import { workDay } from "../../../lib/leadDailyWork";
 import { prisma } from "../../../lib/db";
 
 export const runtime = "nodejs";
@@ -12,6 +13,7 @@ export async function DELETE(request: NextRequest) {
     if ((body.ids.length > 1 || body.bulk === true) && (await getAdminActor(request))?.role !== "superadmin") return NextResponse.json({error: "Only superadmins can batch delete leads."}, {status:403});
     const deleted = await prisma.$transaction(async tx => {
         // Keep the operation atomic, including private audio and conversation history.
+        await tx.leadDailyWork.deleteMany({where:{leadId:{in:body.ids}}});
         await tx.leadReminder.deleteMany({where:{leadId:{in:body.ids}}});
         await tx.leadConversation.deleteMany({ where: { leadId: { in: body.ids } } });
         return tx.lead.deleteMany({ where: { id: { in: body.ids } } });
@@ -21,7 +23,7 @@ export async function DELETE(request: NextRequest) {
 export async function GET(request: NextRequest) {
     const denied = await requireAdmin(request, true); if (denied) return denied;
     const [leads, stages, people] = await Promise.all([
-        prisma.lead.findMany({ orderBy: [{ createdAt: "desc" }, { id: "desc" }], include: { uploads: { orderBy: { id: "desc" } }, conversations: { where: { party: "note" }, select: { id: true, text: true, author: true, createdAt: true }, orderBy: { createdAt: "desc" } }, reminders: { orderBy: { dueAt: "asc" } }, _count: { select: { conversations: true } } } }),
+        prisma.lead.findMany({ orderBy: [{ createdAt: "desc" }, { id: "desc" }], include: { dailyWork: { where: { day: workDay() } }, uploads: { orderBy: { id: "desc" } }, conversations: { where: { party: "note" }, select: { id: true, text: true, author: true, createdAt: true }, orderBy: { createdAt: "desc" } }, reminders: { orderBy: { dueAt: "asc" } }, _count: { select: { conversations: true } } } }),
         prisma.leadStage.findMany({ orderBy: { sortOrder: "asc" } }), prisma.leadPerson.findMany({ orderBy: { name: "asc" } }),
     ]);
     return NextResponse.json({ leads, stages, people, user: await getAdminActor(request) }, { headers: { "Cache-Control": "no-store" } });

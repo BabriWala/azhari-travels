@@ -34,3 +34,14 @@
 @media(max-width:640px){.lw-manual-lead input,.lw-manual-lead select,.lw-manual-lead textarea{font-size:16px!important}}
 
 .lw-batch-tag{align-self:flex-start;border-radius:4px;padding:2px 6px;font-weight:600}
+
+.lw-daily-dashboard{background:white;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:24px}
+.lw-daily-dashboard p{font-size:12px;color:var(--muted);margin-top:6px}
+.lw-daily-dashboard button[aria-pressed=true]{background:var(--green);color:white}
+.lw-daily-work{margin-top:10px;padding:10px;border:1px solid #cbd5e1;border-left-width:4px;border-radius:7px;background:#f8fafc;min-width:0;white-space:normal}
+.lw-daily-work label{font-size:11px}
+.lw-daily-work small{display:block;margin-top:5px;font-size:10px;overflow-wrap:anywhere}
+.lw-daily-checked{background:#eff6ff;border-color:#60a5fa}
+.lw-daily-follow_up{background:#fff7ed;border-color:#fb923c}
+.lw-daily-done{background:#ecfdf5;border-color:#34d399}
+@media(max-width:640px){.lw-daily-work select{font-size:16px!important}.lw-daily-dashboard{padding:16px}}

@@ -113,6 +113,7 @@ model Review {
 }
 
 model Lead {
+  dailyWork LeadDailyWork[]
   uploads LeadUpload[]
   notes String @default("")
   reminders LeadReminder[]
@@ -213,4 +214,16 @@ model LeadUpload {
   author String
   createdAt DateTime @default(now())
   leads Lead[]
+}
+
+model LeadDailyWork {
+  id String @id @default(cuid())
+  leadId String
+  lead Lead @relation(fields:[leadId],references:[id],onDelete:Cascade)
+  day String
+  status String @default("not_checked")
+  author String
+  updatedAt DateTime @updatedAt
+  @@unique([leadId,day])
+  @@index([day,status])
 }
