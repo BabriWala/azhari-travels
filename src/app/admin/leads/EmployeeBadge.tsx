@@ -1,7 +1,7 @@
 export function employeeColors(name:string) {
  let hash=0;for(const char of name.trim().toLowerCase())hash=(hash*31+char.charCodeAt(0))>>>0;
  const hue=hash%360;
- return {backgroundColor:"hsl("+hue+" 55% 95%)",color:"hsl("+hue+" 65% 28%)",borderColor:"hsl("+hue+" 35% 78%)"};
+ return {backgroundColor:"hsl("+hue+" 70% 91%)",color:"hsl("+hue+" 65% 28%)",borderColor:"hsl("+hue+" 55% 57%)"};
 }
 export default function EmployeeBadge({name}:{name:string}) {
  const unassigned=!name||name==="Unassigned";
