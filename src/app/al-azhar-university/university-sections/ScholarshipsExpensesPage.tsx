@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import MetaWhatsAppSalesLink from "../../components/MetaWhatsAppSalesLink";
 
 
@@ -19,7 +20,7 @@ const cards = [
         label: "03",
         title: "বৃত্তি",
         highlight: "যোগ্যতাভিত্তিক",
-        text: "বৃত্তি সম্পূর্ণভাবে মেধা ও ফলাফলের ওপর নির্ভরশীল। সাধারণত শিক্ষার্থীদের ২–৩ বছর ধারাবাহিকভাবে কঠোর পরিশ্রমের মাধ্যমে বৃত্তির জন্য যোগ্যতা অর্জন করতে হয়।",
+        text: "বাংলাদেশ থেকে নতুন আবেদন এবং মিশরে অধ্যয়নরত শিক্ষার্থীদের বৃত্তির আবেদনপথ আলাদা। যোগ্যতা, মনোনয়ন ও চূড়ান্ত অনুমোদনের শর্ত চলতি বিজ্ঞপ্তি অনুযায়ী যাচাই করুন।",
     },
     {
         label: "04",
@@ -56,6 +57,7 @@ export default function ScholarshipsExpensesPage() {
             </section>
 
             <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+                <Link href="/al-azhar-scholarship" className="mb-7 inline-flex rounded-xl bg-emerald-800 px-6 py-3 font-semibold text-white hover:bg-emerald-900">আল-আযহার স্কলারশিপ: সম্পূর্ণ আবেদন গাইড →</Link>
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                     {cards.map((card) => (
                         <div

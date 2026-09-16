@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import AlAzharPackagePage from './university-sections/AlAzharPackagePage';
 import AlAzharAdmissionDocuments from './university-sections/AlAzharAdmissionDocuments';
 import AlAzharNotSuitablePage from './university-sections/AlAzharNotSuitablePage';
@@ -22,6 +23,10 @@ import OurAddressPage from './university-sections/OurAddressPage';
 const page = () => {
     return (
         <div className='py-[40px] hind-siliguri-regular'>
+            <div className="mx-auto mb-6 flex max-w-7xl flex-wrap items-center justify-between gap-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5">
+                <div><p className="text-lg font-bold text-emerald-950">আল-আযহার স্কলারশিপে আবেদন করতে চান?</p><p className="mt-1 text-sm text-emerald-800">যোগ্যতা, কাগজপত্র ও ধাপে ধাপে আবেদন নির্দেশনা দেখুন।</p></div>
+                <Link href="/al-azhar-scholarship" className="rounded-xl bg-emerald-800 px-5 py-3 font-semibold text-white hover:bg-emerald-900 focus-visible:outline-2 focus-visible:outline-offset-4">স্কলারশিপ গাইড দেখুন →</Link>
+            </div>
             <AlAzharPackagePage></AlAzharPackagePage>
             <AlAzharAdmissionDocuments></AlAzharAdmissionDocuments>
             <AlAzharNotSuitablePage></AlAzharNotSuitablePage>
