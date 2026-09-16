@@ -22,25 +22,25 @@ import OurAddressPage from './university-sections/OurAddressPage';
 const page = () => {
     return (
         <div className='py-[40px] hind-siliguri-regular'>
-            <EducationalStructurePage />
-            <AlAzharFacultiesPage />
-            <PopularFacultiesPage />
-            <MahadulQiraatPage />
-            <QuranMemorizationPage />
-            <ArabicLanguagePage />
-            <ArabicLanguageProficiencyPage />
-            <FourMadhhabsPage />
-            <AqeedahPage />
-            <FatwaBoardPage />
-            <FamousScholarsPage />
-            <AdmissionDetailsPage />
-            <AlAzharAdmissionDocuments />
-            <AlAzharNotSuitablePage />
-            <ImportantNotesPage />
-            <ScholarshipsExpensesPage />
-            <AlAzharPackagePage />
-            <ProcessingSystemPage />
-            <OurAddressPage />
+            <AlAzharPackagePage></AlAzharPackagePage>
+            <AlAzharAdmissionDocuments></AlAzharAdmissionDocuments>
+            <AlAzharNotSuitablePage></AlAzharNotSuitablePage>
+            <ProcessingSystemPage></ProcessingSystemPage>
+            <AdmissionDetailsPage></AdmissionDetailsPage>
+            <ImportantNotesPage></ImportantNotesPage>
+            <ScholarshipsExpensesPage></ScholarshipsExpensesPage>
+            <EducationalStructurePage></EducationalStructurePage>
+            <MahadulQiraatPage></MahadulQiraatPage>
+            <AlAzharFacultiesPage></AlAzharFacultiesPage>
+            <PopularFacultiesPage></PopularFacultiesPage>
+            <QuranMemorizationPage></QuranMemorizationPage>
+            <ArabicLanguagePage></ArabicLanguagePage>
+            <ArabicLanguageProficiencyPage></ArabicLanguageProficiencyPage>
+            <FourMadhhabsPage></FourMadhhabsPage>
+            <AqeedahPage></AqeedahPage>
+            <FatwaBoardPage></FatwaBoardPage>
+            <FamousScholarsPage></FamousScholarsPage>
+            <OurAddressPage></OurAddressPage>
         </div>
     );
 };
