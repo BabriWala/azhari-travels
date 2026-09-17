@@ -4,6 +4,7 @@ import { NextRequest } from "next/server";
 import { fail, ok } from "../../../lib/api";
 import { requireAdmin } from "../../../lib/adminAuth";
 import { prisma } from "../../../lib/db";
+import { compressImage } from "../../../lib/compressImage";
 
 const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const maxSize = 5 * 1024 * 1024;
@@ -36,23 +37,27 @@ export async function POST(request: NextRequest) {
         return fail("File size must be 5MB or less", 422);
     }
 
-    const extensions: Record<string, string> = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/gif": ".gif" };
-    const extension = extensions[file.type];
-    const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}${extension}`;
+    let compressed;
+    try {
+        compressed = await compressImage(Buffer.from(await file.arrayBuffer()));
+    } catch {
+        return fail("This image could not be processed. Choose a valid image up to 40 megapixels.", 422);
+    }
+    const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}${compressed.extension}`;
     const uploadDir = path.join(process.cwd(), "public", "uploads", category);
     const diskPath = path.join(uploadDir, safeName);
     const publicUrl = `/uploads/${category}/${safeName}`;
 
     try {
         await mkdir(uploadDir, { recursive: true });
-        await writeFile(diskPath, Buffer.from(await file.arrayBuffer()));
+        await writeFile(diskPath, compressed.bytes);
 
         const asset = await prisma.mediaAsset.create({
             data: {
                 url: publicUrl,
                 filename: file.name,
-                mimeType: file.type,
-                size: file.size,
+                mimeType: compressed.mimeType,
+                size: compressed.bytes.length,
                 alt,
                 category,
             },

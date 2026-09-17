@@ -74,7 +74,7 @@ export default function StudentGalleryManager({ token }: { token: string }) {
         <form onSubmit={upload} className="mt-5 grid gap-4 sm:grid-cols-2">
             <label className="text-sm font-semibold">Gallery photos
                 <input disabled={busy} type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif" onChange={event => { setFiles(Array.from(event.target.files || [])); setMessage(""); }} className="mt-2 block w-full rounded-xl border border-slate-200 p-3" />
-                <span className="mt-1 block text-xs text-slate-500">JPG, PNG, WebP or GIF · Maximum 5 MB per photo</span>
+                <span className="mt-1 block text-xs text-slate-500">JPG, PNG, WebP or GIF · Maximum 5 MB per photo · Automatically compressed for faster loading</span>
             </label>
             <label className="text-sm font-semibold">Photo description (optional)
                 <input disabled={busy} value={caption} maxLength={300} onChange={event => setCaption(event.target.value)} placeholder="Describe this student moment" className="mt-2 block w-full rounded-xl border border-slate-200 p-3" />
