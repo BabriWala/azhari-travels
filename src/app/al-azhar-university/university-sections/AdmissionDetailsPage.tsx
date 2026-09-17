@@ -47,9 +47,9 @@ const certificatePaths = [
 
 export default function AdmissionDetailsPage() {
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
+        <section className="az-content-section bg-slate-50 text-slate-900">
             {/* Hero */}
-            <section className="relative overflow-hidden bg-[#080b34] text-white">
+            <section className="relative overflow-hidden bg-[#06113C] text-white">
                 <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-500/30 blur-3xl" />
                 <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-orange-400/30 blur-3xl" />
 
@@ -60,10 +60,10 @@ export default function AdmissionDetailsPage() {
                             আল-আযহার বিশ্ববিদ্যালয়
                         </span>
 
-                        <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
+                        <h2 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
                             {/* Admission Details */}
                             ভর্তি বিবরণ
-                        </h1>
+                        </h2>
 
                         <p className="mt-5 text-base leading-8 text-slate-200 sm:text-lg">
                             {/* Through our representative, students must first enroll in a
@@ -77,10 +77,10 @@ export default function AdmissionDetailsPage() {
             {/* Language Course Options */}
             <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
                 <div className="mb-6">
-                    <h2 className="text-3xl font-black text-[#080b34]">
+                    <h3 className="text-3xl font-black text-[#06113C]">
                         {/* Language Course Options */}
                         ভাষা কোর্স বিকল্প
-                    </h2>
+                    </h3>
                     <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">
                         {/* Students have two main options for completing the required language
                         course. */}
@@ -95,7 +95,7 @@ export default function AdmissionDetailsPage() {
                             className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 sm:p-8"
                         >
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                <h3 className="text-2xl font-black text-[#080b34]">
+                                <h3 className="text-2xl font-black text-[#06113C]">
                                     {option.title}
                                 </h3>
 
@@ -107,7 +107,7 @@ export default function AdmissionDetailsPage() {
                             <div className="mt-6 space-y-4">
                                 {option.points.map((point, pointIndex) => (
                                     <div key={pointIndex} className="flex gap-3">
-                                        <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-linear-to-r from-pink-600 to-orange-400 text-xs font-bold text-white">
+                                        <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-linear-to-r from-[#FF006D] to-[#FF8300] text-xs font-bold text-white">
                                             ✓
                                         </div>
                                         <p className="text-sm leading-7 text-slate-600">
@@ -124,10 +124,10 @@ export default function AdmissionDetailsPage() {
             {/* Certificate Based Admission */}
             <section className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
                 <div className="mb-6">
-                    <h2 className="text-3xl font-black text-[#080b34]">
+                    <h3 className="text-3xl font-black text-[#06113C]">
                         {/* Certificate Based Admission Path */}
                         সার্টিফিকেট ভিত্তিক ভর্তি সিস্টেম
-                    </h2>
+                    </h3>
                     <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">
                         {/* The next admission path depends on whether the student holds a
                         Sharhe Bekaya certificate or an Alim certificate. */}
@@ -141,14 +141,14 @@ export default function AdmissionDetailsPage() {
                             key={index}
                             className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 sm:p-8"
                         >
-                            <h3 className="text-2xl font-black text-[#080b34]">
+                            <h3 className="text-2xl font-black text-[#06113C]">
                                 {path.title}
                             </h3>
 
                             <div className="mt-6 space-y-5">
                                 {path.steps.map((step, stepIndex) => (
                                     <div key={stepIndex} className="flex gap-4">
-                                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#080b34] text-sm font-black text-white">
+                                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#06113C] text-sm font-black text-white">
                                             {stepIndex + 1}
                                         </div>
 
@@ -165,11 +165,11 @@ export default function AdmissionDetailsPage() {
 
             {/* Summary */}
             <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-                <div className="rounded-4xl bg-linear-to-r from-[#080b34] to-[#151b55] p-6 text-center text-white shadow-xl sm:p-8">
-                    <h2 className="text-2xl font-black sm:text-3xl">
+                <div className="rounded-4xl bg-linear-to-r from-[#06113C] to-[#101C55] p-6 text-center text-white shadow-xl sm:p-8">
+                    <h3 className="text-2xl font-black sm:text-3xl">
                         {/* Start With Language Course */}
                         ভাষা কোর্স দিয়ে শুরু করুন
-                    </h2>
+                    </h3>
 
                     <p className="mx-auto mt-4 max-w-3xl text-sm leading-8 text-slate-200 sm:text-base">
                         {/* Whether you choose the public education program or the Sheikh Zayed
@@ -179,6 +179,6 @@ export default function AdmissionDetailsPage() {
                     </p>
                 </div>
             </section>
-        </main>
+        </section>
     );
 }

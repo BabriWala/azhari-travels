@@ -17,7 +17,7 @@ const points = [
 
 export default function FatwaBoardPage() {
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
+        <section className="az-content-section bg-slate-50 text-slate-900">
             <section className="relative overflow-hidden bg-white">
                 <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-orange-100 blur-3xl" />
                 <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-pink-100 blur-3xl" />
@@ -28,10 +28,10 @@ export default function FatwaBoardPage() {
                         আল-আযহার দারুল ইফতা
                     </span>
 
-                    <h1 className="mt-5 text-4xl font-black leading-tight text-[#080b34] sm:text-5xl md:text-6xl">
+                    <h2 className="mt-5 text-4xl font-black leading-tight text-[#06113C] sm:text-5xl md:text-6xl">
                         {/* Fatwa Board */}
                         ফতোয়া বোর্ড
-                    </h1>
+                    </h2>
 
                     <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
                         {/* Al-Azhar’s Darul Ifta is separate from the Faculty of Shariah and
@@ -48,13 +48,13 @@ export default function FatwaBoardPage() {
                             key={index}
                             className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-xl"
                         >
-                            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r from-pink-600 to-orange-400 text-xl font-black text-white">
+                            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r from-[#FF006D] to-[#FF8300] text-xl font-black text-white">
                                 {index + 1}
                             </div>
 
-                            <h2 className="text-2xl font-black text-[#080b34]">
+                            <h3 className="text-2xl font-black text-[#06113C]">
                                 {item.title}
-                            </h2>
+                            </h3>
 
                             <p className="mt-4 text-sm leading-7 text-slate-600">
                                 {item.text}
@@ -65,11 +65,11 @@ export default function FatwaBoardPage() {
             </section>
 
             <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-                <div className="rounded-4xl bg-linear-to-r from-[#080b34] to-[#151b55] p-6 text-center text-white shadow-xl sm:p-8">
-                    <h2 className="text-2xl font-black sm:text-3xl">
+                <div className="rounded-4xl bg-linear-to-r from-[#06113C] to-[#101C55] p-6 text-center text-white shadow-xl sm:p-8">
+                    <h3 className="text-2xl font-black sm:text-3xl">
                         {/* Four-Year Special Course */}
                         চার বছরের বিশেষ কোর্স
-                    </h2>
+                    </h3>
 
                     <p className="mx-auto mt-4 max-w-3xl text-sm leading-8 text-slate-200 sm:text-base">
                         {/* To receive the title of Mufti, a student must complete a dedicated
@@ -77,12 +77,12 @@ export default function FatwaBoardPage() {
                         মুফতি উপাধি অর্জনের জন্য, একজন শিক্ষার্থীকে ফতোয়া বোর্ডের মাধ্যমে একটি বিশেষ 4-বছরের কোর্স সম্পন্ন করতে হবে।
                     </p>
 
-                    <div className="mx-auto mt-6 w-fit rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-8 py-3 text-sm font-bold text-white shadow-lg">
+                    <div className="mx-auto mt-6 w-fit rounded-full bg-linear-to-r from-[#FF006D] to-[#FF8300] px-8 py-3 text-sm font-bold text-white shadow-lg">
                         {/* Mufti Title Pathway */}
                         মুফতি উপাধি যোগ্যতার পথ
                     </div>
                 </div>
             </section>
-        </main>
+        </section>
     );
 }

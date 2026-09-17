@@ -32,7 +32,7 @@ const steps = [
 
 export default function ProcessingSystemPage() {
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
+        <section className="az-content-section bg-slate-50 text-slate-900">
             {/* Hero */}
             <section className="relative overflow-hidden bg-white">
                 <div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-pink-100 blur-3xl" />
@@ -44,10 +44,10 @@ export default function ProcessingSystemPage() {
                         আল-আযহার বিশ্ববিদ্যালয়ের ভর্তি প্রক্রিয়া
                     </span>
 
-                    <h1 className="mt-5 text-4xl font-black leading-tight text-[#080b34] sm:text-5xl md:text-6xl">
+                    <h2 className="mt-5 text-4xl font-black leading-tight text-[#06113C] sm:text-5xl md:text-6xl">
                         {/* Our Processing System */}
                         আমাদের প্রক্রিয়া
-                    </h1>
+                    </h2>
 
                     <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
                         {/* A simple step-by-step process for Egypt ticket reservation, visa
@@ -60,7 +60,7 @@ export default function ProcessingSystemPage() {
             {/* Steps */}
             <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
                 <div className="relative">
-                    <div className="absolute left-6 top-0 hidden h-full w-1 rounded-full bg-linear-to-b from-pink-600 to-orange-400 md:block" />
+                    <div className="absolute left-6 top-0 hidden h-full w-1 rounded-full bg-linear-to-b from-[#FF006D] to-[#FF8300] md:block" />
 
                     <div className="space-y-6">
                         {steps.map((item, index) => (
@@ -68,7 +68,7 @@ export default function ProcessingSystemPage() {
                                 key={index}
                                 className="relative grid gap-5 rounded-4xl bg-white p-5 shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-xl md:grid-cols-[90px_1fr] md:p-6"
                             >
-                                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r from-pink-600 to-orange-400 text-xl font-black text-white md:h-16 md:w-16">
+                                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r from-[#FF006D] to-[#FF8300] text-xl font-black text-white md:h-16 md:w-16">
                                     {index + 1}
                                 </div>
 
@@ -78,12 +78,12 @@ export default function ProcessingSystemPage() {
                                             <p className="text-sm font-bold uppercase tracking-wider text-orange-500">
                                                 {item.step}
                                             </p>
-                                            <h2 className="mt-1 text-2xl font-black text-[#080b34]">
+                                            <h3 className="mt-1 text-2xl font-black text-[#06113C]">
                                                 {item.title}
-                                            </h2>
+                                            </h3>
                                         </div>
 
-                                        <span className="w-fit rounded-full bg-slate-100 px-5 py-2 text-sm font-bold text-[#080b34]">
+                                        <span className="w-fit rounded-full bg-slate-100 px-5 py-2 text-sm font-bold text-[#06113C]">
                                             {item.amount}
                                         </span>
                                     </div>
@@ -100,11 +100,11 @@ export default function ProcessingSystemPage() {
 
             {/* Summary */}
             <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-                <div className="rounded-4xl bg-linear-to-r from-[#080b34] to-[#151b55] p-6 text-center text-white shadow-xl sm:p-8">
-                    <h2 className="text-2xl font-black sm:text-3xl">
+                <div className="rounded-4xl bg-linear-to-r from-[#06113C] to-[#101C55] p-6 text-center text-white shadow-xl sm:p-8">
+                    <h3 className="text-2xl font-black sm:text-3xl">
                         {/* Complete Admission Support */}
                         সম্পূর্ণ ভর্তি সহায়তা
-                    </h2>
+                    </h3>
 
                     <p className="mx-auto mt-4 max-w-3xl text-sm leading-8 text-slate-200 sm:text-base">
                         {/* From ticket reservation to visa approval, OK to Board, airport
@@ -114,16 +114,16 @@ export default function ProcessingSystemPage() {
                     </p>
 
                     <MetaWhatsAppSalesLink
-                        href="https://wa.me/+8801318185954"
+                        href="https://wa.me/8801318185954"
                         sectionName="Processing System"
                     >
-                        <button className="mt-6 rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-7 py-3 font-bold text-white shadow-lg transition hover:scale-105 md:mt-0">
+                        <button className="mt-6 rounded-full bg-linear-to-r from-[#FF006D] to-[#FF8300] px-7 py-3 font-bold text-white shadow-lg transition hover:scale-105 md:mt-0">
                             প্রক্রিয়া শুরু করুন
                         </button>
                     </MetaWhatsAppSalesLink>
 
                 </div>
             </section>
-        </main>
+        </section>
     );
 }

@@ -18,7 +18,7 @@ const included = [
     "ভর্তি হওয়া পর্যন্ত সকল সহযোগিতা",
 ];
 
-const notIncluded = [
+export const studentExpenses = [
     {
         icon: Home,
         title: "বাসা ভাড়া ও খাবারের খরচ",
@@ -43,7 +43,7 @@ const notIncluded = [
 
 export default function AlAzharPackagePage() {
     return (
-        <main className="min-h-screen bg-[#f8fafc] text-slate-900">
+        <section className="az-content-section bg-[#f8fafc] text-slate-900">
             {/* Hero Section */}
             <section className="relative overflow-hidden bg-white">
                 <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-pink-100 blur-3xl" />
@@ -67,12 +67,12 @@ export default function AlAzharPackagePage() {
                             নির্ভরযোগ্য ভর্তি সহায়তা
                         </div>
 
-                        <h1 className="text-4xl font-extrabold leading-tight text-[#090d35] sm:text-5xl lg:text-6xl">
+                        <h2 className="text-4xl font-extrabold leading-tight text-[#090d35] sm:text-5xl lg:text-6xl">
                             আল আযহার বিশ্ববিদ্যালয়{" "}
-                            <span className="bg-linear-to-r from-pink-600 to-orange-400 bg-clip-text text-transparent">
+                            <span className="bg-linear-to-r from-[#FF006D] to-[#FF8300] bg-clip-text text-transparent">
                                 প্যাকেজ
                             </span>
-                        </h1>
+                        </h2>
 
                         <p className="mt-5 text-base leading-7 text-slate-600 sm:text-lg">
                             আল-আযহার বিশ্ববিদ্যালয়ে পড়াশোনা করতে ইচ্ছুক শিক্ষার্থীদের জন্য সম্পূর্ণ ভর্তি সহায়তা প্যাকেজ — যার মধ্যে রয়েছে ভিসা, এয়ার টিকেট, ওমরাহ এবং ভর্তি সম্পন্ন হওয়া পর্যন্ত সকল প্রকার সহযোগিতা
@@ -80,9 +80,9 @@ export default function AlAzharPackagePage() {
 
                         {/* <div className="mt-8 rounded-3xl bg-[#090d35] p-6 text-white shadow-xl">
                             <p className="text-sm text-slate-300">প্যাকেজ মূল্য</p>
-                            <h2 className="mt-1 text-4xl font-black text-white">
+                            <h3 className="mt-1 text-4xl font-black text-white">
                                 1,90,000/-
-                            </h2>
+                            </h3>
                             <p className="mt-2 text-sm text-slate-300">
                                
                                 এক লক্ষ নব্বই হাজার টাকা
@@ -105,10 +105,10 @@ export default function AlAzharPackagePage() {
                             key={index}
                             className="rounded-3xl bg-white p-5 text-center shadow-sm ring-1 ring-slate-100"
                         >
-                            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r from-pink-600 to-orange-400 text-white">
+                            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r from-[#FF006D] to-[#FF8300] text-white">
                                 <item.icon size={26} />
                             </div>
-                            <h3 className="font-bold text-[#090d35]">{item.title}</h3>
+                            <h3 className="font-bold text-slate-900">{item.title}</h3>
                         </div>
                     ))}
                 </div>
@@ -119,9 +119,9 @@ export default function AlAzharPackagePage() {
                 <div className="grid gap-8 lg:grid-cols-2">
                     {/* Included */}
                     <div className="rounded-4xl bg-white p-6 shadow-lg sm:p-8">
-                        <h2 className="text-2xl font-black text-[#090d35]">
+                        <h3 className="text-2xl font-black text-[#090d35]">
                             প্যাকেজে অন্তর্ভুক্ত
-                        </h2>
+                        </h3>
 
                         <div className="mt-6 space-y-4">
                             {included.map((item, index) => (
@@ -147,13 +147,13 @@ export default function AlAzharPackagePage() {
 
                     {/* Not Included */}
                     <div className="rounded-4xl bg-white p-6 shadow-lg sm:p-8">
-                        <h2 className="text-2xl font-black text-[#090d35]">
+                        <h3 className="text-2xl font-black text-[#090d35]">
                             {/* Not Included in the Package */}
                             প্যাকেজে অন্তর্ভুক্ত নয়
-                        </h2>
+                        </h3>
 
                         <div className="mt-6 space-y-4">
-                            {notIncluded.map((item, index) => (
+                            {studentExpenses.map((item, index) => (
                                 <div
                                     key={index}
                                     className="rounded-2xl border border-slate-100 p-4"
@@ -181,16 +181,16 @@ export default function AlAzharPackagePage() {
             {/* Additional Cost */}
 
             {/* <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-                <div className="rounded-4xl bg-linear-to-r from-[#090d35] to-[#151b55] p-6 text-white shadow-xl sm:p-8 md:flex md:items-center md:justify-between">
+                <div className="rounded-4xl bg-linear-to-r from-[#090d35] to-[#101C55] p-6 text-white shadow-xl sm:p-8 md:flex md:items-center md:justify-between">
                     <div>
                         <p className="text-sm text-slate-300">
                            
                             আনুমানিক অতিরিক্ত খরচ
 
                         </p>
-                        <h2 className="mt-2 text-3xl font-black sm:text-4xl">
+                        <h3 className="mt-2 text-3xl font-black sm:text-4xl">
                             80,000–90,000 টাকা
-                        </h2>
+                        </h3>
                         <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
                             উপরোক্ত অতিরিক্ত খরচসমূহ শিক্ষার্থীকে ব্যক্তিগতভাবে বহন করতে হবে।
 
@@ -198,15 +198,15 @@ export default function AlAzharPackagePage() {
                     </div>
 
                     <MetaWhatsAppSalesLink
-                        href="https://wa.me/+8801318185954"
+                        href="https://wa.me/8801318185954"
                         sectionName="Al-Azhar Package"
                     >
-                        <button className="mt-6 rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-7 py-3 font-bold text-white shadow-lg transition hover:scale-105 md:mt-0">
+                        <button className="mt-6 rounded-full bg-linear-to-r from-[#FF006D] to-[#FF8300] px-7 py-3 font-bold text-white shadow-lg transition hover:scale-105 md:mt-0">
                             এখনই যোগাযোগ করুন
                         </button>
                     </MetaWhatsAppSalesLink>
                 </div>
             </section> */}
-        </main>
+        </section>
     );
 }

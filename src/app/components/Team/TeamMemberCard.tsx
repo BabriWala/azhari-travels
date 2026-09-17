@@ -43,10 +43,10 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({ name, position, bio, imageU
             {bio && <p className="mt-2 text-text-light  text-sm">{bio}</p>}
             <div className="flex justify-center mt-4 space-x-4">
                 {/* Mobile and WhatsApp Icons */}
-                <Link className="cursor-pointer" href={`tel:${mobileNumber}`} target="_blank" rel="noopener noreferrer">
+                <Link className="cursor-pointer" href={mobileNumber.replace(/\D/g, "") === "8801318185954" ? "https://wa.me/8801318185954" : `tel:${mobileNumber}`} aria-label="Contact team member" target="_blank" rel="noopener noreferrer">
                     <Icon icon="mdi:phone" className="text-primary  w-6 h-6" />
                 </Link>
-                <Link className="cursor-pointer" href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
+                <Link className="cursor-pointer" href={`https://wa.me/${whatsappNumber.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer">
                     <Icon icon="mdi:whatsapp" className="text-primary  w-6 h-6" />
                 </Link>
                 {/* Social Media Icons */}

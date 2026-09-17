@@ -1,5 +1,6 @@
 "use client";
 
+import StudentGalleryManager from "./StudentGalleryManager";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Database, ImagePlus, Loader2, LogOut, Pencil, Plus, RefreshCcw, Save, Search, ShieldCheck, Trash2 } from "lucide-react";
 
@@ -579,6 +580,8 @@ export default function AdminContentPage() {
                         </div>
                     </div>
                 </section>
+
+                <StudentGalleryManager token={token} />
 
                 <div className="mt-6 grid gap-6 lg:grid-cols-[330px_1fr]">
                     <aside className="rounded-[24px] bg-white p-4 shadow-sm ring-1 ring-slate-200 sm:p-5">

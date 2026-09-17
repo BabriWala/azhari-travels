@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { MessageCircle, Send } from "lucide-react";
+import WhatsAppContactText from "../components/WhatsAppContactText";
 import { contactCards } from "../data/marketingPages";
 import { Eyebrow, IconBadge, InfoCard, PageShell, Section, gradientButton } from "../components/Marketing/PagePrimitives";
 
@@ -32,7 +33,7 @@ export default function ContactPage() {
                                 <IconBadge icon={item.icon} />
                                 <div>
                                     <p className="text-sm font-black uppercase tracking-wider text-slate-500">{item.label}</p>
-                                    <p className="mt-1 font-bold">{item.value}</p>
+                                    <p className="mt-1 font-bold"><WhatsAppContactText text={item.value} /></p>
                                 </div>
                             </InfoCard>
                         ))}

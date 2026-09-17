@@ -172,6 +172,10 @@ model MediaAsset {
   size      Int
   alt       String?
   category  String   @default("general")
+  visible   Boolean  @default(true)
+  sortOrder Int      @default(0)
+  deletedAt DateTime?
+  isLocal   Boolean  @default(false)
   createdAt DateTime @default(now())
 }
 

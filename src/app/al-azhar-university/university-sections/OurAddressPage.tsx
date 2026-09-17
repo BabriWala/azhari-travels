@@ -1,4 +1,5 @@
 import React from "react";
+import WhatsAppContactText from "../../components/WhatsAppContactText";
 
 
 const contactItems = [
@@ -6,8 +7,8 @@ const contactItems = [
         title: "মোবাইল",
         value: "013 1818 5954",
         subtitle: "আযহারী ট্রাভেলস এন্ড ট্যুরস",
-        action: "tel:01318185954",
-        button: "এখনই কল করুন",
+        action: "https://wa.me/8801318185954",
+        button: "হোয়াটসঅ্যাপে যোগাযোগ করুন",
     },
     {
         title: "অফিসের অবস্থান",
@@ -20,8 +21,8 @@ const contactItems = [
 
 export default function OurAddressPage() {
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
-            <section className="relative overflow-hidden bg-[#080b34] text-white">
+        <section className="az-content-section bg-slate-50 text-slate-900">
+            <section className="relative overflow-hidden bg-[#06113C] text-white">
                 <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-500/30 blur-3xl" />
                 <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-orange-400/30 blur-3xl" />
 
@@ -31,10 +32,10 @@ export default function OurAddressPage() {
                         যোগাযোগের তথ্য
                     </span>
 
-                    <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
+                    <h2 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
                         {/* Our Address */}
                         আমাদের ঠিকানা
-                    </h1>
+                    </h2>
 
                     <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-200 sm:text-lg">
                         {/* Contact us by phone or visit our office for Al-Azhar University
@@ -51,16 +52,16 @@ export default function OurAddressPage() {
                             key={index}
                             className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-xl sm:p-8"
                         >
-                            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r from-pink-600 to-orange-400 text-xl font-black text-white">
+                            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r from-[#FF006D] to-[#FF8300] text-xl font-black text-white">
                                 {index + 1}
                             </div>
 
-                            <h2 className="text-2xl font-black text-[#080b34]">
+                            <h3 className="text-2xl font-black text-[#06113C]">
                                 {item.title}
-                            </h2>
+                            </h3>
 
                             <p className="mt-3 text-xl font-bold text-slate-800">
-                                {item.value}
+                                <WhatsAppContactText text={item.value} />
                             </p>
 
                             <p className="mt-2 text-sm leading-7 text-slate-600">
@@ -71,7 +72,7 @@ export default function OurAddressPage() {
                                 href={item.action}
                                 target={item.title === "Office Map" ? "_blank" : undefined}
                                 rel={item.title === "Office Map" ? "noreferrer" : undefined}
-                                className="mt-6 inline-block rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-7 py-3 text-sm font-bold text-white shadow-lg transition hover:scale-105"
+                                className="mt-6 inline-block rounded-full bg-linear-to-r from-[#FF006D] to-[#FF8300] px-7 py-3 text-sm font-bold text-white shadow-lg transition hover:scale-105"
                             >
                                 {item.button}
                             </a>
@@ -89,10 +90,10 @@ export default function OurAddressPage() {
                                 অফিসের ঠিকানা
                             </span>
 
-                            <h2 className="mt-4 text-3xl font-black text-[#080b34]">
+                            <h3 className="mt-4 text-3xl font-black text-[#06113C]">
                                 {/* Visit Our Office */}
                                 আমাদের অফিসে আসুন
-                            </h2>
+                            </h3>
                         </div>
 
                         <p className="text-sm leading-8 text-slate-600 sm:text-base">
@@ -104,6 +105,6 @@ export default function OurAddressPage() {
                     </div>
                 </div>
             </section>
-        </main>
+        </section>
     );
 }

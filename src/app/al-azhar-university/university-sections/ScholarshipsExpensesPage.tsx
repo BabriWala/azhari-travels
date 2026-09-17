@@ -32,8 +32,8 @@ const cards = [
 
 export default function ScholarshipsExpensesPage() {
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
-            <section className="relative overflow-hidden bg-[#080b34] text-white">
+        <section className="az-content-section bg-slate-50 text-slate-900">
+            <section className="relative overflow-hidden bg-[#06113C] text-white">
                 <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-500/30 blur-3xl" />
                 <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-orange-400/30 blur-3xl" />
 
@@ -43,10 +43,10 @@ export default function ScholarshipsExpensesPage() {
                         আল-আযহার বিশ্ববিদ্যালয়
                     </span>
 
-                    <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
+                    <h2 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
                         {/* Scholarships & Expenses */}
                         বৃত্তি ও খরচ
-                    </h1>
+                    </h2>
 
                     <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-200 sm:text-lg">
                         {/* A clear overview of tuition fees, living costs, scholarship
@@ -65,7 +65,7 @@ export default function ScholarshipsExpensesPage() {
                             className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-xl"
                         >
                             <div className="mb-5 flex items-center justify-between gap-4">
-                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-r from-pink-600 to-orange-400 text-sm font-black text-white">
+                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-r from-[#FF006D] to-[#FF8300] text-sm font-black text-white">
                                     {card.label}
                                 </div>
 
@@ -74,9 +74,9 @@ export default function ScholarshipsExpensesPage() {
                                 </span>
                             </div>
 
-                            <h2 className="text-xl font-black text-[#080b34]">
+                            <h3 className="text-xl font-black text-[#06113C]">
                                 {card.title}
-                            </h2>
+                            </h3>
 
                             <p className="mt-3 text-sm leading-7 text-slate-600">
                                 {card.text}
@@ -90,10 +90,10 @@ export default function ScholarshipsExpensesPage() {
                 <div className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 sm:p-8">
                     <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
                         <div>
-                            <h2 className="text-2xl font-black text-[#080b34] sm:text-3xl">
+                            <h3 className="text-2xl font-black text-[#06113C] sm:text-3xl">
                                 {/* Plan Your Expenses Carefully */}
                                 আপনার খরচ সাবধানে পরিকল্পনা করুন
-                            </h2>
+                            </h3>
 
                             <p className="mt-4 max-w-3xl text-sm leading-8 text-slate-600 sm:text-base">
                                 {/* Islamic studies may not require tuition fees, but students
@@ -106,10 +106,10 @@ export default function ScholarshipsExpensesPage() {
 
 
                         <MetaWhatsAppSalesLink
-                            href="https://wa.me/+8801318185954"
+                            href="https://wa.me/8801318185954"
                             sectionName="Scholarships Expenses"
                         >
-                            <button className="rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-8 py-3 font-bold text-white shadow-lg transition hover:scale-105">
+                            <button className="rounded-full bg-linear-to-r from-[#FF006D] to-[#FF8300] px-8 py-3 font-bold text-white shadow-lg transition hover:scale-105">
                                 {/* Contact Us */}
                                 আমাদের সাথে যোগাযোগ করুন
                             </button>
@@ -117,6 +117,6 @@ export default function ScholarshipsExpensesPage() {
                     </div>
                 </div>
             </section>
-        </main>
+        </section>
     );
 }

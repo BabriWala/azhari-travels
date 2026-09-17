@@ -25,11 +25,19 @@ export async function POST(request: NextRequest) {
         return fail("Only JPG, PNG, WEBP and GIF images are allowed", 422);
     }
 
-    if (file.size > maxSize) {
+    if (!/^[a-z0-9-]{1,60}$/.test(category)) {
+        return fail("Invalid upload category", 422);
+    }
+    if (category === "al-azhar-students" && alt.length > 300) {
+        return fail("Gallery descriptions must be 300 characters or less", 422);
+    }
+
+    if (file.size === 0 || file.size > maxSize) {
         return fail("File size must be 5MB or less", 422);
     }
 
-    const extension = path.extname(file.name) || ".webp";
+    const extensions: Record<string, string> = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/gif": ".gif" };
+    const extension = extensions[file.type];
     const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}${extension}`;
     const uploadDir = path.join(process.cwd(), "public", "uploads", category);
     const diskPath = path.join(uploadDir, safeName);

@@ -48,6 +48,11 @@ jobs:
             git reset --hard origin/main
             corepack enable
             pnpm install --frozen-lockfile
+            # Take a consistent SQLite backup before applying additive schema changes.
+            if [ -f prisma/dev.db ]; then
+              mkdir -p /var/backups/azhari-travels
+              python3 -c 'import sqlite3, datetime; source = sqlite3.connect("prisma/dev.db"); target = sqlite3.connect("/var/backups/azhari-travels/pre-deploy-" + datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + ".db"); source.backup(target); target.close(); source.close()'
+            fi
             pnpm prisma db push
             pnpm db:seed
             pnpm build

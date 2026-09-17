@@ -1,0 +1,65 @@
+.az-university { --az-pink: #ff006d; --az-orange: #ff8300; color: #06113C; background: #F7F8FC; padding-bottom: 48px; }
+.az-hero { padding: 64px 24px; background: radial-gradient(ellipse at 95% 0%, #ffe6cd 0%, transparent 52%), radial-gradient(ellipse at 0% 90%, #fff1f6 0%, transparent 50%), #fff; border-bottom: 1px solid #eee4e7; }
+.az-hero-inner { max-width: 1216px; margin: auto; display: grid; grid-template-columns: 1.3fr 1fr; align-items: center; gap: 64px; }
+.az-eyebrow { display: inline-flex; align-items: center; gap: 8px; color: #06113C; font-size: 14px; font-weight: 600; }
+.az-hero-kicker { margin: 24px 0 12px; font: 600 11px/1.5 Arial, sans-serif; letter-spacing: .18em; color: #64748b; }
+.az-hero h1 { font-size: clamp(40px, 5vw, 68px); font-weight: 700; line-height: 1.25; letter-spacing: -.025em; color: #06113C; }
+.az-hero h1 span { color: #b80050; }
+.az-hero-description { margin-top: 24px; max-width: 550px; font-size: 18px; line-height: 1.9; color: #64748b; }
+.az-hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 28px; align-items: center; }
+.az-primary-link, .az-secondary-link { display: inline-flex; gap: 8px; align-items: center; font-weight: 600; padding: 13px 18px; border-radius: 10px; }
+.az-primary-link { background: linear-gradient(107deg, var(--az-pink), var(--az-orange)); color: #17151b; box-shadow: 0 6px 18px #ff006d1a; }
+.az-primary-link:hover { box-shadow: 0 8px 24px #ff006d30; }
+.az-secondary-link { color: #333333; border: 1px solid #e4dbe0; background: #ffffffaa; }
+.az-section-nav { background: white; border-bottom: 1px solid #ece8e7; }
+.az-section-nav > div { max-width: 1280px; margin: auto; display: flex; align-items: center; gap: 10px; padding: 16px 24px; overflow-x: auto; }
+.az-section-nav svg { flex-shrink: 0; color: #b80050; margin-right: 8px; }
+.az-section-nav a { flex-shrink: 0; padding: 9px 14px; border-radius: 8px; font-weight: 600; font-size: 14px; color: #555555; }
+.az-section-nav a:hover { background: #fff1f6; color: #06113C; }
+.az-university [id] { scroll-margin-top: 110px; }
+.az-content-section { min-height: 0; background: transparent; padding: 38px 0 0; border-bottom: 1px solid #e9e5e3; }
+.az-content-section > section:first-child { background: transparent; color: #06113C; }
+.az-content-section > section:first-child > .absolute { display: none; }
+.az-content-section > section:first-child > .relative { padding-top: 20px; padding-bottom: 24px; text-align: left; }
+.az-content-section > section:first-child .max-w-3xl { max-width: 900px; margin-left: 0; text-align: left; }
+.az-content-section > section:first-child h2 { color: #06113C; font-size: clamp(27px, 3vw, 36px); line-height: 1.4; font-weight: 700; margin-top: 12px; }
+.az-content-section > section:first-child p { color: #64748b; font-size: 16px; line-height: 1.9; margin-top: 12px; }
+.az-content-section > section:first-child span { color: #06113C; background: #fff0f5; padding: 6px 12px; font-size: 13px; }
+.az-content-section > section:not(:first-child) { padding-top: 16px; padding-bottom: 28px; }
+.az-content-section h3 { font-weight: 700; line-height: 1.5; }
+.az-content-section [class*="rounded-3xl"], .az-content-section [class*="rounded-4xl"] { border-radius: 16px; }
+.az-content-section [class*="shadow-xl"] { box-shadow: 0 8px 24px #24304408; }
+.az-content-section [class*="from-[#b80050]"] { color: #17151b; }
+.az-gallery-section { background: white; border-bottom: 1px solid #e9e5e3; }
+.az-gallery-control { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid #eadde3; border-radius: 50%; background: white; color: #06113C; cursor: pointer; }
+.az-gallery-control:hover { background: #fff1f6; }
+.az-gallery-photo { display: block; border: 1px solid #eee4e7; border-radius: 16px; overflow: hidden; background: #F7F8FC; }
+.az-gallery-photo img { width: 100%; aspect-ratio: 4/3; object-fit: contain; }
+.az-gallery-photo > span { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #fff; font-size: 14px; color: #555555; }
+.az-gallery-photo > span > span { color: #b80050; }
+.az-university a:focus-visible, .az-university button:focus-visible { outline: 3px solid #b80050; outline-offset: 3px; }
+@media (max-width: 767px) {
+ .az-hero { padding: 36px 20px; }
+ .az-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+ .az-hero-description { font-size: 16px; }
+ .az-section-nav > div { padding: 12px 16px; }
+ .az-content-section { padding-top: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .az-university *, .az-university *::before, .az-university *::after { scroll-behavior: auto !important; transition-duration: 0s !important; } }
+
+
+.az-guide-card { background: linear-gradient(white, white) padding-box, linear-gradient(107deg, var(--az-pink), var(--az-orange)) border-box; padding: 32px; border: 1px solid transparent; border-top-width: 4px; border-radius: 20px; box-shadow: 0 24px 64px #06113C0a; }
+.az-guide-brand { display: flex; align-items: center; gap: 16px; padding-bottom: 22px; margin-bottom: 22px; border-bottom: 1px solid #f0e7e9; }
+.az-guide-brand img { width: 76px; height: 76px; flex-shrink: 0; }
+.az-guide-brand span { font: 700 13px/1.5 Arial, sans-serif; letter-spacing: .1em; color: #06113C; }
+.az-guide-brand p { font-size: 14px; color: #64748b; margin-top: 5px; }
+.az-guide-heading { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 700; color: #06113C; }
+.az-guide-card > p { margin-top: 8px; color: #64748b; }
+.az-guide-card ol { margin: 24px 0; display: grid; gap: 22px; }
+.az-guide-card li { display: flex; gap: 16px; align-items: center; }
+.az-guide-card li > span { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: 12px; background: #fff2e3; color: #06113C; }
+.az-guide-card li:nth-child(2) > span { background: #fff1f6; color: #b80050; }
+.az-guide-card li strong { font-size: 18px; font-weight: 600; }
+.az-guide-card li p { font-size: 14px; color: #64748b; margin-top: 4px; }
+.az-guide-card > a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 20px; border-top: 1px solid #eee; color: #06113C; font-size: 14px; font-weight: 600; }
+@media (max-width: 767px) { .az-guide-card { padding: 24px; } }

@@ -26,7 +26,7 @@ export default function Header() {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="hidden h-10 items-center justify-between border-b border-slate-100 text-xs font-semibold text-slate-500 lg:flex">
                     <div className="flex items-center gap-5">
-                        <a href="tel:+8801318185954" className="inline-flex items-center gap-2 transition hover:text-[#F7025B]">
+                        <a href="https://wa.me/8801318185954" aria-label="01318185954 — WhatsApp" className="inline-flex items-center gap-2 transition hover:text-[#F7025B]">
                             <PhoneCall size={14} />
                             +88 013 1818 5954
                         </a>
@@ -114,7 +114,7 @@ export default function Header() {
                         </div>
 
                         <div className="mt-4 grid gap-3 rounded-2xl bg-[#F8FAFC] p-4">
-                            <a href="tel:+8801318185954" className="inline-flex items-center gap-2 text-sm font-bold text-slate-600">
+                            <a href="https://wa.me/8801318185954" aria-label="01318185954 — WhatsApp" className="inline-flex items-center gap-2 text-sm font-bold text-slate-600">
                                 <PhoneCall size={16} className="text-[#F7025B]" />
                                 +88 013 1818 5954
                             </a>

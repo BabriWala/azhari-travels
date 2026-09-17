@@ -92,7 +92,7 @@ export default function Footer() {
                         </div>
 
                         <div className="mt-6 space-y-4 text-sm font-semibold leading-7 text-white/76">
-                            <p className="flex min-w-0 gap-3"><PhoneCall className="mt-1 shrink-0 text-[#FF7A1A]" size={18} /> <span className="min-w-0 break-words">+88013 1818 5954</span></p>
+                            <p className="flex min-w-0 gap-3"><PhoneCall className="mt-1 shrink-0 text-[#FF7A1A]" size={18} /> <a href="https://wa.me/8801318185954" aria-label="01318185954 — WhatsApp" className="min-w-0 break-words underline underline-offset-4">+88013 1818 5954</a></p>
                             <p className="flex min-w-0 gap-3"><Mail className="mt-1 shrink-0 text-[#FF7A1A]" size={18} /> <span className="min-w-0 break-all">azharitravels.info@gmail.com</span></p>
                             <p className="flex min-w-0 gap-3"><MapPin className="mt-1 shrink-0 text-[#FF7A1A]" size={18} /> <span className="min-w-0 break-words">2/A - R#7 - Nabinagar Housing - Mohammadpur - Dhaka</span></p>
                         </div>

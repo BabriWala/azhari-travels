@@ -1,5 +1,6 @@
 "use client";
 
+import WhatsAppContactText from "../../../components/WhatsAppContactText";
 import AU_ADMIN_FAQ from '@/app/data/admin_faq_AU';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -109,7 +110,7 @@ const Page: React.FC = () => {
 
                             </h2>
                             <p className='text-base mb-2'><strong>{faq.category}</strong> - {highlightText(faq.question_banglish, searchTerm)}</p>
-                            <p className="text-gray-700 whitespace-pre-line mb-2">{faq.answer}</p>
+                            <p className="text-gray-700 whitespace-pre-line mb-2"><WhatsAppContactText text={faq.answer} /></p>
                             <button
                                 onClick={() => handleCopy(faq.answer, faq.id)}
                                 className="text-blue-500 hover:underline focus:outline-none"

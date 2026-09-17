@@ -32,7 +32,7 @@ const notes = [
 
 export default function AlAzharAdmissionDocuments() {
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
+        <section className="az-content-section bg-slate-50 text-slate-900">
             {/* Hero */}
             <section className="relative overflow-hidden bg-white">
                 <div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-orange-100 blur-3xl" />
@@ -45,10 +45,10 @@ export default function AlAzharAdmissionDocuments() {
                             আল-আযহার বিশ্ববিদ্যালয়ে ভর্তি
                         </span>
 
-                        <h1 className="mt-5 text-4xl font-black leading-tight text-[#080b34] sm:text-5xl md:text-6xl">
+                        <h2 className="mt-5 text-4xl font-black leading-tight text-[#06113C] sm:text-5xl md:text-6xl">
                             {/* Admission Documents */}
                             ভর্তির কাগজপত্র
-                        </h1>
+                        </h2>
 
                         <p className="mt-5 text-base leading-7 text-slate-600 sm:text-lg">
                             {/* The following documents are required for admission to Al-Azhar
@@ -67,13 +67,13 @@ export default function AlAzharAdmissionDocuments() {
                             key={index}
                             className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-xl"
                         >
-                            <div className="mb-5 flex h-16 w-16 text-white items-center justify-center rounded-2xl bg-linear-to-r from-pink-600 to-orange-400 text-3xl">
+                            <div className="mb-5 flex h-16 w-16 text-white items-center justify-center rounded-2xl bg-linear-to-r from-[#FF006D] to-[#FF8300] text-3xl">
                                 {item.icon}
                             </div>
 
-                            <h2 className="text-xl font-black text-[#080b34]">
+                            <h3 className="text-xl font-black text-[#06113C]">
                                 {item.title}
-                            </h2>
+                            </h3>
 
                             <p className="mt-3 text-sm leading-7 text-slate-600">
                                 {item.text}
@@ -85,18 +85,18 @@ export default function AlAzharAdmissionDocuments() {
 
             {/* Special Notes */}
             <section className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
-                <div className="overflow-hidden rounded-4xl bg-[#080b34] shadow-xl">
+                <div className="overflow-hidden rounded-4xl bg-[#06113C] shadow-xl">
                     <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-                        <div className="bg-linear-to-br from-pink-600 to-orange-400 p-8 text-white sm:p-10">
+                        <div className="bg-linear-to-br from-[#FF006D] to-[#FF8300] p-8 text-white sm:p-10">
                             <p className="text-sm font-semibold uppercase tracking-widest">
                                 {/* Important */}
                                 গুরুত্বপূর্ণ
                             </p>
 
-                            <h2 className="mt-3 text-3xl font-black sm:text-4xl">
+                            <h3 className="mt-3 text-3xl font-black sm:text-4xl">
                                 {/* Special Notes */}
                                 বিশেষ নোট
-                            </h2>
+                            </h3>
 
                             <p className="mt-4 text-sm leading-7 text-white/90">
                                 {/* Please read these points carefully before preparing your
@@ -111,7 +111,7 @@ export default function AlAzharAdmissionDocuments() {
                                     key={index}
                                     className="flex gap-4 rounded-2xl bg-white/10 p-4 text-white"
                                 >
-                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-sm font-black text-[#080b34]">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-sm font-black text-[#06113C]">
                                         {index + 1}
                                     </div>
                                     <p className="text-sm leading-7 text-slate-100">{note}</p>
@@ -125,10 +125,10 @@ export default function AlAzharAdmissionDocuments() {
             {/* CTA */}
             <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
                 <div className="rounded-4xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-100 sm:p-8">
-                    <h2 className="text-2xl font-black text-[#080b34]">
+                    <h3 className="text-2xl font-black text-[#06113C]">
                         {/* Need Help With Notary or Ministry Attestation? */}
                         নোটারি বা মিনিস্ট্রি অ্যাটেস্টেশনে সাহায্যের প্রয়োজন?
-                    </h2>
+                    </h3>
 
                     <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-600">
                         {/* Contact Azhari Travels 2.0 for guidance about document preparation,
@@ -136,16 +136,16 @@ export default function AlAzharAdmissionDocuments() {
                         কাগজপত্র তৈরি, নোটারি করা, মিনিস্ট্রি অ্যাটেস্টেশন এবং ভর্তির সময় সাহায্যের জন্য আাযহারী ট্রাভেলস এন্ড ট্যুরস এর সাথে যোগাযোগ করুন।
                     </p>
                     <MetaWhatsAppSalesLink
-                        href="https://wa.me/+8801318185954"
+                        href="https://wa.me/8801318185954"
                         sectionName="Admission Documents"
                     >
-                        <button className="mt-6 rounded-full bg-linear-to-r from-pink-600 to-orange-400 px-8 py-3 font-bold text-white shadow-lg transition hover:scale-105">
+                        <button className="mt-6 rounded-full bg-linear-to-r from-[#FF006D] to-[#FF8300] px-8 py-3 font-bold text-white shadow-lg transition hover:scale-105">
                             {/* Contact Now */}
                             এখনই যোগাযোগ করুন
                         </button>
                     </MetaWhatsAppSalesLink>
                 </div>
             </section>
-        </main>
+        </section>
     );
 }

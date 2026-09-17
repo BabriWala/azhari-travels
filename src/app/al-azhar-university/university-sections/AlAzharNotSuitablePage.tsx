@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const warnings = [
     {
@@ -16,6 +17,7 @@ const warnings = [
     {
         title: "স্কলারশিপ নিশ্চিত নয়",
         text: "মিনহা (স্কলারশিপ) যদি ভাগ্যে থাকে তাহলে ভিন্ন কথা। সেটার জন্য ও আছে অফিসে অফিসে কাগজের লড়াই",
+        scholarship: true,
     },
     {
         title: "নির্ভরযোগ্য কর্মসংস্থানের সুযোগ নেই",
@@ -29,8 +31,8 @@ const warnings = [
 
 export default function AlAzharNotSuitablePage() {
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
-            <section className="relative overflow-hidden bg-[#080b34] text-white">
+        <section className="az-content-section bg-slate-50 text-slate-900">
+            <section className="relative overflow-hidden bg-[#06113C] text-white">
                 <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-500/30 blur-3xl" />
                 <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-orange-400/30 blur-3xl" />
 
@@ -41,10 +43,10 @@ export default function AlAzharNotSuitablePage() {
                             ভর্তির আগে গুরুত্বপূর্ণ বিষয়সমূহ
                         </span>
 
-                        <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
+                        <h2 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
                             {/* Who Al-Azhar Is Not Suitable For */}
                             যারা আল আযহার এর জন্য উপযুক্ত নয়
-                        </h1>
+                        </h2>
 
                         <p className="mt-5 text-base leading-8 text-slate-200 sm:text-lg">
                             {/* Students wishing to study at Al-Azhar University must seriously
@@ -62,17 +64,25 @@ export default function AlAzharNotSuitablePage() {
                             key={index}
                             className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-xl"
                         >
-                            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-r from-pink-600 to-orange-400 text-xl font-black text-white">
+                            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-r from-[#FF006D] to-[#FF8300] text-xl font-black text-white">
                                 {index + 1}
                             </div>
 
-                            <h2 className="text-xl font-black text-[#080b34]">
+                            <h3 className="text-xl font-black text-[#06113C]">
                                 {item.title}
-                            </h2>
+                            </h3>
 
                             <p className="mt-3 text-sm leading-7 text-slate-600">
                                 {item.text}
                             </p>
+                            {item.scholarship && (
+                                <Link
+                                    href="/al-azhar-scholarship"
+                                    className="mt-4 inline-flex items-center rounded-xl bg-linear-to-r from-[#FF006D] to-[#FF8300] px-4 py-3 text-sm font-bold text-[#06113C] transition hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FF006D]"
+                                >
+                                    স্কলারশিপের বিস্তারিত ও আবেদন গাইড দেখুন →
+                                </Link>
+                            )}
                         </div>
                     ))}
                 </div>
@@ -81,10 +91,10 @@ export default function AlAzharNotSuitablePage() {
             <section className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
                 <div className="grid gap-6 lg:grid-cols-2">
                     <div className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 sm:p-8">
-                        <h2 className="text-2xl font-black text-[#080b34]">
+                        <h3 className="text-2xl font-black text-[#06113C]">
                             {/* Correct Intention */}
                             সঠিক ইচ্ছা
-                        </h2>
+                        </h3>
 
                         <p className="mt-4 text-sm leading-8 text-slate-600 sm:text-base">
                             {/* Traveling to the city of knowledge should be for seeking
@@ -94,10 +104,10 @@ export default function AlAzharNotSuitablePage() {
                     </div>
 
                     <div className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 sm:p-8">
-                        <h2 className="text-2xl font-black text-[#080b34]">
+                        <h3 className="text-2xl font-black text-[#06113C]">
                             {/* Recommended Preparation */}
                             সুপারিশকৃত প্রস্তুতি
-                        </h2>
+                        </h3>
 
                         <p className="mt-4 text-sm leading-8 text-slate-600 sm:text-base">
                             {/* It is strongly recommended to come after completing Dawra/Farigh
@@ -114,11 +124,11 @@ export default function AlAzharNotSuitablePage() {
             </section>
 
             <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-                <div className="rounded-4xl bg-linear-to-r from-[#080b34] to-[#151b55] p-6 text-center text-white shadow-xl sm:p-8">
-                    <h2 className="text-2xl font-black sm:text-3xl">
+                <div className="rounded-4xl bg-linear-to-r from-[#06113C] to-[#101C55] p-6 text-center text-white shadow-xl sm:p-8">
+                    <h3 className="text-2xl font-black sm:text-3xl">
                         {/* Final Note */}
                         বিশেষ পরামর্শ
-                    </h2>
+                    </h3>
 
                     <p className="mx-auto text-left  mt-4 max-w-3xl text-sm leading-8 text-slate-200 sm:text-base">
                         {/* Everything mentioned above is true in general, although exceptions
@@ -138,6 +148,6 @@ export default function AlAzharNotSuitablePage() {
                     </p>
                 </div>
             </section>
-        </main>
+        </section>
     );
 }

@@ -42,9 +42,9 @@ const subjects = [
 ];
 export default function AlAzharFacultiesPage() {
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900">
+        <section className="az-content-section bg-slate-50 text-slate-900">
             {/* Hero */}
-            <section className="relative overflow-hidden bg-[#080b34] text-white">
+            <section className="relative overflow-hidden bg-[#06113C] text-white">
                 <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-pink-500/30 blur-3xl" />
                 <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-orange-400/30 blur-3xl" />
 
@@ -54,9 +54,9 @@ export default function AlAzharFacultiesPage() {
                         আল-আযহার বিশ্ববিদ্যালয়
                     </span>
 
-                    <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
+                    <h2 className="mt-5 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
                         আল-আযহার বিশ্ববিদ্যালয়ের অনুষদসমূহ
-                    </h1>
+                    </h2>
 
                     <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-200 sm:text-lg">
                         {/* Modern Al-Azhar University has 24 main faculties with multiple
@@ -70,10 +70,10 @@ export default function AlAzharFacultiesPage() {
             <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
                 <div className="grid gap-5 md:grid-cols-3">
                     <div className="rounded-4xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-100">
-                        <h2 className="text-5xl font-black text-[#080b34]">
+                        <h3 className="text-5xl font-black text-[#06113C]">
                             {/* 24 */}
                             ২৪
-                        </h2>
+                        </h3>
                         <p className="mt-2 font-semibold text-slate-600">
                             {/* Main Faculties */}
                             প্রধান অনুষদসমূহ
@@ -81,10 +81,10 @@ export default function AlAzharFacultiesPage() {
                     </div>
 
                     <div className="rounded-4xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-100">
-                        <h2 className="text-5xl font-black text-[#080b34]">
+                        <h3 className="text-5xl font-black text-[#06113C]">
                             {/* Many */}
                             অনেক
-                        </h2>
+                        </h3>
                         <p className="mt-2 font-semibold text-slate-600">
                             {/* Departments */}
                             বিভাগসমূহ
@@ -92,10 +92,10 @@ export default function AlAzharFacultiesPage() {
                     </div>
 
                     <div className="rounded-4xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-100">
-                        <h2 className="text-5xl font-black text-[#080b34]">
+                        <h3 className="text-5xl font-black text-[#06113C]">
                             {/* Wide */}
                             বিস্তৃত
-                        </h2>
+                        </h3>
                         <p className="mt-2 font-semibold text-slate-600">
                             {/* Study Areas */}
                             অধ্যয়ন ক্ষেত্র
@@ -107,10 +107,10 @@ export default function AlAzharFacultiesPage() {
             {/* Subjects */}
             <section className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
                 <div className="rounded-4xl bg-white p-6 shadow-sm ring-1 ring-slate-100 sm:p-8">
-                    <h2 className="text-3xl font-black text-[#080b34]">
+                    <h3 className="text-3xl font-black text-[#06113C]">
                         {/* Available Faculties & Subjects */}
                         উপলব্ধ অনুষদসমূহ ও বিষয়সমূহ
-                    </h2>
+                    </h3>
 
                     <p className="mt-3 text-sm leading-7 text-slate-600 sm:text-base">
                         {/* These include Islamic studies, Arabic language, social sciences,
@@ -133,11 +133,11 @@ export default function AlAzharFacultiesPage() {
 
             {/* CTA */}
             <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-                <div className="rounded-4xl bg-linear-to-r from-[#080b34] to-[#151b55] p-6 text-center text-white shadow-xl sm:p-8">
-                    <h2 className="text-2xl font-black sm:text-3xl">
+                <div className="rounded-4xl bg-linear-to-r from-[#06113C] to-[#101C55] p-6 text-center text-white shadow-xl sm:p-8">
+                    <h3 className="text-2xl font-black sm:text-3xl">
                         {/* Choose Your Academic Path */}
                         আপনার শিক্ষাগত প্রতিভা নির্বাচন করুন
-                    </h2>
+                    </h3>
 
                     <p className="mx-auto mt-4 max-w-3xl text-sm leading-8 text-slate-200 sm:text-base">
                         {/* Al-Azhar offers a broad academic structure, but admission processing
@@ -147,6 +147,6 @@ export default function AlAzharFacultiesPage() {
                     </p>
                 </div>
             </section>
-        </main>
+        </section>
     );
 }
