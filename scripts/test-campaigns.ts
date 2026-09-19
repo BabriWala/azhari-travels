@@ -1,0 +1,96 @@
+import assert from "node:assert/strict";
+import { DatabaseSync } from "node:sqlite";
+import { mkdirSync, readFileSync, readdirSync, unlinkSync } from "node:fs";
+import { resolve } from "node:path";
+import { randomUUID } from "node:crypto";
+import { NextRequest } from "next/server";
+import { defaultCampaign, evaluate, validateConfig, validateAnswers, visibleQuestions } from "../src/app/lib/campaigns";
+
+async function main() {
+    const config = defaultCampaign();
+    assert.equal(validateConfig(config), config);
+    const conditional = { id: "validity", label: "Passport validity", type: "date" as const, step: 1, field: "" as const, required: true, active: true, options: [], rules: [], condition: { questionId: "passport", value: "Yes" } };
+    config.questions.push(conditional);
+    validateConfig(config);
+    assert.ok(!visibleQuestions(config, { passport: "No" }).some(q => q.id === "validity"));
+    const invalid = structuredClone(config); invalid.questions[0].condition = { questionId: "passport", value: "Yes" };
+    assert.throws(() => validateConfig(invalid), /earlier/);
+    assert.throws(() => validateAnswers(config, { name: "Test", phone: "       " }, 0, false));
+    assert.throws(() => validateAnswers(config, { name: "Test", phone: "01712345678", passport: "Yes", budget: "Yes" }, 1, false), /validity/);
+    assert.equal(evaluate(config, { passport: "Yes", budget: "Yes", consent: true }, true).qualification, "Hot");
+    assert.equal(evaluate(config, { passport: "Yes", budget: "Yes", consent: true }, false).qualification, "Partial");
+    const rejecting = structuredClone(config); rejecting.questions.find(q => q.id === "passport")!.rules[0].disqualify = true;
+    assert.equal(evaluate(rejecting, { passport: "Yes", budget: "Yes", consent: true }, true).qualification, "Not Qualified");
+    mkdirSync(".data", { recursive: true });
+    const databasePath = resolve(`.data/campaign-test-${randomUUID()}.db`), database = new DatabaseSync(databasePath);
+    for (const migration of readdirSync("prisma/migrations").filter(n => /^\d/.test(n)).sort()) database.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
+    database.close();
+    process.env.DATABASE_URL = `file:${databasePath.replaceAll("\\", "/")}`;
+    process.env.ADMIN_API_TOKEN = "campaign-test-token";
+    const { prisma } = await import("../src/app/lib/db");
+    const admin = await import("../src/app/api/admin/campaigns/route");
+    const visitor = await import("../src/app/api/campaigns/[slug]/route");
+    const reports = await import("../src/app/api/admin/campaign-responses/route");
+    const req = (url: string, method = "GET", body?: unknown, token?: string, cookie?: string, origin = "http://localhost") => new NextRequest(`http://localhost${url}`, { method, headers: { "Content-Type": "application/json", Origin: origin, ...(token ? { Authorization: `Bearer ${token}` } : {}), ...(cookie ? { Cookie: cookie } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) });
+    const auth = "campaign-test-token", context = { params: Promise.resolve({ slug: "test-campaign" }) };
+    try {
+        assert.equal((await admin.GET(req("/api/admin/campaigns"))).status, 401);
+        const member = await prisma.adminUser.create({ data: { name: "Staff", email: "staff@example.test", role: "subadmin" } });
+        const { issueSession } = await import("../src/app/lib/adminAuth"); const staffToken = await issueSession(member.id);
+        assert.equal((await admin.POST(req("/api/admin/campaigns", "POST", {}, staffToken))).status, 403);
+        const body = { title: "Test campaign", slug: "test-campaign", service: "Student admission", published: false, config, spend: 1000, currency: "BDT", defaultOwner: "Unassigned" };
+        const created = await admin.POST(req("/api/admin/campaigns", "POST", body, auth)); assert.equal(created.status, 200, await created.clone().text());
+        const campaign = (await created.json()).data;
+        assert.equal((await visitor.GET(req("/api/campaigns/test-campaign"), context)).status, 404);
+        await admin.POST(req("/api/admin/campaigns", "POST", { ...body, id: campaign.id, published: true }, auth));
+        const publicData = await (await visitor.GET(req("/api/campaigns/test-campaign"), context)).json();
+        assert.ok(publicData.config.questions.every((q: { rules: unknown[] }) => q.rules.length === 0));
+        const proxied = new NextRequest("http://localhost:3001/api/campaigns/test-campaign", { method: "POST", headers: { Host: "azharitravels.com", Origin: "https://azharitravels.com", "X-Forwarded-Proto": "https", "Content-Type": "application/json" }, body: JSON.stringify({ answers: { name: "Proxy check", phone: "01700000111" }, step: 0, version: 0, complete: false }) });
+        const proxyResult = await visitor.POST(proxied, context);
+        assert.equal(proxyResult.status, 200); assert.ok(proxyResult.headers.get("set-cookie")!.includes("Secure"));
+        await prisma.lead.deleteMany(); await prisma.campaignResponse.deleteMany();
+        const partial = { answers: { name: "Test visitor", phone: "01712345678" }, step: 0, version: 0, complete: false, tracking: { utm_source: "facebook", ad_id: "123", campaign_id: "456" } };
+        assert.equal((await visitor.POST(req("/api/campaigns/test-campaign", "POST", partial, undefined, undefined, "https://evil.test"), context)).status, 403);
+        const first = await visitor.POST(req("/api/campaigns/test-campaign", "POST", partial), context); assert.equal(first.status, 200, await first.clone().text());
+        const cookie = first.headers.get("set-cookie")!.split(";")[0];
+        assert.ok(first.headers.get("set-cookie")!.includes("HttpOnly"));
+        assert.equal(await prisma.lead.count(), 1); assert.equal(await prisma.campaignResponse.count(), 1);
+        const saved = await prisma.campaignResponse.findFirstOrThrow(); assert.equal(saved.qualification, "Partial");
+        assert.equal((await (await visitor.GET(req("/api/campaigns/test-campaign", "GET", undefined, undefined, cookie), context)).json()).saved.answers.name, "Test visitor");
+        assert.equal((await (await visitor.GET(req("/api/campaigns/test-campaign"), context)).json()).saved, null);
+        assert.equal((await visitor.POST(req("/api/campaigns/test-campaign", "POST", partial, undefined, cookie), context)).status, 409);
+        // Changes to the live questionnaire do not mutate an assessment in progress.
+        await admin.POST(req("/api/admin/campaigns", "POST", { ...body, id: campaign.id, published: true, config: { ...config, description: "Changed" } }, auth));
+        const restored = await (await visitor.GET(req("/api/campaigns/test-campaign", "GET", undefined, undefined, cookie), context)).json();
+        assert.notEqual(restored.config.description, "Changed");
+        const final = { ...partial, answers: { ...partial.answers, passport: "No", validity: "2030-01-01", budget: "Yes", consent: true }, step: 2, version: 1, complete: true };
+        const completed = await visitor.POST(req("/api/campaigns/test-campaign", "POST", final, undefined, cookie), context); assert.equal(completed.status, 200, await completed.clone().text());
+        const assessment = await prisma.campaignResponse.findFirstOrThrow(); assert.equal(assessment.score, 60); assert.equal(assessment.qualification, "Qualified"); assert.equal(JSON.parse(assessment.answers).validity, undefined);
+        const activityCount = await prisma.leadConversation.count();
+        await visitor.POST(req("/api/campaigns/test-campaign", "POST", final, undefined, cookie), context); assert.equal(await prisma.leadConversation.count(), activityCount);
+        // A new browser with the same normalized contact joins the same CRM profile without overwriting it.
+        const duplicate = await visitor.POST(req("/api/campaigns/test-campaign", "POST", { ...partial, answers: { name: "Different supplied name", phone: "+8801712345678" } }), context);
+        assert.equal(duplicate.status, 200); assert.equal(await prisma.lead.count(), 1); assert.equal(await prisma.campaignResponse.count(), 2);
+        assert.equal((await prisma.lead.findFirstOrThrow()).name, "Test visitor");
+        const dupCookie = duplicate.headers.get("set-cookie")!.split(";")[0];
+        const dupPublic = await (await visitor.GET(req("/api/campaigns/test-campaign", "GET", undefined, undefined, dupCookie), context)).json();
+        assert.equal(dupPublic.saved.answers.name, "Different supplied name"); // no other visitor's answers exposed
+        assert.equal((await reports.GET(req("/api/admin/campaign-responses"))).status, 401);
+        const report = await (await reports.GET(req(`/api/admin/campaign-responses?campaign=${campaign.id}`, "GET", undefined, auth))).json();
+        assert.equal(report.data.summary.leads, 1); assert.equal(report.data.summary.qualified, 1); assert.equal(report.data.summary.costPerLead, 1000); assert.equal(report.data.total, 2); assert.ok(!JSON.stringify(report).includes(saved.tokenHash));
+        const filtered = await (await reports.GET(req(`/api/admin/campaign-responses?campaign=${campaign.id}&qualification=Qualified&minScore=60&passport=No`, "GET", undefined, auth))).json(); assert.equal(filtered.data.total, 1);
+        const csv = await reports.GET(req(`/api/admin/campaign-responses?campaign=${campaign.id}&export=csv`, "GET", undefined, auth)); assert.equal(csv.status, 200); assert.ok((await csv.text()).includes("Test visitor"));
+        const changed = await reports.PATCH(req("/api/admin/campaign-responses", "PATCH", { id: assessment.id, qualification: "Converted" }, staffToken)); assert.equal(changed.status, 200);
+        assert.equal((await prisma.campaignResponse.findUniqueOrThrow({ where: { id: assessment.id } })).qualification, "Converted");
+        const unfinished = await prisma.campaignResponse.findFirstOrThrow({ where: { completedAt: null } });
+        await reports.PATCH(req("/api/admin/campaign-responses", "PATCH", { id: unfinished.id, qualification: "Nurture" }, staffToken));
+        const finishDuplicate = await visitor.POST(req("/api/campaigns/test-campaign", "POST", { ...final, answers: { ...final.answers, phone: "+8801712345678" } }, undefined, dupCookie), context);
+        assert.equal(finishDuplicate.status, 200);
+        assert.equal((await prisma.campaignResponse.findUniqueOrThrow({ where: { id: unfinished.id } })).qualification, "Nurture");
+        await prisma.lead.deleteMany();
+        assert.equal(await prisma.campaignResponse.count(), 0);
+        const deleted = await visitor.GET(req("/api/campaigns/test-campaign", "GET", undefined, undefined, cookie), context); assert.equal((await deleted.json()).saved, null);
+        console.log("PASS: validation, conditions, scoring, authorization, draft privacy, partial save/resume, snapshots, stale tabs, duplicate identity, completion idempotency, tracking, filters, export and conversion history.");
+    } finally { await prisma.$disconnect(); unlinkSync(databasePath); }
+}
+main().catch(error => { console.error(error); process.exitCode = 1; });

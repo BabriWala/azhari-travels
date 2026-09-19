@@ -22,7 +22,7 @@ async function main() {
     mkdirSync(".data", { recursive: true });
     const path = resolve(`.data/leads-test-${randomUUID()}.db`);
     const db = new DatabaseSync(path);
-    for (const migration of ["000001_init", "000002_lead_workspace", "000003_admin_sessions", "000004_lead_followups", "000005_lead_uploads", "000006_lead_daily_work", "000007_upload_names"]) db.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
+    for (const migration of ["000001_init", "000002_lead_workspace", "000003_admin_sessions", "000004_lead_followups", "000005_lead_uploads", "000006_lead_daily_work", "000007_upload_names", "000008_gallery_management", "000009_campaign_assessments"]) db.exec(readFileSync(`prisma/migrations/${migration}/migration.sql`, "utf8"));
     db.close();
     process.env.DATABASE_URL = `file:${path.replaceAll("\\", "/")}`;
     process.env.ADMIN_API_TOKEN = "lead-test-token";

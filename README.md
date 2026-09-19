@@ -236,6 +236,22 @@ Run `pnpm test:leads` for isolated database integration tests. Optionally append
 
 GitHub Actions deploys `main` to the VPS using `.github/workflows/deploy.yml`.
 
+### Campaign landing pages and assessments
+
+Open **Lead workspace → Campaigns & assessments** (`/admin/campaigns`). Superadmins can create, publish/pause and edit campaigns; staff can review responses and update qualification. A published campaign lives at `/campaign/<slug>`. No campaigns are published automatically.
+
+The editor manages introductions, campaign information, privacy notice, button/confirmation text, steps, question order, question types, required/active flags, field mappings, conditions and scoring rules. Conditions refer to earlier active questions; rules support equality, contains and numeric comparisons. Scores are capped at 100, with configurable Hot, Qualified and Warm thresholds; a matching disqualification rule overrides the score. Staff overrides are preserved. Map questions to phone, WhatsApp, email, passport, budget, location, education or experience to enable contact matching and filters.
+
+Visitors are told that continuing saves incomplete answers. Each successful Next saves a partial assessment and links it to a CRM profile. An HttpOnly, same-site cookie resumes that visitor's own assessment for 30 days on the same browser; it never returns another person's answers when a contact matches. Existing assessments retain a snapshot of their original questions and scoring rules. Unchecked required consent prevents final submission. Server validation ignores answers hidden by conditional logic and rejects stale saves from other tabs.
+
+Phone/WhatsApp/email matching reuses a profile without replacing staff-managed contact data, stages or ownership. Ambiguous matches remain separate with a review note. Shared-device cookies should be cleared before starting an assessment for another person. New leads use the campaign's default assignee. Existing CRM notes, daily work, conversation/audio history and follow-ups remain available; Call, WhatsApp, SMS and Email links open the staff member's communication app. Outbound messaging is not automated and no SMS/email/WhatsApp provider is connected.
+
+Use URL parameters in Facebook ads: `utm_source=facebook&utm_medium=paid_social&utm_campaign=YOUR_CAMPAIGN&campaign_id={{campaign.id}}&adset_id={{adset.id}}&ad_id={{ad.id}}`. The system also records `utm_content`, `utm_term`, `fbclid`, landing page and referrer on the first save. It does not fetch ad spend or audience demographics from Meta. Configure your reverse proxy to overwrite `X-Real-IP` for the persisted hourly submission rate limit.
+
+**Leads & performance** supports debounced search, qualification/score/contact-answer/date/employee/follow-up filters, sorting, pagination and CSV export. The main CRM row also shows the latest assessment score and progress. Campaign reports count unique CRM profiles; response lists retain repeat assessments. Enter lifetime campaign spend manually in one currency. Cost per lead and cost per qualified lead use lifetime totals for that selected campaign, independent of response-list filters. Conversion means an assessment was marked Converted; it is not an inferred sale or payment. Ad and team breakdowns show recorded activity only.
+
+Apply additive migration `000009_campaign_assessments` (or the existing deployment schema sync), regenerate Prisma, and restart the app. Back up the database first. Run `pnpm test:campaigns` and `pnpm test:leads` for isolated database integration checks.
+
 Required repository secrets:
 
 - `HOST`

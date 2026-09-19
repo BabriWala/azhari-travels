@@ -5,6 +5,7 @@
   "packageManager": "pnpm@10.24.0",
   "scripts": {
     "test:leads": "tsx scripts/test-leads.ts",
+    "test:campaigns": "tsx scripts/test-campaigns.ts",
     "dev": "next dev --turbopack",
     "postinstall": "prisma generate",
     "build": "next build",

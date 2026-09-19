@@ -1,0 +1,33 @@
+import { NextRequest } from "next/server";
+import { prisma } from "../../../lib/db";
+import { requireAdmin, getAdminActor } from "../../../lib/adminAuth";
+import { ok, fail } from "../../../lib/api";
+import { validateConfig } from "../../../lib/campaigns";
+
+export async function GET(request: NextRequest) {
+    const denied = await requireAdmin(request, true); if (denied) return denied;
+    const [campaigns, people, user] = await Promise.all([prisma.campaign.findMany({ orderBy: { createdAt: "desc" } }), prisma.leadPerson.findMany({ orderBy: { name: "asc" } }), getAdminActor(request)]);
+    return ok({ campaigns: campaigns.map(c => ({ ...c, config: JSON.parse(c.config) })), people, user }, { headers: { "Cache-Control": "no-store" } });
+}
+export async function POST(request: NextRequest) {
+    const denied = await requireAdmin(request); if (denied) return denied;
+    if (Number(request.headers.get("content-length")) > 150000) return fail("Campaign is too large.", 413);
+    const body = await request.json().catch(() => null);
+    try {
+        if (!body || typeof body.title !== "string" || !body.title.trim() || body.title.length > 200 || typeof body.slug !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(body.slug) || body.slug.length > 80 || typeof body.service !== "string" || body.service.length > 200 || typeof body.published !== "boolean" || !Number.isFinite(body.spend) || body.spend < 0 || body.spend > 1e12 || !/^[A-Z]{3}$/.test(body.currency) || typeof body.defaultOwner !== "string") throw new Error("Check campaign title, URL, service, spend and currency.");
+        const config = validateConfig(body.config);
+        if (body.defaultOwner !== "Unassigned" && !await prisma.leadPerson.findUnique({ where: { name: body.defaultOwner } })) throw new Error("Select an existing team member.");
+        const data = { title: body.title.trim(), slug: body.slug, service: body.service, published: body.published, config: JSON.stringify(config), spend: body.spend, currency: body.currency, defaultOwner: body.defaultOwner };
+        const campaign = await prisma.$transaction(async tx => {
+            if (body.id) {
+                const previous = await tx.campaign.findUnique({ where: { id: body.id } });
+                if (!previous) throw new Error("Campaign not found.");
+                if (previous.slug !== body.slug) throw new Error("The campaign URL cannot change after creation. Create another campaign for a new URL.");
+            }
+            const saved = body.id ? await tx.campaign.update({ where: { id: body.id }, data }) : await tx.campaign.create({ data });
+            await tx.activityLog.create({ data: { entity: "campaign", entityId: saved.id, action: body.id ? "update" : "create", message: `${(await getAdminActor(request))!.name}: ${saved.title}` } });
+            return saved;
+        });
+        return ok({ ...campaign, config: JSON.parse(campaign.config) });
+    } catch (error) { return fail((error as { code?: string }).code === "P2002" ? "That campaign URL is already in use." : error instanceof Error ? error.message : "Could not save campaign.", 422); }
+}
