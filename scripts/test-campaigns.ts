@@ -8,7 +8,15 @@ import { defaultCampaign, evaluate, validateConfig, validateAnswers, visibleQues
 
 async function main() {
     const config = defaultCampaign();
-    assert.equal(designFor(config).layout, "split");
+    assert.equal(designFor(config).layout, "card");
+    assert.equal(designFor(config).brand, "");
+    assert.equal(designFor(config).logo, "");
+    assert.equal(designFor(config).showIntro, false);
+    assert.equal(designFor({ ...config, design: { brand: "Azhari Travels & Tours", logo: "/al-azhar/azhari-logo.svg" } }).brand, "");
+    assert.throws(() => validateConfig({ ...config, design: { footerImage: "javascript:alert(1)" } }), /Links/);
+    const optionalEmail = defaultCampaign(); optionalEmail.questions.find(q => q.id === "email")!.required = true;
+    assert.doesNotThrow(() => validateAnswers(optionalEmail, { name: "Test", phone: "01712345678", passport: "No", budget: "No", consent: true }, 2, true));
+    assert.throws(() => validateAnswers(optionalEmail, { name: "Test", phone: "01712345678", passport: "No", budget: "No", consent: true, email: "invalid" }, 2, true), /valid email/);
     assert.throws(() => validateConfig({ ...config, design: { homeUrl: "javascript:alert(1)" } }), /Links/);
     const branching = defaultCampaign();
     branching.steps = ["About you", "Passport details", "Apply for a passport", "Consent"];
@@ -48,6 +56,8 @@ async function main() {
     const { prisma } = await import("../src/app/lib/db");
     const admin = await import("../src/app/api/admin/campaigns/route");
     const visitor = await import("../src/app/api/campaigns/[slug]/route");
+    const issues = await import("../src/app/api/campaigns/[slug]/issues/route");
+    const issueAdmin = await import("../src/app/api/admin/campaign-issues/route");
     const reports = await import("../src/app/api/admin/campaign-responses/route");
     const req = (url: string, method = "GET", body?: unknown, token?: string, cookie?: string, origin = "http://localhost") => new NextRequest(`http://localhost${url}`, { method, headers: { "Content-Type": "application/json", Origin: origin, ...(token ? { Authorization: `Bearer ${token}` } : {}), ...(cookie ? { Cookie: cookie } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) });
     const auth = "campaign-test-token", context = { params: Promise.resolve({ slug: "test-campaign" }) };
@@ -61,6 +71,15 @@ async function main() {
         const campaign = (await created.json()).data;
         assert.equal((await visitor.GET(req("/api/campaigns/test-campaign"), context)).status, 404);
         await admin.POST(req("/api/admin/campaigns", "POST", { ...body, id: campaign.id, published: true }, auth));
+        assert.equal((await issueAdmin.GET(req("/api/admin/campaign-issues"))).status, 401);
+        assert.equal((await issues.POST(req("/api/campaigns/test-campaign/issues", "POST", { code: "required", step: 0, questionId: "phone" }, undefined, undefined, "https://evil.test"), context)).status, 403);
+        assert.equal((await issues.POST(req("/api/campaigns/test-campaign/issues", "POST", { code: "raw-secret", step: 0, questionId: "phone" }), context)).status, 422);
+        for (let i = 0; i < 2; i++) assert.equal((await issues.POST(req("/api/campaigns/test-campaign/issues", "POST", { code: "required", step: 0, questionId: "phone", answers: { phone: "PRIVATE" } }), context)).status, 200);
+        const inbox = await (await issueAdmin.GET(req("/api/admin/campaign-issues", "GET", undefined, auth))).json();
+        assert.equal(inbox.data.count, 1); assert.equal(inbox.data.issues[0].occurrences, 2);
+        assert.ok(!JSON.stringify(inbox).includes("PRIVATE"));
+        assert.equal((await issueAdmin.PATCH(req("/api/admin/campaign-issues", "PATCH", { id: inbox.data.issues[0].id }, auth))).status, 200);
+        assert.equal((await (await issueAdmin.GET(req("/api/admin/campaign-issues", "GET", undefined, auth))).json()).data.count, 0);
         const publicData = await (await visitor.GET(req("/api/campaigns/test-campaign"), context)).json();
         assert.ok(publicData.config.questions.every((q: { rules: unknown[] }) => q.rules.length === 0));
         const proxied = new NextRequest("http://localhost:3001/api/campaigns/test-campaign", { method: "POST", headers: { Host: "azharitravels.com", Origin: "https://azharitravels.com", "X-Forwarded-Proto": "https", "Content-Type": "application/json" }, body: JSON.stringify({ answers: { name: "Proxy check", phone: "01700000111" }, step: 0, version: 0, complete: false }) });

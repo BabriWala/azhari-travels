@@ -234,6 +234,21 @@ model ActivityLog {
   createdAt DateTime @default(now())
 }
 
+model CampaignFormIssue {
+  id String @id
+  campaignId String
+  step Int
+  questionId String @default("")
+  message String
+  code String
+  occurrences Int @default(1)
+  resolvedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([resolvedAt, updatedAt])
+  @@index([campaignId])
+}
+
 model MessageTemplate {
  id String @id @default(cuid())
  title String

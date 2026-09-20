@@ -97,3 +97,35 @@
 
 .campaign-preview:not(.is-mobile) .campaign-stage-layout { gap:20px; }
 .campaign-preview:not(.is-mobile) .campaign-form-card { padding:20px; }
+/* Compact, question-first campaign pages */
+.campaign-ui [hidden] { display:none !important; }
+.assessment { padding:24px 20px; }
+.assessment .campaign-shell { max-width:760px; }
+.assessment .campaign-stage-layout { grid-template-columns:1fr; gap:12px; padding:0; }
+.assessment .campaign-story { padding:0 4px; }
+.assessment .campaign-story h1 { font-size:clamp(23px,3vw,30px); line-height:1.3; margin:8px 0; }
+.assessment .campaign-story>p { font-size:15px; line-height:1.65; margin:8px 0; }
+.assessment .campaign-story>p:empty { display:none; }
+.assessment .campaign-brand { font-size:15px; margin:0 0 16px; gap:10px; }
+.assessment .campaign-brand img { width:auto; max-width:160px; height:36px; }
+.assessment .campaign-form-card { padding:clamp(20px,4vw,32px); border-top:3px solid var(--accent); }
+.assessment .campaign-banner { max-height:180px; margin:12px 0; object-fit:contain; aspect-ratio:auto; }
+.campaign-question-page .campaign-story h1 { font-size:24px; }
+.campaign-question-page .campaign-eyebrow { font-size:11px; }
+.campaign-information { font-size:14px; margin:8px 0 24px; }
+.assessment .campaign-field,.assessment legend { font-size:18px; font-weight:600; line-height:1.6; }
+.assessment .campaign-choice { padding:14px 16px; font-size:16px; }
+.assessment .campaign-choice:hover { border-color:var(--accent); }
+.assessment .campaign-field input,.assessment .campaign-field select,.assessment .campaign-field textarea { font-size:16px; min-height:48px; }
+.assessment .campaign-notice { font-size:12px; line-height:1.7; }
+.assessment .campaign-page-footer { margin-top:20px; padding:16px 4px; opacity:1; font-size:13px; }
+.campaign-footer-image { display:block; max-width:180px; max-height:72px; object-fit:contain; margin-bottom:12px; }
+.campaign-invalid-field { border-left:3px solid #b42318; padding-left:12px; }
+.campaign-editor-tabs { display:flex; flex-wrap:wrap; gap:8px; padding:16px 0; margin-bottom:20px; border-bottom:1px solid #e1e5ee; }
+.campaign-editor-tabs button[aria-pressed=true] { color:white; background:var(--navy); border-color:var(--navy); }
+.campaign-issue-badge { display:inline-flex; align-items:center; justify-content:center; min-width:24px; height:24px; padding:0 6px; margin-left:8px; border-radius:20px; background:#b42318; color:white; font-size:12px; }
+.campaign-issue { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:20px 0; border-bottom:1px solid #e1e5ee; }
+.campaign-issue h3 { font-size:17px; margin:8px 0; }
+.campaign-issue p { font-size:13px; }
+.campaign-ui button:focus-visible,.campaign-ui input:focus-visible,.campaign-ui select:focus-visible,.campaign-ui textarea:focus-visible,.campaign-ui summary:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+@media(max-width:600px) { .assessment { padding:16px 12px; } .assessment .campaign-form-card { padding:20px 16px; } .campaign-issue { align-items:start; flex-direction:column; } .campaign-editor-tabs button { flex:1; font-size:13px; } }

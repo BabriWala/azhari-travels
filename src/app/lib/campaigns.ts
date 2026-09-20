@@ -3,11 +3,22 @@ export type QuestionType = typeof questionTypes[number];
 export const contactFields = ["", "name", "phone", "email", "whatsapp", "service", "passport", "budget", "location", "education", "experience"] as const;
 export type Answer = string | string[] | boolean;
 export type Answers = Record<string, Answer>;
-export type CampaignDesign = { layout: "card" | "split"; primary: string; accent: string; background: string; surface: string; text: string; radius: number; brand: string; logo: string; homeUrl: string; footer: string; finishUrl: string; showProgress: boolean };
+export type CampaignDesign = { layout: "card" | "split"; primary: string; accent: string; background: string; surface: string; text: string; radius: number; brand: string; logo: string; homeUrl: string; footer: string; footerImage: string; finishUrl: string; showProgress: boolean; showIntro: boolean };
 export type CampaignPage = { heading?: string; description?: string; footer?: string; button?: string; backButton?: string; image?: string; showHeader?: boolean; showFooter?: boolean };
 export type StepRoute = { from: number; questionId: string; answer: string; to: number; autoAdvance: boolean };
-export const defaultDesign: CampaignDesign = { layout: "split", primary: "#06113c", accent: "#b80050", background: "#f5f6fa", surface: "#ffffff", text: "#06113c", radius: 20, brand: "Azhari Travels & Tours", logo: "/al-azhar/azhari-logo.svg", homeUrl: "/", footer: "Azhari Travels & Tours · Your next journey starts here", finishUrl: "/", showProgress: true };
-export function designFor(c: CampaignConfig): CampaignDesign { return { ...defaultDesign, ...c.design }; }
+export const defaultDesign: CampaignDesign = { layout: "card", primary: "#06113c", accent: "#b80050", background: "#f5f6fa", surface: "#ffffff", text: "#06113c", radius: 16, brand: "", logo: "", homeUrl: "", footer: "", footerImage: "", finishUrl: "", showProgress: true, showIntro: false };
+export function designFor(c: CampaignConfig): CampaignDesign {
+    const d = { ...defaultDesign, ...c.design };
+    // Remove branding inherited from the original template, including saved forms.
+    if (d.brand === "Azhari Travels & Tours") d.brand = "";
+    if (d.logo === "/al-azhar/azhari-logo.svg") d.logo = "";
+    if (d.footer === "Azhari Travels & Tours · Your next journey starts here") d.footer = "";
+    return d;
+}
+export const isRequired = (q: Question) => q.required && q.type !== "email" && q.field !== "email";
+export class AnswerError extends Error {
+    constructor(message: string, public questionId: string) { super(message); }
+}
 export function pageFor(c: CampaignConfig, key: string): CampaignPage { return { showHeader: true, showFooter: true, ...c.pages?.[key] }; }
 export function safeCampaignUrl(url: string, image = false) { return !/[\\\u0000-\u0020]/.test(url) && ((url.startsWith("/") && !url.startsWith("//")) || /^https:\/\//i.test(url)) && (!image || !url.includes("#")); }
 export type Question = {
@@ -53,14 +64,14 @@ export function validateConfig(value: unknown): CampaignConfig {
         if (!Array.isArray(q.rules) || q.rules.length > 20 || q.rules.some(r => !["equals", "contains", "gte", "lte"].includes(r.operator) || typeof r.value !== "string" || r.value.length > 200 || !Number.isInteger(r.points) || r.points < 0 || r.points > 100 || typeof r.disqualify !== "boolean" || (["gte", "lte"].includes(r.operator) && (!r.value.trim() || !Number.isFinite(Number(r.value)))))) throw new Error("Check scoring rules (0–100 points each).");
         ids.add(q.id);
     }
-    if (!c.questions.some(q => q.active && q.required && !q.condition && ["phone", "email", "whatsapp"].includes(q.field) && ["phone", "email"].includes(q.type))) throw new Error("Include an unconditional, required phone or email question mapped to a contact field.");
+    if (!c.questions.some(q => q.active && isRequired(q) && !q.condition && ["phone", "whatsapp"].includes(q.field) && q.type === "phone")) throw new Error("Include an unconditional, required phone or WhatsApp question mapped to a contact field.");
     if (!c.questions.some(q => q.active && q.required && !q.condition && q.type === "consent")) throw new Error("Include an unconditional, required consent checkbox.");
     if (!c.thresholds || [c.thresholds.hot, c.thresholds.qualified, c.thresholds.warm].some(n => !Number.isInteger(n) || n < 0 || n > 100) || c.thresholds.hot < c.thresholds.qualified || c.thresholds.qualified < c.thresholds.warm) throw new Error("Thresholds must satisfy Hot ≥ Qualified ≥ Warm, between 0 and 100.");
     const design = designFor(c);
-    if (!["card", "split"].includes(design.layout) || !Number.isInteger(design.radius) || design.radius < 0 || design.radius > 32 || typeof design.showProgress !== "boolean") throw new Error("Check layout and corner settings.");
+    if (!["card", "split"].includes(design.layout) || !Number.isInteger(design.radius) || design.radius < 0 || design.radius > 32 || typeof design.showProgress !== "boolean" || typeof design.showIntro !== "boolean") throw new Error("Check layout and corner settings.");
     for (const color of [design.primary, design.accent, design.background, design.surface, design.text]) if (!/^#[0-9a-f]{6}$/i.test(color)) throw new Error("Choose valid six-digit colors.");
     for (const text of [design.brand, design.footer]) if (typeof text !== "string" || text.length > 1000) throw new Error("Brand and footer text must be under 1,000 characters.");
-    for (const url of [design.logo, design.homeUrl, design.finishUrl]) if (typeof url !== "string" || url.length > 2000 || url && !safeCampaignUrl(url)) throw new Error("Links must be relative paths or HTTPS URLs.");
+    for (const url of [design.logo, design.footerImage, design.homeUrl, design.finishUrl]) if (typeof url !== "string" || url.length > 2000 || url && !safeCampaignUrl(url)) throw new Error("Links must be relative paths or HTTPS URLs.");
     if (c.pages && (typeof c.pages !== "object" || Array.isArray(c.pages))) throw new Error("Invalid page settings.");
     for (const [key, page] of Object.entries(c.pages || {})) {
         if (!["intro", "complete", ...c.steps.map((_, i) => `step-${i}`)].includes(key) || !page || typeof page !== "object") throw new Error("Page settings refer to a missing step.");
@@ -73,7 +84,7 @@ export function validateConfig(value: unknown): CampaignConfig {
     if (c.stepNext && (typeof c.stepNext !== "object" || Array.isArray(c.stepNext))) throw new Error("Invalid default navigation settings.");
     for (const [from, to] of Object.entries(c.stepNext || {})) {
         if (!/^\d+$/.test(from) || !Number.isInteger(to) || Number(from) >= c.steps.length || to <= Number(from) || to >= c.steps.length) throw new Error("The default next step must be a later step.");
-        if (c.questions.some(q => q.active && q.required && !q.condition && q.step > Number(from) && q.step < to && (q.type === "consent" || ["phone", "email", "whatsapp"].includes(q.field)))) throw new Error("Default navigation cannot skip required contact or consent steps.");
+        if (c.questions.some(q => q.active && isRequired(q) && !q.condition && q.step > Number(from) && q.step < to && (q.type === "consent" || ["phone", "email", "whatsapp"].includes(q.field)))) throw new Error("Default navigation cannot skip required contact or consent steps.");
     }
     for (const route of c.routes || []) {
         const q = c.questions.find(q => q.id === route.questionId && q.active && q.step === route.from);
@@ -82,7 +93,7 @@ export function validateConfig(value: unknown): CampaignConfig {
         if (["single", "multiple", "select", "yesno", "consent"].includes(q.type) && !options.includes(route.answer)) throw new Error("Navigation answers must match a question option.");
         if (route.autoAdvance && !["single", "select", "yesno"].includes(q.type)) throw new Error("Automatic navigation is available for single choice, dropdown and yes/no questions.");
         const key = `${route.from}:${q.id}:${route.answer}`; if (branches.has(key)) throw new Error("Remove duplicate navigation conditions."); branches.add(key);
-        if (c.questions.some(q => q.active && q.required && !q.condition && q.step > route.from && q.step < route.to && (q.type === "consent" || ["phone", "email", "whatsapp"].includes(q.field)))) throw new Error("Navigation cannot skip required contact or consent steps. Put these in a shared step.");
+        if (c.questions.some(q => q.active && isRequired(q) && !q.condition && q.step > route.from && q.step < route.to && (q.type === "consent" || ["phone", "email", "whatsapp"].includes(q.field)))) throw new Error("Navigation cannot skip required contact or consent steps. Put these in a shared step.");
     }
     return c;
 }
@@ -120,18 +131,18 @@ export function validateAnswers(config: CampaignConfig, input: unknown, step: nu
         if (!path.includes(q.step)) continue;
         if (!visibleQuestions(config, answers).some(v => v.id === q.id)) continue;
         const value = (input as Answers)[q.id];
-        const missing = value === undefined || value === "" || value === false || Array.isArray(value) && !value.length;
-        if (missing) { if (q.required && (complete || q.step <= step)) throw new Error(`Please answer: ${q.label}`); continue; }
-        if (q.type === "consent") { if (value !== true) throw new Error(`Please confirm: ${q.label}`); answers[q.id] = true; continue; }
+        const missing = value === undefined || typeof value === "string" && !value.trim() || value === false || Array.isArray(value) && !value.length;
+        if (missing) { if (isRequired(q) && (complete || q.step <= step)) throw new AnswerError(`Please answer: ${q.label}`, q.id); continue; }
+        if (q.type === "consent") { if (value !== true) throw new AnswerError(`Please confirm: ${q.label}`, q.id); answers[q.id] = true; continue; }
         const options = q.type === "yesno" ? ["Yes", "No"] : q.options;
-        if (q.type === "multiple") { if (!Array.isArray(value) || value.length > options.length || value.some(v => !options.includes(v)) || new Set(value).size !== value.length) throw new Error(`Invalid choices: ${q.label}`); answers[q.id] = value; continue; }
-        if (typeof value !== "string" || value.length > (q.type === "textarea" ? 4000 : 500) || !value.trim()) throw new Error(`Invalid answer: ${q.label}`);
+        if (q.type === "multiple") { if (!Array.isArray(value) || value.length > options.length || value.some(v => !options.includes(v)) || new Set(value).size !== value.length) throw new AnswerError(`Invalid choices: ${q.label}`, q.id); answers[q.id] = value; continue; }
+        if (typeof value !== "string" || value.length > (q.type === "textarea" ? 4000 : 500) || !value.trim()) throw new AnswerError(`Invalid answer: ${q.label}`, q.id);
         const v = value.trim();
-        if (["single", "select", "yesno"].includes(q.type) && !options.includes(v)) throw new Error(`Choose an option: ${q.label}`);
-        if (q.type === "number" && !Number.isFinite(Number(v))) throw new Error(`Enter a number: ${q.label}`);
-        if (q.type === "date" && (!/^\d{4}-\d{2}-\d{2}$/.test(v) || !Number.isFinite(Date.parse(v)) || new Date(v).toISOString().slice(0, 10) !== v)) throw new Error(`Enter a valid date: ${q.label}`);
-        if ((q.type === "email" || q.field === "email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) throw new Error(`Enter a valid email: ${q.label}`);
-        if ((q.type === "phone" || ["phone", "whatsapp"].includes(q.field)) && (!/^\+?[\d ()-]{7,30}$/.test(v) || v.replace(/\D/g, "").length < 7 || v.replace(/\D/g, "").length > 15)) throw new Error(`Enter a valid phone: ${q.label}`);
+        if (["single", "select", "yesno"].includes(q.type) && !options.includes(v)) throw new AnswerError(`Choose an option: ${q.label}`, q.id);
+        if (q.type === "number" && !Number.isFinite(Number(v))) throw new AnswerError(`Enter a number: ${q.label}`, q.id);
+        if (q.type === "date" && (!/^\d{4}-\d{2}-\d{2}$/.test(v) || !Number.isFinite(Date.parse(v)) || new Date(v).toISOString().slice(0, 10) !== v)) throw new AnswerError(`Enter a valid date: ${q.label}`, q.id);
+        if ((q.type === "email" || q.field === "email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) throw new AnswerError(`Enter a valid email: ${q.label}`, q.id);
+        if ((q.type === "phone" || ["phone", "whatsapp"].includes(q.field)) && (!/^\+?[\d ()-]{7,30}$/.test(v) || v.replace(/\D/g, "").length < 7 || v.replace(/\D/g, "").length > 15)) throw new AnswerError(`Enter a valid phone: ${q.label}`, q.id);
         answers[q.id] = v;
     }
     return answers;
@@ -150,4 +161,4 @@ export function evaluate(config: CampaignConfig, answers: Answers, complete: boo
 export function mappedAnswers(config: CampaignConfig, answers: Answers) {
     return Object.fromEntries(visibleQuestions(config, answers).filter(q => q.field && answers[q.id] !== undefined).map(q => [q.field, String(answers[q.id])]));
 }
-export function publicConfig(config: CampaignConfig) { return { ...config, questions: config.questions.map(q => ({ ...q, rules: [] })), thresholds: { hot: 0, qualified: 0, warm: 0 } }; }
+export function publicConfig(config: CampaignConfig) { return { ...config, questions: config.questions.map(q => ({ ...q, required: isRequired(q), rules: [] })), thresholds: { hot: 0, qualified: 0, warm: 0 } }; }

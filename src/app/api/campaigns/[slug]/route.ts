@@ -2,7 +2,8 @@ import { randomBytes, createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../lib/db";
 import { fail } from "../../../lib/api";
-import { CampaignConfig, publicConfig, validateAnswers, evaluate, mappedAnswers, nextStep } from "../../../lib/campaigns";
+import { CampaignConfig, publicConfig, validateAnswers, evaluate, mappedAnswers, nextStep, AnswerError } from "../../../lib/campaigns";
+import { recordCampaignIssue } from "../../../lib/campaignIssues";
 import { normalizeLeadPhone } from "../../../lib/leadImport";
 
 export const runtime = "nodejs";
@@ -84,7 +85,9 @@ export async function POST(request: NextRequest, context: Context) {
         response.cookies.set(cookieName(slug), token, { httpOnly: true, secure: protocol === "https:", sameSite: "lax", path: `/api/campaigns/${slug}`, maxAge: 30 * 86400 });
         return response;
     } catch (error) {
-        if ((error as { code?: string }).code) return fail("Could not save your progress. Please retry.", 503);
+        const databaseError = !!(error as { code?: string }).code;
+        await recordCampaignIssue(data.campaign.id, body.step, error instanceof AnswerError ? error.questionId : "", databaseError ? "server" : "validation", databaseError ? "The server could not save progress. Check server/database availability." : error instanceof Error ? error.message : "The submission could not be saved.");
+        if (databaseError) return fail("Could not save your progress. Please retry.", 503);
         return fail(error instanceof Error ? error.message : "Could not save your progress. Please retry.", 422);
     }
 }
