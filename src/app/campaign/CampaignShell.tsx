@@ -8,7 +8,7 @@ export default function CampaignShell({ config, title, service, pageKey, childre
             {p.showHeader && (d.logo || d.brand) && <a href={d.homeUrl || undefined} className="campaign-brand">{d.logo && <img src={d.logo} alt="" />}<span>{d.brand}</span></a>}
             <div className="campaign-stage-layout">
                 {p.showHeader && <header className="campaign-story">{service && <span className="campaign-eyebrow">{service}</span>}<h1>{heading}</h1><p className="preserve-lines">{p.description ?? (pageKey === "intro" ? config.description : "")}</p>{p.image && <img className="campaign-banner" src={p.image} alt="" />}</header>}
-                <section className="campaign-card campaign-form-card">{!p.showHeader && <h1 className="campaign-form-heading">{heading}</h1>}{children}</section>
+                <section className="campaign-card campaign-form-card">{!p.showHeader && <h1 className="campaign-form-heading">{heading}</h1>}{children}{!!p.links?.length && <nav className="campaign-page-links" aria-label="Page links">{p.links.map((link, i) => <a className="campaign-link-button" key={i} href={link.url} target={link.newTab ? "_blank" : undefined} rel={link.newTab ? "noopener noreferrer" : undefined}>{link.label}{link.newTab && <span aria-label="opens in a new tab"> ↗</span>}</a>)}</nav>}</section>
             </div>
             {p.showFooter && (p.footer || d.footer || d.footerImage) && <footer className="campaign-page-footer preserve-lines">{d.footerImage && <img className="campaign-footer-image" src={d.footerImage} alt="Footer logo" />}{p.footer ?? d.footer}</footer>}
         </div>

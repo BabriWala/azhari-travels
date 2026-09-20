@@ -1,3 +1,7 @@
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import QuestionInput from "../src/app/campaign/QuestionInput";
+import CampaignShell from "../src/app/campaign/CampaignShell";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { mkdirSync, readFileSync, readdirSync, unlinkSync } from "node:fs";
@@ -8,6 +12,24 @@ import { defaultCampaign, evaluate, validateConfig, validateAnswers, visibleQues
 
 async function main() {
     const config = defaultCampaign();
+    const consentFree = defaultCampaign(); consentFree.questions = consentFree.questions.filter(q => q.type !== "consent");
+    assert.doesNotThrow(() => validateConfig(consentFree));
+    const answersWithoutConsent = { name: "Test", phone: "01712345678", passport: "Yes", budget: "No" };
+    assert.doesNotThrow(() => validateAnswers(consentFree, answersWithoutConsent, 2, true));
+    const legacyConsent = defaultCampaign(); legacyConsent.questions.find(q => q.type === "consent")!.required = true;
+    assert.doesNotThrow(() => validateAnswers(legacyConsent, answersWithoutConsent, 2, true));
+    const single = { ...config.questions[2], type: "single" as const, options: ["Yes", "No"] };
+    const radio = renderToStaticMarkup(createElement(QuestionInput, { question: single, value: "Yes", disabled: false, onChange: () => {} }));
+    assert.equal((radio.match(/type="radio"/g) || []).length, 2); assert.ok(!radio.includes('type="checkbox"')); assert.equal((radio.match(/checked=""/g) || []).length, 1);
+    const multi = renderToStaticMarkup(createElement(QuestionInput, { question: { ...single, type: "multiple" }, value: ["Yes", "No"], disabled: false, onChange: () => {} }));
+    assert.equal((multi.match(/type="checkbox"/g) || []).length, 2); assert.equal((multi.match(/checked=""/g) || []).length, 2);
+    const singleConfig = { ...config, questions: config.questions.map(q => q.id === single.id ? single : q) };
+    assert.throws(() => validateAnswers(singleConfig, { ...answersWithoutConsent, passport: ["Yes", "No"] }, 1, false), /Select exactly one/);
+    const linked = { ...config, pages: { "step-0": { links: [{ label: "Contact us", url: "https://wa.me/8801318185954", newTab: true }] } } };
+    assert.doesNotThrow(() => validateConfig(linked));
+    const linksHtml = renderToStaticMarkup(createElement(CampaignShell, { config: linked, title: "Test", pageKey: "step-0", children: null }));
+    assert.ok(linksHtml.includes('href="https://wa.me/8801318185954"')); assert.ok(linksHtml.includes('rel="noopener noreferrer"'));
+    assert.throws(() => validateConfig({ ...linked, pages: { "step-0": { links: [{ label: "Broken", url: "javascript:alert(1)", newTab: false }] } } }), /button 1/);
     assert.equal(designFor(config).layout, "card");
     assert.equal(designFor(config).brand, "");
     assert.equal(designFor(config).logo, "");
@@ -100,6 +122,11 @@ async function main() {
         await admin.POST(req("/api/admin/campaigns", "POST", { ...body, id: campaign.id, published: true, config: { ...config, description: "Changed" } }, auth));
         const restored = await (await visitor.GET(req("/api/campaigns/test-campaign", "GET", undefined, undefined, cookie), context)).json();
         assert.notEqual(restored.config.description, "Changed");
+        assert.equal(restored.hasUpdatedForm, true);
+        const restart = await visitor.DELETE(req("/api/campaigns/test-campaign", "DELETE", undefined, undefined, cookie), context);
+        assert.equal(restart.status, 200); assert.ok(restart.headers.get("set-cookie")!.includes("Max-Age=0"));
+        assert.equal(await prisma.campaignResponse.count(), 1);
+        assert.equal((await visitor.DELETE(req("/api/campaigns/test-campaign", "DELETE", undefined, undefined, cookie, "https://evil.test"), context)).status, 403);
         const final = { ...partial, answers: { ...partial.answers, passport: "No", validity: "2030-01-01", budget: "Yes", consent: true }, step: 2, version: 1, complete: true };
         const completed = await visitor.POST(req("/api/campaigns/test-campaign", "POST", final, undefined, cookie), context); assert.equal(completed.status, 200, await completed.clone().text());
         const assessment = await prisma.campaignResponse.findFirstOrThrow(); assert.equal(assessment.score, 60); assert.equal(assessment.qualification, "Qualified"); assert.equal(JSON.parse(assessment.answers).validity, undefined);

@@ -21,7 +21,17 @@ async function load(request: NextRequest, slug: string) {
 export async function GET(request: NextRequest, context: Context) {
     const { slug } = await context.params;
     const data = await load(request, slug); if (!data) return fail("This campaign is not available.", 404);
-    return NextResponse.json({ title: data.campaign.title, service: data.campaign.service, config: publicConfig(data.config), saved: data.saved ? { answers: JSON.parse(data.saved.answers), step: data.saved.step, version: data.saved.version, completed: !!data.saved.completedAt } : null }, { headers: { "Cache-Control": "private, no-store" } });
+    return NextResponse.json({ title: data.campaign.title, service: data.campaign.service, config: publicConfig(data.config), hasUpdatedForm: !!data.saved && data.saved.snapshot !== data.campaign.config, saved: data.saved ? { answers: JSON.parse(data.saved.answers), step: data.saved.step, version: data.saved.version, completed: !!data.saved.completedAt } : null }, { headers: { "Cache-Control": "private, no-store" } });
+}
+// Reset only this browser's resume cookie; keep lead and response history intact.
+export async function DELETE(request: NextRequest, context: Context) {
+    const protocol = request.headers.get("x-forwarded-proto")?.split(",")[0].trim() === "https" ? "https:" : request.nextUrl.protocol;
+    if (request.headers.get("origin") !== `${protocol}//${request.headers.get("host") || request.nextUrl.host}`) return fail("Open this form on the website, then try Start updated form again.", 403);
+    const { slug } = await context.params;
+    const data = await load(request, slug); if (!data) return fail("This campaign is unavailable. Contact the team for a current form link.", 404);
+    const response = NextResponse.json({ restarted: true }, { headers: { "Cache-Control": "private, no-store" } });
+    response.cookies.set(cookieName(slug), "", { httpOnly: true, secure: protocol === "https:", sameSite: "lax", path: `/api/campaigns/${slug}`, maxAge: 0 });
+    return response;
 }
 export async function POST(request: NextRequest, context: Context) {
     const origin = request.headers.get("origin");

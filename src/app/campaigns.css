@@ -129,3 +129,12 @@
 .campaign-issue p { font-size:13px; }
 .campaign-ui button:focus-visible,.campaign-ui input:focus-visible,.campaign-ui select:focus-visible,.campaign-ui textarea:focus-visible,.campaign-ui summary:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
 @media(max-width:600px) { .assessment { padding:16px 12px; } .assessment .campaign-form-card { padding:20px 16px; } .campaign-issue { align-items:start; flex-direction:column; } .campaign-editor-tabs button { flex:1; font-size:13px; } }
+/* Clear single-choice circles and multiple-choice squares, including reset styles. */
+.assessment .campaign-choice input[type=radio],.assessment .campaign-choice input[type=checkbox] { appearance:auto; flex:none; width:18px; height:18px; min-width:18px; padding:0; margin-top:4px; }
+.assessment .campaign-choice input[type=radio] { border-radius:50%; }
+.campaign-choice-hint { display:block; margin:4px 0 12px; font-size:13px; font-weight:400; opacity:.75; }
+.campaign-page-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; padding-top:20px; border-top:1px solid color-mix(in srgb,var(--campaign-text) 12%,transparent); }
+.campaign-link-button { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:12px 18px; border:1px solid var(--navy); border-radius:10px; color:var(--navy); background:var(--campaign-surface); text-decoration:none; font-weight:600; overflow-wrap:anywhere; }
+.campaign-link-button:hover { background:color-mix(in srgb,var(--navy) 6%,var(--campaign-surface)); }
+.campaign-link-button:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+@media(max-width:480px) { .campaign-page-links a { width:100%; } }

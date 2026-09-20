@@ -1,11 +1,13 @@
 "use client";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { Answers, CampaignConfig, Question, visibleQuestions, nextStep, matchingRoute, stepPath, pageFor, designFor, validateAnswers, AnswerError } from "../../lib/campaigns";
+import QuestionInput from "../QuestionInput";
 import CampaignShell from "../CampaignShell";
-type Loaded = { title: string; service: string; config: CampaignConfig; saved: null | { answers: Answers; step: number; version: number; completed: boolean } };
+type Loaded = { title: string; service: string; config: CampaignConfig; hasUpdatedForm?: boolean; saved: null | { answers: Answers; step: number; version: number; completed: boolean } };
 export default function Assessment({ slug }: { slug: string }) {
     const [data, setData] = useState<Loaded | null>(null), [answers, setAnswers] = useState<Answers>({}), [step, setStep] = useState(0), [version, setVersion] = useState(0);
     const [started, setStarted] = useState(true), [complete, setComplete] = useState(false), [busy, setBusy] = useState(false), [error, setError] = useState(""), [notice, setNotice] = useState("");
+    const [restartError, setRestartError] = useState("");
     const [invalidQuestion, setInvalidQuestion] = useState("");
     const reported = useRef(new Set<string>());
     const formRef = useRef<HTMLFormElement>(null), saving = useRef(false);
@@ -27,6 +29,14 @@ export default function Assessment({ slug }: { slug: string }) {
         reported.current.add(key);
         try { await fetch('/api/campaigns/' + slug + '/issues', { method: "POST", headers: { "Content-Type": "application/json" }, body: key, keepalive: true }); }
         catch { reported.current.delete(key); }
+    }
+    async function restart() {
+        setBusy(true); setRestartError("");
+        try {
+            const response = await fetch('/api/campaigns/' + slug, { method: "DELETE" });
+            if (!response.ok) throw new Error("Could not start the updated form. Please retry; your previous saved response is preserved.");
+            window.location.reload();
+        } catch (e) { setRestartError(e instanceof TypeError ? "Connection interrupted. Check your internet connection and try Start updated form again. Your saved response is unchanged." : (e as Error).message); setBusy(false); }
     }
     async function nextHandler(event: FormEvent<HTMLFormElement>) {
         event.preventDefault(); if (!data || saving.current) return;
@@ -57,7 +67,8 @@ export default function Assessment({ slug }: { slug: string }) {
     const pageKey = complete ? "complete" : started ? 'step-' + step : "intro", p = pageFor(data.config, pageKey), d = designFor(data.config), path = stepPath(data.config, answers), index = path.indexOf(step);
     const next = nextStep(data.config, answers, step);
     return <CampaignShell config={data.config} title={data.title} service={data.service} pageKey={pageKey}>
-        {complete ? <><span className="campaign-success-mark" aria-hidden="true">✓</span><p className="preserve-lines">{data.config.confirmation}</p>{d.finishUrl && <a className="campaign-primary button" href={d.finishUrl}>{p.button || "Continue"}</a>}</> : !started ? <><p className="preserve-lines">{data.config.information}</p><p className="campaign-notice">{data.config.privacy}</p><button className="campaign-primary campaign-wide-button" onClick={() => setStarted(true)}>{p.button || data.config.cta} →</button></> : <>
+        {data.hasUpdatedForm && <div className="campaign-notice"><p>This form has been updated. Your saved response uses the previous questions. Start the latest version to see the new options; you will enter your answers again. Previously saved responses remain in the CRM.</p><button type="button" disabled={busy} onClick={() => void restart()}>Start updated form</button>{restartError && <p role="alert" className="campaign-error">{restartError}</p>}</div>}
+        {complete ? <><span className="campaign-success-mark" aria-hidden="true">✓</span><p className="preserve-lines">{data.config.confirmation}</p>{d.finishUrl && p.showCompletionButton !== false && <a className="campaign-primary button" href={d.finishUrl}>{p.button || "Continue"}</a>}</> : !started ? <><p className="preserve-lines">{data.config.information}</p><p className="campaign-notice">{data.config.privacy}</p><button className="campaign-primary campaign-wide-button" onClick={() => setStarted(true)}>{p.button || data.config.cta} →</button></> : <>
             {d.showProgress && <><div className="campaign-progress-label"><span>Step {index + 1} of {path.length}</span><span>{Math.round((index + 1) / path.length * 100)}%</span></div><progress aria-label="Assessment progress" max={path.length} value={index + 1} /></>}
             {step === 0 && data.config.information && <details className="campaign-information"><summary>Read campaign details</summary><p className="preserve-lines">{data.config.information}</p></details>}<form noValidate ref={formRef} onSubmit={nextHandler}><div className="campaign-trap" aria-hidden="true"><label>Leave empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
                 {visibleQuestions(data.config, answers).filter(q => q.step === step).map(q => <div id={"question-" + q.id} key={q.id} className={invalidQuestion === q.id ? "campaign-invalid-field" : ""} role="group" aria-invalid={invalidQuestion === q.id} aria-describedby={invalidQuestion === q.id ? "campaign-form-error" : undefined}><QuestionInput question={q} value={answers[q.id]} disabled={busy} onChange={v => { setAnswers(previous => ({ ...previous, [q.id]: v })); setAutoQuestion(q.id); if (invalidQuestion === q.id) { setInvalidQuestion(""); setError(""); } }} /></div>)}
@@ -66,10 +77,4 @@ export default function Assessment({ slug }: { slug: string }) {
             </form>
         </>}
     </CampaignShell>;
-}
-function QuestionInput({ question: q, value, disabled, onChange }: { question: Question; value: Answers[string] | undefined; disabled: boolean; onChange: (v: Answers[string]) => void }) {
-    const choices = q.type === "yesno" ? ["Yes", "No"] : q.options;
-    if (["single", "multiple", "yesno"].includes(q.type)) return <fieldset disabled={disabled}><legend>{q.label}{q.required && " *"}</legend>{choices.map(choice => <label className="campaign-choice" key={choice}><input type={q.type === "multiple" ? "checkbox" : "radio"} name={q.id} required={q.required && q.type !== "multiple"} checked={Array.isArray(value) ? value.includes(choice) : value === choice} onChange={e => onChange(q.type === "multiple" ? e.target.checked ? [...(Array.isArray(value) ? value : []), choice] : (Array.isArray(value) ? value : []).filter(v => v !== choice) : choice)} />{choice}</label>)}</fieldset>;
-    if (q.type === "consent") return <label className="campaign-choice"><input disabled={disabled} type="checkbox" checked={value === true} required={q.required} onChange={e => onChange(e.target.checked)} />{q.label}{q.required && " *"}</label>;
-    return <label className="campaign-field">{q.label}{q.required && " *"}{q.type === "textarea" ? <textarea disabled={disabled} required={q.required} maxLength={4000} value={String(value || "")} onChange={e => onChange(e.target.value)} /> : q.type === "select" ? <select disabled={disabled} required={q.required} value={String(value || "")} onChange={e => onChange(e.target.value)}><option value="">Choose an option</option>{choices.map(c => <option key={c}>{c}</option>)}</select> : <input disabled={disabled} type={q.type === "phone" ? "tel" : ["email", "number", "date"].includes(q.type) ? q.type : "text"} step={q.type === "number" ? "any" : undefined} required={q.required} maxLength={500} value={String(value ?? "")} onChange={e => onChange(e.target.value)} />}</label>;
 }

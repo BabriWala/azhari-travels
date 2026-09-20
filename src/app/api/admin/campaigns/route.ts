@@ -14,9 +14,16 @@ export async function POST(request: NextRequest) {
     if (Number(request.headers.get("content-length")) > 150000) return fail("Campaign is too large.", 413);
     const body = await request.json().catch(() => null);
     try {
-        if (!body || typeof body.title !== "string" || !body.title.trim() || body.title.length > 200 || typeof body.slug !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(body.slug) || body.slug.length > 80 || typeof body.service !== "string" || body.service.length > 200 || typeof body.published !== "boolean" || !Number.isFinite(body.spend) || body.spend < 0 || body.spend > 1e12 || !/^[A-Z]{3}$/.test(body.currency) || typeof body.defaultOwner !== "string") throw new Error("Check campaign title, URL, service, spend and currency.");
+        if (!body || typeof body !== "object") throw new Error("Campaign details are missing. Reopen the editor and try saving again.");
+        if (typeof body.title !== "string" || !body.title.trim() || body.title.length > 200) throw new Error("Campaign title is missing or too long. Enter a title of 1–200 characters in Campaign.");
+        if (typeof body.slug !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(body.slug) || body.slug.length > 80) throw new Error("The landing page URL is invalid. Use up to 80 lowercase letters, numbers and hyphens, for example study-in-egypt.");
+        if (typeof body.service !== "string" || body.service.length > 200) throw new Error("Service text is too long. Use up to 200 characters or leave it empty.");
+        if (typeof body.published !== "boolean") throw new Error("Publication status is invalid. Use the Published checkbox to select draft or live.");
+        if (!Number.isFinite(body.spend) || body.spend < 0 || body.spend > 1e12) throw new Error("Campaign spend must be a number between 0 and 1,000,000,000,000. Enter 0 when no spend has been recorded.");
+        if (!/^[A-Z]{3}$/.test(body.currency)) throw new Error("Currency needs three uppercase letters, for example BDT or USD.");
+        if (typeof body.defaultOwner !== "string") throw new Error("Choose an assigned team member or Unassigned from the dropdown.");
         const config = validateConfig(body.config);
-        if (body.defaultOwner !== "Unassigned" && !await prisma.leadPerson.findUnique({ where: { name: body.defaultOwner } })) throw new Error("Select an existing team member.");
+        if (body.defaultOwner !== "Unassigned" && !await prisma.leadPerson.findUnique({ where: { name: body.defaultOwner } })) throw new Error("The selected team member is unavailable. Choose a current team member or Unassigned, then save again.");
         const data = { title: body.title.trim(), slug: body.slug, service: body.service, published: body.published, config: JSON.stringify(config), spend: body.spend, currency: body.currency, defaultOwner: body.defaultOwner };
         const campaign = await prisma.$transaction(async tx => {
             if (body.id) {
@@ -30,7 +37,7 @@ export async function POST(request: NextRequest) {
             return saved;
         });
         return ok({ ...campaign, config: JSON.parse(campaign.config) });
-    } catch (error) { return fail((error as { code?: string }).code === "P2002" ? "That campaign URL is already in use." : error instanceof Error ? error.message : "Could not save campaign.", 422); }
+    } catch (error) { return fail((error as { code?: string }).code === "P2002" ? "That campaign URL is already in use. Choose a different URL slug, such as study-in-egypt-2026." : (error as { code?: string }).code ? "The server could not save this campaign. Your editor changes remain here; retry shortly or ask the administrator to check database availability." : error instanceof Error ? error.message : "Could not save campaign. Retry shortly; keep the editor open to retain your changes.", 422); }
 }
 
 export async function DELETE(request: NextRequest) {
