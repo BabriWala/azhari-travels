@@ -3,6 +3,13 @@ export type QuestionType = typeof questionTypes[number];
 export const contactFields = ["", "name", "phone", "email", "whatsapp", "service", "passport", "budget", "location", "education", "experience"] as const;
 export type Answer = string | string[] | boolean;
 export type Answers = Record<string, Answer>;
+export type CampaignDesign = { layout: "card" | "split"; primary: string; accent: string; background: string; surface: string; text: string; radius: number; brand: string; logo: string; homeUrl: string; footer: string; finishUrl: string; showProgress: boolean };
+export type CampaignPage = { heading?: string; description?: string; footer?: string; button?: string; backButton?: string; image?: string; showHeader?: boolean; showFooter?: boolean };
+export type StepRoute = { from: number; questionId: string; answer: string; to: number; autoAdvance: boolean };
+export const defaultDesign: CampaignDesign = { layout: "split", primary: "#06113c", accent: "#b80050", background: "#f5f6fa", surface: "#ffffff", text: "#06113c", radius: 20, brand: "Azhari Travels & Tours", logo: "/al-azhar/azhari-logo.svg", homeUrl: "/", footer: "Azhari Travels & Tours · Your next journey starts here", finishUrl: "/", showProgress: true };
+export function designFor(c: CampaignConfig): CampaignDesign { return { ...defaultDesign, ...c.design }; }
+export function pageFor(c: CampaignConfig, key: string): CampaignPage { return { showHeader: true, showFooter: true, ...c.pages?.[key] }; }
+export function safeCampaignUrl(url: string, image = false) { return !/[\\\u0000-\u0020]/.test(url) && ((url.startsWith("/") && !url.startsWith("//")) || /^https:\/\//i.test(url)) && (!image || !url.includes("#")); }
 export type Question = {
     id: string; label: string; type: QuestionType; step: number; required: boolean; active: boolean;
     field: typeof contactFields[number]; options: string[];
@@ -10,6 +17,7 @@ export type Question = {
     rules: { operator: "equals" | "contains" | "gte" | "lte"; value: string; points: number; disqualify: boolean }[];
 };
 export type CampaignConfig = {
+    design?: Partial<CampaignDesign>; pages?: Record<string, CampaignPage>; routes?: StepRoute[]; stepNext?: Record<string, number>;
     description: string; information: string; cta: string; confirmation: string; privacy: string;
     steps: string[]; questions: Question[]; thresholds: { hot: number; qualified: number; warm: number };
 };
@@ -48,7 +56,50 @@ export function validateConfig(value: unknown): CampaignConfig {
     if (!c.questions.some(q => q.active && q.required && !q.condition && ["phone", "email", "whatsapp"].includes(q.field) && ["phone", "email"].includes(q.type))) throw new Error("Include an unconditional, required phone or email question mapped to a contact field.");
     if (!c.questions.some(q => q.active && q.required && !q.condition && q.type === "consent")) throw new Error("Include an unconditional, required consent checkbox.");
     if (!c.thresholds || [c.thresholds.hot, c.thresholds.qualified, c.thresholds.warm].some(n => !Number.isInteger(n) || n < 0 || n > 100) || c.thresholds.hot < c.thresholds.qualified || c.thresholds.qualified < c.thresholds.warm) throw new Error("Thresholds must satisfy Hot ≥ Qualified ≥ Warm, between 0 and 100.");
+    const design = designFor(c);
+    if (!["card", "split"].includes(design.layout) || !Number.isInteger(design.radius) || design.radius < 0 || design.radius > 32 || typeof design.showProgress !== "boolean") throw new Error("Check layout and corner settings.");
+    for (const color of [design.primary, design.accent, design.background, design.surface, design.text]) if (!/^#[0-9a-f]{6}$/i.test(color)) throw new Error("Choose valid six-digit colors.");
+    for (const text of [design.brand, design.footer]) if (typeof text !== "string" || text.length > 1000) throw new Error("Brand and footer text must be under 1,000 characters.");
+    for (const url of [design.logo, design.homeUrl, design.finishUrl]) if (typeof url !== "string" || url.length > 2000 || url && !safeCampaignUrl(url)) throw new Error("Links must be relative paths or HTTPS URLs.");
+    if (c.pages && (typeof c.pages !== "object" || Array.isArray(c.pages))) throw new Error("Invalid page settings.");
+    for (const [key, page] of Object.entries(c.pages || {})) {
+        if (!["intro", "complete", ...c.steps.map((_, i) => `step-${i}`)].includes(key) || !page || typeof page !== "object") throw new Error("Page settings refer to a missing step.");
+        for (const field of ["heading", "description", "footer", "button", "backButton", "image"] as const) if (page[field] !== undefined && (typeof page[field] !== "string" || page[field]!.length > 2000)) throw new Error("Page text must be under 2,000 characters.");
+        if (page.image && !safeCampaignUrl(page.image, true)) throw new Error("Choose a valid image URL.");
+        for (const field of ["showHeader", "showFooter"] as const) if (page[field] !== undefined && typeof page[field] !== "boolean") throw new Error("Invalid page visibility setting.");
+    }
+    if (c.routes && (!Array.isArray(c.routes) || c.routes.length > 100)) throw new Error("Use at most 100 navigation rules.");
+    const branches = new Set<string>();
+    if (c.stepNext && (typeof c.stepNext !== "object" || Array.isArray(c.stepNext))) throw new Error("Invalid default navigation settings.");
+    for (const [from, to] of Object.entries(c.stepNext || {})) {
+        if (!/^\d+$/.test(from) || !Number.isInteger(to) || Number(from) >= c.steps.length || to <= Number(from) || to >= c.steps.length) throw new Error("The default next step must be a later step.");
+        if (c.questions.some(q => q.active && q.required && !q.condition && q.step > Number(from) && q.step < to && (q.type === "consent" || ["phone", "email", "whatsapp"].includes(q.field)))) throw new Error("Default navigation cannot skip required contact or consent steps.");
+    }
+    for (const route of c.routes || []) {
+        const q = c.questions.find(q => q.id === route.questionId && q.active && q.step === route.from);
+        if (!q || !Number.isInteger(route.from) || !Number.isInteger(route.to) || route.to <= route.from || route.to >= c.steps.length || typeof route.answer !== "string" || !route.answer.trim() || route.answer.length > 200 || typeof route.autoAdvance !== "boolean") throw new Error("Navigation rules must link an active question to a later step.");
+        const options = q.type === "yesno" ? ["Yes", "No"] : q.type === "consent" ? ["true"] : q.options;
+        if (["single", "multiple", "select", "yesno", "consent"].includes(q.type) && !options.includes(route.answer)) throw new Error("Navigation answers must match a question option.");
+        if (route.autoAdvance && !["single", "select", "yesno"].includes(q.type)) throw new Error("Automatic navigation is available for single choice, dropdown and yes/no questions.");
+        const key = `${route.from}:${q.id}:${route.answer}`; if (branches.has(key)) throw new Error("Remove duplicate navigation conditions."); branches.add(key);
+        if (c.questions.some(q => q.active && q.required && !q.condition && q.step > route.from && q.step < route.to && (q.type === "consent" || ["phone", "email", "whatsapp"].includes(q.field)))) throw new Error("Navigation cannot skip required contact or consent steps. Put these in a shared step.");
+    }
     return c;
+}
+export function matchingRoute(config: CampaignConfig, answers: Answers, step: number) {
+    const visible = visibleQuestions(config, answers);
+    return config.routes?.find(r => r.from === step && visible.some(q => q.id === r.questionId) && (Array.isArray(answers[r.questionId]) ? (answers[r.questionId] as string[]).includes(r.answer) : String(answers[r.questionId] ?? "") === r.answer));
+}
+export function nextStep(config: CampaignConfig, answers: Answers, step: number): number | null { return matchingRoute(config, answers, step)?.to ?? config.stepNext?.[String(step)] ?? (step + 1 < config.steps.length ? step + 1 : null); }
+export function stepPath(config: CampaignConfig, answers: Answers): number[] {
+    const path: number[] = []; let step: number | null = 0; const visitedAnswers: Answers = {};
+    while (step !== null && path.length < config.steps.length) {
+        path.push(step);
+        for (const q of config.questions.filter(q => q.step === step)) if (answers[q.id] !== undefined) visitedAnswers[q.id] = answers[q.id];
+        const next = nextStep(config, visitedAnswers, step); if (next !== null && next <= step) break;
+        step = next;
+    }
+    return path;
 }
 export function visibleQuestions(config: CampaignConfig, answers: Answers) {
     const visible = new Set<string>();
@@ -62,7 +113,11 @@ export function visibleQuestions(config: CampaignConfig, answers: Answers) {
 export function validateAnswers(config: CampaignConfig, input: unknown, step: number, complete: boolean) {
     if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("Invalid answers.");
     const answers: Answers = {};
+    const path = stepPath(config, input as Answers);
+    if (!path.includes(step)) throw new Error("This step is not on your selected path. Go back and choose your answer again.");
+    if (complete && nextStep(config, input as Answers, step) !== null) throw new Error("Please complete the remaining steps.");
     for (const q of config.questions) {
+        if (!path.includes(q.step)) continue;
         if (!visibleQuestions(config, answers).some(v => v.id === q.id)) continue;
         const value = (input as Answers)[q.id];
         const missing = value === undefined || value === "" || value === false || Array.isArray(value) && !value.length;

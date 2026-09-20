@@ -1,41 +1,50 @@
 "use client";
-import { FormEvent, useEffect, useState } from "react";
-import { Answers, CampaignConfig, Question, visibleQuestions } from "../../lib/campaigns";
-
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { Answers, CampaignConfig, Question, visibleQuestions, nextStep, matchingRoute, stepPath, pageFor, designFor } from "../../lib/campaigns";
+import CampaignShell from "../CampaignShell";
 type Loaded = { title: string; service: string; config: CampaignConfig; saved: null | { answers: Answers; step: number; version: number; completed: boolean } };
 export default function Assessment({ slug }: { slug: string }) {
     const [data, setData] = useState<Loaded | null>(null), [answers, setAnswers] = useState<Answers>({}), [step, setStep] = useState(0), [version, setVersion] = useState(0);
     const [started, setStarted] = useState(false), [complete, setComplete] = useState(false), [busy, setBusy] = useState(false), [error, setError] = useState(""), [notice, setNotice] = useState("");
+    const formRef = useRef<HTMLFormElement>(null), saving = useRef(false);
+    const [autoQuestion, setAutoQuestion] = useState<string | null>(null);
     useEffect(() => {
         const controller = new AbortController();
-        fetch(`/api/campaigns/${slug}`, { cache: "no-store", signal: controller.signal }).then(async r => { const d = await r.json(); if (!r.ok) throw new Error(d.error?.message || "Unable to load assessment."); setData(d); if (d.saved) { setAnswers(d.saved.answers); setStep(d.saved.step); setVersion(d.saved.version); setStarted(true); setComplete(d.saved.completed); setNotice("Your saved progress has been restored."); } }).catch(e => { if (!controller.signal.aborted) setError(e.message); });
+        fetch('/api/campaigns/' + slug, { cache: "no-store", signal: controller.signal }).then(async r => { const d = await r.json(); if (!r.ok) throw new Error(d.error?.message || "Unable to load assessment."); setData(d); if (d.saved) { setAnswers(d.saved.answers); setStep(d.saved.step); setVersion(d.saved.version); setStarted(true); setComplete(d.saved.completed); setNotice("Your saved progress has been restored."); } }).catch(e => { if (!controller.signal.aborted) setError(e.message); });
         return () => controller.abort();
     }, [slug]);
-    async function next(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault(); if (!data || busy) return;
-        setBusy(true); setError(""); setNotice("");
+    useEffect(() => {
+        if (!autoQuestion || !data || busy) return;
+        setAutoQuestion(null);
+        const rule = matchingRoute(data.config, answers, step);
+        if (rule?.autoAdvance && rule.questionId === autoQuestion && formRef.current?.checkValidity()) formRef.current.requestSubmit();
+    }, [autoQuestion, data, answers, step, busy]);
+    async function nextHandler(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault(); if (!data || saving.current) return;
+        saving.current = true; setBusy(true); setError(""); setNotice("");
         try {
             const tracking = Object.fromEntries(new URLSearchParams(window.location.search));
             tracking.referrer = document.referrer; tracking.landing_page = window.location.origin + window.location.pathname;
-            const last = step === data.config.steps.length - 1;
-            const r = await fetch(`/api/campaigns/${slug}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ answers, step, version, complete: last, tracking, website: new FormData(event.currentTarget).get("website") }) });
+            const last = nextStep(data.config, answers, step) === null;
+            const r = await fetch('/api/campaigns/' + slug, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ answers, step, version, complete: last, tracking, website: new FormData(event.currentTarget).get("website") }) });
             const result = await r.json(); if (!r.ok) throw new Error(result.error?.message || "Could not save. Please retry.");
-            setVersion(result.version); setComplete(result.completed); if (!result.completed) setStep(step + 1);
+            setVersion(result.version); setComplete(result.completed); if (result.answers) setAnswers(result.answers); if (!result.completed) setStep(result.nextStep);
             setNotice("Progress saved."); window.scrollTo({ top: 0, behavior: "smooth" });
-        } catch (e) { setError((e as Error).message); } finally { setBusy(false); }
+        } catch (e) { setError((e as Error).message); } finally { saving.current = false; setBusy(false); }
     }
-    return <main className="campaign-ui assessment"><a href="/" className="campaign-brand"><img src="/al-azhar/azhari-logo.svg" alt="Azhari Travels" />Azhari Travels & Tours</a>
-        {!data ? <section className="campaign-card"><p role="status">{error || "Loading assessment…"}</p>{error && <button onClick={() => window.location.reload()}>Try again</button>}</section> : <>
-            <header><span className="campaign-eyebrow">{data.service || "Plan your next journey"}</span><h1>{data.title}</h1><p>{data.config.description}</p></header>
-            {complete ? <section className="campaign-card"><span className="campaign-eyebrow">Assessment received</span><h2>Thank you</h2><p className="preserve-lines">{data.config.confirmation}</p><a href="/">Return to website</a></section> : !started ? <section className="campaign-card"><p className="preserve-lines">{data.config.information}</p><h2>A few questions to guide you</h2><p>{data.config.steps.length} short steps · You can continue later on this browser.</p><p className="campaign-notice">{data.config.privacy}</p><button className="campaign-primary" onClick={() => setStarted(true)}>{data.config.cta} →</button></section> : <section className="campaign-card">
-                <p className="campaign-eyebrow">Step {step + 1} of {data.config.steps.length}</p><progress aria-label="Assessment progress" max={data.config.steps.length} value={step + 1} /><h2>{data.config.steps[step]}</h2>
-                <form onSubmit={next}><div className="campaign-trap" aria-hidden="true"><label>Leave empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
-                    {visibleQuestions(data.config, answers).filter(q => q.step === step).map(q => <QuestionInput key={q.id} question={q} value={answers[q.id]} disabled={busy} onChange={v => setAnswers(previous => ({ ...previous, [q.id]: v }))} />)}
-                    <p className="campaign-notice">{data.config.privacy}</p>{error && <p role="alert" className="campaign-error">{error}</p>}<p role="status">{notice}</p>
-                    <div className="campaign-actions"><button type="button" disabled={busy || step === 0} onClick={() => { setStep(step - 1); setError(""); }}>← Back</button><button className="campaign-primary" disabled={busy}>{busy ? "Saving…" : step === data.config.steps.length - 1 ? "Submit assessment" : "Save & continue →"}</button></div>
-                </form></section>}
+    if (!data) return <div className="campaign-ui assessment"><section className="campaign-card"><p role="status">{error || "Loading assessment…"}</p>{error && <button onClick={() => window.location.reload()}>Try again</button>}</section></div>;
+    const pageKey = complete ? "complete" : started ? 'step-' + step : "intro", p = pageFor(data.config, pageKey), d = designFor(data.config), path = stepPath(data.config, answers), index = path.indexOf(step);
+    const next = nextStep(data.config, answers, step);
+    return <CampaignShell config={data.config} title={data.title} service={data.service} pageKey={pageKey}>
+        {complete ? <><span className="campaign-success-mark" aria-hidden="true">✓</span><p className="preserve-lines">{data.config.confirmation}</p><a className="campaign-primary button" href={d.finishUrl || "/"}>{p.button || "Return to website"}</a></> : !started ? <><p className="preserve-lines">{data.config.information}</p><span className="campaign-eyebrow">Designed around you</span><h2>A few questions to guide you</h2><p>You can save your progress and continue later on this browser.</p><p className="campaign-notice">{data.config.privacy}</p><button className="campaign-primary campaign-wide-button" onClick={() => setStarted(true)}>{p.button || data.config.cta} →</button></> : <>
+            {d.showProgress && <><div className="campaign-progress-label"><span>Step {index + 1} of {path.length}</span><span>{Math.round((index + 1) / path.length * 100)}%</span></div><progress aria-label="Assessment progress" max={path.length} value={index + 1} /></>}
+            <form ref={formRef} onSubmit={nextHandler}><div className="campaign-trap" aria-hidden="true"><label>Leave empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
+                {visibleQuestions(data.config, answers).filter(q => q.step === step).map(q => <QuestionInput key={q.id} question={q} value={answers[q.id]} disabled={busy} onChange={v => { setAnswers(previous => ({ ...previous, [q.id]: v })); setAutoQuestion(q.id); }} />)}
+                <p className="campaign-notice">{data.config.privacy}</p>{error && <p role="alert" className="campaign-error">{error}</p>}<p role="status">{notice}</p>
+                <div className="campaign-actions"><button type="button" disabled={busy || index <= 0} onClick={() => { setStep(path[index - 1]); setError(""); }}>{p.backButton || "← Back"}</button><button className="campaign-primary" disabled={busy}>{busy ? "Saving…" : p.button || (next === null ? "Submit assessment" : "Save & continue →")}</button></div>
+            </form>
         </>}
-    </main>;
+    </CampaignShell>;
 }
 function QuestionInput({ question: q, value, disabled, onChange }: { question: Question; value: Answers[string] | undefined; disabled: boolean; onChange: (v: Answers[string]) => void }) {
     const choices = q.type === "yesno" ? ["Yes", "No"] : q.options;

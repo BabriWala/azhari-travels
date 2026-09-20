@@ -2,7 +2,7 @@ import { randomBytes, createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../lib/db";
 import { fail } from "../../../lib/api";
-import { CampaignConfig, publicConfig, validateAnswers, evaluate, mappedAnswers } from "../../../lib/campaigns";
+import { CampaignConfig, publicConfig, validateAnswers, evaluate, mappedAnswers, nextStep } from "../../../lib/campaigns";
 import { normalizeLeadPhone } from "../../../lib/leadImport";
 
 export const runtime = "nodejs";
@@ -12,7 +12,7 @@ type Context = { params: Promise<{ slug: string }> };
 const cookieName = (slug: string) => `az_assessment_${slug}`;
 async function load(request: NextRequest, slug: string) {
     const campaign = await prisma.campaign.findUnique({ where: { slug } });
-    if (!campaign?.published) return null;
+    if (!campaign?.published || campaign.deletedAt) return null;
     const token = request.cookies.get(cookieName(slug))?.value;
     const saved = token ? await prisma.campaignResponse.findFirst({ where: { campaignId: campaign.id, tokenHash: hash(token), leadId: { not: null } } }) : null;
     return { campaign, saved, token, config: JSON.parse(saved?.snapshot || campaign.config) as CampaignConfig };
@@ -49,6 +49,7 @@ export async function POST(request: NextRequest, context: Context) {
         const tracking: Record<string, string> = {};
         for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "campaign_id", "adset_id", "ad_id", "referrer", "landing_page"]) if (typeof body.tracking?.[key] === "string") tracking[key] = body.tracking[key].slice(0, 1000);
         const result = await prisma.$transaction(async tx => {
+            if (!await tx.campaign.findFirst({ where: { id: data.campaign.id, published: true, deletedAt: null } })) throw new Error("This campaign is no longer accepting responses.");
             const current = data.saved ? await tx.campaignResponse.findUnique({ where: { id: data.saved.id } }) : null;
             if (current && current.version !== body.version) throw new Error("This form changed in another tab. Reload before continuing.");
             if (current?.completedAt) return current;
@@ -78,7 +79,7 @@ export async function POST(request: NextRequest, context: Context) {
             await tx.leadConversation.create({ data: { leadId: lead.id, party: "system", author: "Campaign assessment", text: `${data.campaign.title}: ${body.complete ? "completed" : `saved step ${body.step + 1}`} · ${rating.qualification} · score ${rating.score}/100${matches.length > 1 ? " · Contact matches multiple records; review needed" : ""}` } });
             return saved;
         }, { timeout: 15000 });
-        const response = NextResponse.json({ version: result.version, completed: !!result.completedAt });
+        const response = NextResponse.json({ version: result.version, completed: !!result.completedAt, answers: JSON.parse(result.answers), nextStep: nextStep(data.config, JSON.parse(result.answers), body.step) });
         response.headers.set("Cache-Control", "private, no-store");
         response.cookies.set(cookieName(slug), token, { httpOnly: true, secure: protocol === "https:", sameSite: "lax", path: `/api/campaigns/${slug}`, maxAge: 30 * 86400 });
         return response;

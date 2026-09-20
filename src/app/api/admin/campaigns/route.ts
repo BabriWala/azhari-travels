@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
             if (body.id) {
                 const previous = await tx.campaign.findUnique({ where: { id: body.id } });
                 if (!previous) throw new Error("Campaign not found.");
+                if (previous.deletedAt) throw new Error("Restore this campaign before editing it.");
                 if (previous.slug !== body.slug) throw new Error("The campaign URL cannot change after creation. Create another campaign for a new URL.");
             }
             const saved = body.id ? await tx.campaign.update({ where: { id: body.id }, data }) : await tx.campaign.create({ data });
@@ -30,4 +31,30 @@ export async function POST(request: NextRequest) {
         });
         return ok({ ...campaign, config: JSON.parse(campaign.config) });
     } catch (error) { return fail((error as { code?: string }).code === "P2002" ? "That campaign URL is already in use." : error instanceof Error ? error.message : "Could not save campaign.", 422); }
+}
+
+export async function DELETE(request: NextRequest) {
+    const denied = await requireAdmin(request); if (denied) return denied;
+    const body = await request.json().catch(() => null);
+    if (!body || typeof body.id !== "string" || typeof body.confirmation !== "string") return fail("Confirm the campaign URL to delete it.", 422);
+    const campaign = await prisma.campaign.findUnique({ where: { id: body.id } });
+    if (!campaign) return fail("Campaign not found.", 404);
+    if (body.confirmation !== campaign.slug) return fail("The confirmation must match the campaign URL slug.", 422);
+    await prisma.$transaction([
+        prisma.campaign.update({ where: { id: campaign.id }, data: { deletedAt: new Date(), published: false } }),
+        prisma.activityLog.create({ data: { action: "delete", entity: "campaign", entityId: campaign.id, message: `${(await getAdminActor(request))!.name} removed ${campaign.title}; lead history retained.` } }),
+    ]);
+    return ok({ deleted: true });
+}
+export async function PATCH(request: NextRequest) {
+    const denied = await requireAdmin(request); if (denied) return denied;
+    const body = await request.json().catch(() => null);
+    if (!body || typeof body.id !== "string" || body.action !== "restore") return fail("Choose a campaign to restore.", 422);
+    const campaign = await prisma.campaign.findUnique({ where: { id: body.id } });
+    if (!campaign) return fail("Campaign not found.", 404);
+    await prisma.$transaction([
+        prisma.campaign.update({ where: { id: campaign.id }, data: { deletedAt: null, published: false } }),
+        prisma.activityLog.create({ data: { action: "restore", entity: "campaign", entityId: campaign.id, message: `${(await getAdminActor(request))!.name} restored ${campaign.title} as a draft.` } }),
+    ]);
+    return ok({ restored: true });
 }

@@ -4,10 +4,28 @@ import { mkdirSync, readFileSync, readdirSync, unlinkSync } from "node:fs";
 import { resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 import { NextRequest } from "next/server";
-import { defaultCampaign, evaluate, validateConfig, validateAnswers, visibleQuestions } from "../src/app/lib/campaigns";
+import { defaultCampaign, evaluate, validateConfig, validateAnswers, visibleQuestions, stepPath, nextStep, designFor } from "../src/app/lib/campaigns";
 
 async function main() {
     const config = defaultCampaign();
+    assert.equal(designFor(config).layout, "split");
+    assert.throws(() => validateConfig({ ...config, design: { homeUrl: "javascript:alert(1)" } }), /Links/);
+    const branching = defaultCampaign();
+    branching.steps = ["About you", "Passport details", "Apply for a passport", "Consent"];
+    branching.questions = branching.questions.map(q => ({ ...q, step: q.id === "passport" ? 0 : q.step === 2 ? 3 : q.step }));
+    branching.questions.push({ id: "application", label: "Application plan", type: "text", step: 2, active: true, required: true, field: "", options: [], rules: [] });
+    branching.routes = [{ from: 0, questionId: "passport", answer: "No", to: 2, autoAdvance: true }];
+    branching.stepNext = { "1": 3 };
+    validateConfig(branching);
+    assert.deepEqual(stepPath(branching, { passport: "No" }), [0, 2, 3]);
+    assert.deepEqual(stepPath(branching, { passport: "Yes" }), [0, 1, 3]);
+    assert.equal(nextStep(branching, { passport: "No" }, 0), 2);
+    const noPassport = { name: "Example", phone: "01712345678", passport: "No", application: "Next week", budget: "Yes", consent: true };
+    const cleaned = validateAnswers(branching, noPassport, 3, true);
+    assert.equal(cleaned.budget, undefined); assert.equal(evaluate(branching, cleaned, true).score, 20);
+    assert.throws(() => validateAnswers(branching, noPassport, 1, false), /selected path/);
+    assert.throws(() => validateAnswers(branching, noPassport, 0, true), /remaining steps/);
+    assert.throws(() => validateConfig({ ...branching, routes: [{ from: 1, questionId: "budget", answer: "Yes", to: 0, autoAdvance: false }] }), /later step/);
     assert.equal(validateConfig(config), config);
     const conditional = { id: "validity", label: "Passport validity", type: "date" as const, step: 1, field: "" as const, required: true, active: true, options: [], rules: [], condition: { questionId: "passport", value: "Yes" } };
     config.questions.push(conditional);
@@ -87,9 +105,25 @@ async function main() {
         const finishDuplicate = await visitor.POST(req("/api/campaigns/test-campaign", "POST", { ...final, answers: { ...final.answers, phone: "+8801712345678" } }, undefined, dupCookie), context);
         assert.equal(finishDuplicate.status, 200);
         assert.equal((await prisma.campaignResponse.findUniqueOrThrow({ where: { id: unfinished.id } })).qualification, "Nurture");
+        assert.equal((await admin.DELETE(req("/api/admin/campaigns", "DELETE", { id: campaign.id, confirmation: body.slug }, staffToken))).status, 403);
+        assert.equal((await admin.DELETE(req("/api/admin/campaigns", "DELETE", { id: campaign.id, confirmation: "wrong" }, auth))).status, 422);
+        assert.equal((await admin.DELETE(req("/api/admin/campaigns", "DELETE", { id: campaign.id, confirmation: body.slug }, auth))).status, 200);
+        assert.equal((await visitor.GET(req("/api/campaigns/test-campaign"), context)).status, 404);
+        assert.equal(await prisma.lead.count(), 1); assert.equal(await prisma.campaignResponse.count(), 2);
+        assert.equal((await admin.POST(req("/api/admin/campaigns", "POST", { ...body, id: campaign.id }, auth))).status, 422);
+        assert.equal((await admin.PATCH(req("/api/admin/campaigns", "PATCH", { id: campaign.id, action: "restore" }, auth))).status, 200);
+        assert.equal((await prisma.campaign.findUniqueOrThrow({ where: { id: campaign.id } })).published, false);
+        await admin.POST(req("/api/admin/campaigns", "POST", { ...body, id: campaign.id, published: true }, auth));
         await prisma.lead.deleteMany();
         assert.equal(await prisma.campaignResponse.count(), 0);
         const deleted = await visitor.GET(req("/api/campaigns/test-campaign", "GET", undefined, undefined, cookie), context); assert.equal((await deleted.json()).saved, null);
+        await admin.POST(req("/api/admin/campaigns", "POST", { ...body, slug: "branching", config: branching, published: true }, auth));
+        const branchContext = { params: Promise.resolve({ slug: "branching" }) };
+        const branchSave = await visitor.POST(req("/api/campaigns/branching", "POST", { answers: { name: "Branch test", phone: "01712345678", passport: "No" }, step: 0, version: 0, complete: false }), branchContext);
+        assert.equal(branchSave.status, 200, await branchSave.clone().text()); assert.equal((await branchSave.json()).nextStep, 2);
+        const branchCookie = branchSave.headers.get("set-cookie")!.split(";")[0];
+        const branchComplete = await visitor.POST(req("/api/campaigns/branching", "POST", { answers: noPassport, step: 3, version: 1, complete: true }, undefined, branchCookie), branchContext);
+        assert.equal(branchComplete.status, 200, await branchComplete.clone().text());
         console.log("PASS: validation, conditions, scoring, authorization, draft privacy, partial save/resume, snapshots, stale tabs, duplicate identity, completion idempotency, tracking, filters, export and conversion history.");
     } finally { await prisma.$disconnect(); unlinkSync(databasePath); }
 }

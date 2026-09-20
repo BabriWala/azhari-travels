@@ -141,6 +141,7 @@ model Lead {
 }
 
 model Campaign {
+  deletedAt DateTime?
   id String @id @default(cuid())
   slug String @unique
   title String
